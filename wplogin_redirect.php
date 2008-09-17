@@ -2,9 +2,11 @@
 /*
 Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
-Description: Redirect users to different locations after logging in. Define a set of rules for specific users, users with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects. Version 1.5 and up of this plugin is compatible only with WordPress 2.6.2 and up.
+Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects. Version 1.5 and up of this plugin is compatible only with WordPress 2.6.2 and up.
 Author: Peter
-Version: 1.5
+Version: 1.5.1
+Change Log:
+2008-09-17  1.5.1: Fixed compatibility for sites with a different table prefix setting in wp-config.php. (Thanks Eric!) 
 Author URI: http://www.theblog.ca
 */
 
@@ -23,9 +25,10 @@ $rul_db_addresses = $wpdb->prefix . 'login_redirects';
 // This extra function is necessary to support the use case where someone was previously logged in
 
 function redirect_current_user_can($capability, $current_user) {
+    global $wpdb;
 
-    $roles = get_option('wp_user_roles');
-    $user_roles = $current_user->wp_capabilities;
+    $roles = get_option($wpdb->prefix . 'user_roles');
+    $user_roles = $current_user->{$wpdb->prefix . 'capabilities'};
     $user_roles = array_keys($user_roles, true);
     $role = $user_roles[0];
     $capabilities = $roles[$role]['capabilities'];
@@ -62,7 +65,7 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
         
     if ( $rul_roles ) {
         foreach ( $rul_roles as $rul_role ) {
-            if ( isset ( $user->wp_capabilities[$rul_role->rul_value] ) ) {
+            if ( isset ( $user->{$wpdb->prefix . 'capabilities'}[$rul_role->rul_value] ) ) {
                 $redirect_to = $rul_role->rul_url;
                 return $redirect_to;
             }
@@ -122,7 +125,7 @@ if (is_admin()) {
     // Returns all roles in the system
     function rul_returnrolenames() {
         global $wp_roles;
-        
+
         $rul_returnrolenames = array();
         foreach (array_keys($wp_roles->role_names) as $rul_rolename) {
             $rul_returnrolenames[$rul_rolename] = $rul_rolename;
