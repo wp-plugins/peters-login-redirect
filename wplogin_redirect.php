@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects. Version 1.5 and up of this plugin is compatible only with WordPress 2.6.2 and up.
 Author: Peter
-Version: 1.5.1
+Version: 1.6.0
 Change Log:
+2008-11-26  1.6.0: Added a function rul_register that acts the same as the wp_register function you see in templates, except that it will return the custom defined admin address
 2008-09-17  1.5.1: Fixed compatibility for sites with a different table prefix setting in wp-config.php. (Thanks Eric!) 
 Author URI: http://www.theblog.ca
 */
@@ -40,7 +41,7 @@ function redirect_current_user_can($capability, $current_user) {
     return false;
 }
 
-// This function set the URL to redirect to
+// This function sets the URL to redirect to
 
 function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
     global $wpdb, $rul_db_addresses;
@@ -97,6 +98,32 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
     // No rules matched or existed, so just send them to the WordPress admin panel as usual
     return $redirect_to;
     
+}
+
+// Typically this function is used in templates, similarly to the wp_register function
+// It returns a link to the administration panel or the one that was custom defined
+// If no user is logged in, it returns the "Register" link
+// You can specify tags to go around the returned link (or wrap it with no tags); by default this is a list item
+// You can also specify whether to print out the link or just return it
+
+function rul_register( $before = '<li>', $after = '</li>', $give_echo = true ) {
+    global $current_user;
+    
+	if ( ! is_user_logged_in() ) {
+		if ( get_option('users_can_register') )
+			$link = $before . '<a href="' . site_url('wp-login.php?action=register', 'login') . '">' . __('Register') . '</a>' . $after;
+		else
+			$link = '';
+	} else {
+        $link = $before . '<a href="' . redirect_to_front_page('', '', $current_user) . '">' . __('Site Admin') . '</a>' . $after;;
+	}
+    
+    if ($give_echo) {
+        echo $link;
+    }
+    else {
+        return $link;
+    }
 }
 
 if (is_admin()) {
