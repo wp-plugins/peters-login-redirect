@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects. Version 1.5 and up of this plugin is compatible only with WordPress 2.6.2 and up.
 Author: Peter
-Version: 1.6.0
+Version: 1.6.1
 Change Log:
+2009-02-06  1.6.1: Minor database table tweak for better compatibility with different setups. (Thanks David!)
 2008-11-26  1.6.0: Added a function rul_register that acts the same as the wp_register function you see in templates, except that it will return the custom defined admin address
 2008-09-17  1.5.1: Fixed compatibility for sites with a different table prefix setting in wp-config.php. (Thanks Eric!) 
 Author URI: http://www.theblog.ca
@@ -718,7 +719,7 @@ if (is_admin()) {
         `rul_type` enum(\'user\',\'role\',\'level\',\'all\') NOT NULL,
         `rul_value` varchar(255) NOT NULL,
         `rul_url` longtext NOT NULL,
-        `rul_order` int(2) NOT NULL,
+        `rul_order` int(2) NOT NULL default \'0\',
         UNIQUE KEY `rul_type` (`rul_type`,`rul_value`)
         )';
 
