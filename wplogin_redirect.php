@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects. Version 1.5 and up of this plugin is compatible only with WordPress 2.6.2 and up.
 Author: Peter
-Version: 1.6.1
+Version: 1.7.0
 Change Log:
+2009-05-31  1.7.0: Added option $rul_local_only (in the plugin file itself) to bypass the WordPress default limitation of only redirecting to local URLs.
 2009-02-06  1.6.1: Minor database table tweak for better compatibility with different setups. (Thanks David!)
 2008-11-26  1.6.0: Added a function rul_register that acts the same as the wp_register function you see in templates, except that it will return the custom defined admin address
 2008-09-17  1.5.1: Fixed compatibility for sites with a different table prefix setting in wp-config.php. (Thanks Eric!) 
@@ -14,7 +15,18 @@ Author URI: http://www.theblog.ca
 
 /*
 --------------
-All settings are configured in Settings > Login redirects in the WordPress admin panel
+Configuration
+--------------
+*/
+
+// Setting this to false will make it so that you can redirect to any URL you want
+// Setting this to true will make it so that you can only redirect to a local URL (one on the same domain)
+$rul_local_only = false;
+
+
+/*
+--------------
+All other settings are configured in Settings > Login redirects in the WordPress admin panel
 --------------
 */
 
@@ -42,15 +54,30 @@ function redirect_current_user_can($capability, $current_user) {
     return false;
 }
 
-// This function sets the URL to redirect to
-
-function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
-    global $wpdb, $rul_db_addresses;
+// This function wraps around the main redirect function to determine whether or not to bypass the WordPress local URL limitation
+function redirect_wrapper( $redirect_to, $requested_redirect_to, $user ) {
+    global $rul_local_only;
 
     // If they're on the login page, don't do anything
     if ( !isset ( $user->user_login ) ) {
         return $redirect_to;
     }
+
+    $rul_url = redirect_to_front_page( $redirect_to, $requested_redirect_to, $user );
+
+    if( $rul_local_only ) {
+        return $rul_url;
+    }
+    else {
+        wp_redirect( $rul_url );
+        die();
+    }
+}
+
+// This function sets the URL to redirect to
+
+function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
+    global $wpdb, $rul_db_addresses;
 
     // Check for a redirect rule for this user
     $rul_user = $wpdb->get_var('SELECT rul_url FROM ' . $rul_db_addresses . 
@@ -521,30 +548,34 @@ if (is_admin()) {
     */
 
     function rul_safe_redirect($location) {
+        global $rul_local_only;
 
-    	// Need to look at the URL the way it will end up in wp_redirect()
-    	$location = wp_sanitize_redirect($location);
+        if( !$rul_local_only ) {
+            return $location;
+        }
 
-    	// browsers will assume 'http' is your protocol, and will obey a redirect to a URL starting with '//'
-    	if ( substr($location, 0, 2) == '//' ) {
-    		$location = 'http:' . $location;
+        // Need to look at the URL the way it will end up in wp_redirect()
+        $location = wp_sanitize_redirect($location);
+
+        // browsers will assume 'http' is your protocol, and will obey a redirect to a URL starting with '//'
+        if ( substr($location, 0, 2) == '//' ) {
+            $location = 'http:' . $location;
         }
         
-    	// In php 5 parse_url may fail if the URL query part contains http://, bug #38143
-    	$test = ( $cut = strpos($location, '?') ) ? substr( $location, 0, $cut ) : $location;
+        // In php 5 parse_url may fail if the URL query part contains http://, bug #38143
+        $test = ( $cut = strpos($location, '?') ) ? substr( $location, 0, $cut ) : $location;
 
-    	$lp  = parse_url($test);
-    	$wpp = parse_url(get_option('home'));
+        $lp  = parse_url($test);
+        $wpp = parse_url(get_option('home'));
 
-    	$allowed_hosts = (array) apply_filters('allowed_redirect_hosts', array($wpp['host']), isset($lp['host']) ? $lp['host'] : '');
+        $allowed_hosts = (array) apply_filters('allowed_redirect_hosts', array($wpp['host']), isset($lp['host']) ? $lp['host'] : '');
 
-    	if ( isset($lp['host']) && ( !in_array($lp['host'], $allowed_hosts) && $lp['host'] != strtolower($wpp['host'])) ) {
+        if ( isset($lp['host']) && ( !in_array($lp['host'], $allowed_hosts) && $lp['host'] != strtolower($wpp['host'])) ) {
     		return false;
         }
         else {
             return $location;
         }
-
     }
     
     // This is the Settings > Login redirects menu
@@ -751,5 +782,5 @@ function rul_uninstall () {
 
 register_activation_hook( __FILE__, 'rul_install' );
 register_deactivation_hook( __FILE__, 'rul_uninstall' );
-add_filter('login_redirect', 'redirect_to_front_page', 10, 3);
+add_filter('login_redirect', 'redirect_wrapper', 10, 3);
 ?>
