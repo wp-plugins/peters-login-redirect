@@ -750,7 +750,7 @@ if (is_admin()) {
         $sql = 'CREATE TABLE ' . $rul_db_addresses . ' (
         `rul_type` enum(\'user\',\'role\',\'level\',\'all\') NOT NULL,
         `rul_value` varchar(255) NOT NULL default \'\',
-        `rul_url` longtext NOT NULL default \'\',
+        `rul_url` longtext NOT NULL,
         `rul_order` int(2) NOT NULL default \'0\',
         UNIQUE KEY `rul_type` (`rul_type`,`rul_value`)
         )';
