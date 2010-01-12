@@ -2,7 +2,7 @@
 Contributors: pkthree
 Donate link: http://www.theblog.ca
 Tags: login, redirect, admin, administration, dashboard, users, authentication
-Requires at least: 2.6.2
+Requires at least: 2.7
 Tested up to: 2.9
 Stable tag: trunk
 

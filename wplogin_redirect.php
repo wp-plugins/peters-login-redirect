@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects. Version 1.5 and up of this plugin is compatible only with WordPress 2.6.2 and up.
 Author: Peter
-Version: 1.7.1
+Version: 1.7.2
 Change Log:
+2010-01-11  1.7.2: Plugin now removes its database tables when it is uninstalled, instead of when it is deactivated. This prevents the redirect rules from being deleted when upgrading WordPress automatically.
 2009-10-07  1.7.1: Minor database compatibility tweak. (Thanks KCP!) 
 2009-05-31  1.7.0: Added option $rul_local_only (in the plugin file itself) to bypass the WordPress default limitation of only redirecting to local URLs.
 2009-02-06  1.6.1: Minor database table tweak for better compatibility with different setups. (Thanks David!)
@@ -33,8 +34,10 @@ All other settings are configured in Settings > Login redirects in the WordPress
 
 global $wpdb;
 global $rul_db_addresses;
+global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
+$rul_version = '1.7.2';
 
 // Thanks to http://wordpress.org/support/topic/97314 for this function
 // This extra function is necessary to support the use case where someone was previously logged in
@@ -743,7 +746,7 @@ if (is_admin()) {
     // Add and remove database tables when installing and uninstalling
 
     function rul_install () {
-    global $wpdb, $rul_db_addresses;
+    global $wpdb, $rul_db_addresses, $rul_version;
     
     // Add the table to hold group information and moderator rules
     if($wpdb->get_var('SHOW TABLES LIKE \'' . $rul_db_addresses . '\'') != $rul_db_addresses) {
@@ -761,7 +764,10 @@ if (is_admin()) {
         $wpdb->insert($rul_db_addresses,
             array('rul_type' => 'all')
         );
-	}
+
+        // Set the version number in the database
+        add_option( 'rul_version', $rul_version, '', 'no' );
+    }
 }
 
 function rul_uninstall () {
@@ -771,7 +777,9 @@ function rul_uninstall () {
     if($wpdb->get_var('SHOW TABLES LIKE \'' . $rul_db_addresses . '\'') == $rul_db_addresses) {
         $sql = 'DROP TABLE ' . $rul_db_addresses;
 		$wpdb->query($sql);
-	}
+    }
+    
+    delete_option( 'rul_version' );
 }
 
     function rul_addoptionsmenu() {
@@ -782,6 +790,6 @@ function rul_uninstall () {
 }
 
 register_activation_hook( __FILE__, 'rul_install' );
-register_deactivation_hook( __FILE__, 'rul_uninstall' );
+register_uninstall_hook( __FILE__, 'rul_uninstall' );
 add_filter('login_redirect', 'redirect_wrapper', 10, 3);
 ?>
