@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects. Version 1.5 and up of this plugin is compatible only with WordPress 2.6.2 and up.
 Author: Peter
-Version: 1.7.2
+Version: 1.7.3
 Change Log:
+2010-03-04  1.7.3: Minor tweak on settings page for better compatibility with different WordPress URL setups.
 2010-01-11  1.7.2: Plugin now removes its database tables when it is uninstalled, instead of when it is deactivated. This prevents the redirect rules from being deleted when upgrading WordPress automatically.
 2009-10-07  1.7.1: Minor database compatibility tweak. (Thanks KCP!) 
 2009-05-31  1.7.0: Added option $rul_local_only (in the plugin file itself) to bypass the WordPress default limitation of only redirecting to local URLs.
@@ -37,7 +38,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '1.7.2';
+$rul_version = '1.7.3';
 
 // Thanks to http://wordpress.org/support/topic/97314 for this function
 // This extra function is necessary to support the use case where someone was previously logged in
@@ -673,7 +674,7 @@ if (is_admin()) {
         <p>Define different local URLs to which different users, users with specific roles, users with specific levels, and all other users will be redirected.</p>
 
         <h3>Specific users</h3>
-        <form name="rul_usernameform" action="<?php print $_SERVER['PHP_SELF'] . '?page=' . basename(__FILE__); ?>" method="post">
+        <form name="rul_usernameform" action="<?php print '?page=' . basename(__FILE__); ?>" method="post">
         <table class="widefat">
             <tr>
                 <th>Username</th>
@@ -693,7 +694,7 @@ if (is_admin()) {
         </form>
             
         <h3>Specific roles</h3>
-        <form name="rul_roleform" action="<?php print $_SERVER['PHP_SELF'] . '?page=' . basename(__FILE__); ?>" method="post">
+        <form name="rul_roleform" action="<?php print '?page=' . basename(__FILE__); ?>" method="post">
         <table class="widefat">
             <tr>
                 <th>Role</th>
@@ -713,7 +714,7 @@ if (is_admin()) {
         </form> 
  
         <h3>Specific levels</h3>
-        <form name="rul_levelform" action="<?php print $_SERVER['PHP_SELF'] . '?page=' . basename(__FILE__); ?>" method="post">
+        <form name="rul_levelform" action="<?php print '?page=' . basename(__FILE__); ?>" method="post">
         <table class="widefat">
             <tr>
                 <th>Level</th>
@@ -735,7 +736,7 @@ if (is_admin()) {
         </form> 
         
         <h3>All other users</h3>
-        <form name="rul_allform" action="<?php print $_SERVER['PHP_SELF'] . '?page=' . basename(__FILE__); ?>" method="post">
+        <form name="rul_allform" action="<?php '?page=' . basename(__FILE__); ?>" method="post">
         <p>URL: <input type="text" size="45" maxlength="500" name="rul_all" value="<?php print $rul_allvalue; ?>" /></p>
         <p class="submit"><input type="submit" name="rul_allsubmit" value="Update" /> <input type="submit" name="rul_allsubmit" value="Delete" /></p>
         </form>
