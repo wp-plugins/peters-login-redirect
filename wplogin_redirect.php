@@ -39,7 +39,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '1.7.3';
+$rul_version = '1.8.0';
 
 // Some helper functions, all "public static" in PHP5 land
 class rulRedirectFunctionCollection
