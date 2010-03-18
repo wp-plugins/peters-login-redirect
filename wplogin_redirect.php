@@ -2,10 +2,11 @@
 /*
 Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
-Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects. Version 1.5 and up of this plugin is compatible only with WordPress 2.6.2 and up.
+Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
 Author: Peter
-Version: 1.7.3
+Version: 1.8.0
 Change Log:
+2010-03-18  1.8.0: Added the ability to specify a username in the redirect URL for more dynamic URL generation.
 2010-03-04  1.7.3: Minor tweak on settings page for better compatibility with different WordPress URL setups.
 2010-01-11  1.7.2: Plugin now removes its database tables when it is uninstalled, instead of when it is deactivated. This prevents the redirect rules from being deleted when upgrading WordPress automatically.
 2009-10-07  1.7.1: Minor database compatibility tweak. (Thanks KCP!) 
@@ -40,23 +41,54 @@ global $rul_version;
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
 $rul_version = '1.7.3';
 
-// Thanks to http://wordpress.org/support/topic/97314 for this function
-// This extra function is necessary to support the use case where someone was previously logged in
+// Some helper functions, all "public static" in PHP5 land
+class rulRedirectFunctionCollection
+{
+    // Thanks to http://wordpress.org/support/topic/97314 for this function
+    // This extra function is necessary to support the use case where someone was previously logged in
+    function redirect_current_user_can($capability, $current_user)
+    {
+        global $wpdb;
 
-function redirect_current_user_can($capability, $current_user) {
-    global $wpdb;
+        $roles = get_option($wpdb->prefix . 'user_roles');
+        $user_roles = $current_user->{$wpdb->prefix . 'capabilities'};
+        $user_roles = array_keys($user_roles, true);
+        $role = $user_roles[0];
+        $capabilities = $roles[$role]['capabilities'];
 
-    $roles = get_option($wpdb->prefix . 'user_roles');
-    $user_roles = $current_user->{$wpdb->prefix . 'capabilities'};
-    $user_roles = array_keys($user_roles, true);
-    $role = $user_roles[0];
-    $capabilities = $roles[$role]['capabilities'];
-
-    if ( in_array( $capability, array_keys( $capabilities, true) ) ) {
-        // check array keys of capabilities for match against requested capability
-        return true;
+        if ( in_array( $capability, array_keys( $capabilities, true) ) ) {
+            // check array keys of capabilities for match against requested capability
+            return true;
+        }
+        return false;
     }
-    return false;
+    
+    // A generic function to return the value mapped to a particular variable
+    function rul_get_variable( $variable )
+    {
+        switch( $variable ) {
+            // Returns the current user's username (only use this if you know they're logged in)
+            case 'username':
+            default:
+                global $current_user;
+                return 'pkthree';
+                break;
+        }
+    }
+    
+    // Replaces the syntax [variable]variable_name[/variable] with whatever has been mapped to the variable_name in the rul_get_variable function
+    function rul_replace_variable( $string )
+    {
+        preg_match_all( "/\[variable\](.*?)\[\/variable\]/is", $string, $out );
+
+        foreach( $out[0] as $instance => $full_match )
+        {
+            $replaced_variable = rulRedirectFunctionCollection::rul_get_variable( $out[1][ $instance ] );
+            $string = str_replace( $full_match, $replaced_variable, $string );
+        }
+
+        return $string;
+    }
 }
 
 // This function wraps around the main redirect function to determine whether or not to bypass the WordPress local URL limitation
@@ -88,8 +120,9 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
     $rul_user = $wpdb->get_var('SELECT rul_url FROM ' . $rul_db_addresses . 
         ' WHERE rul_type = \'user\' AND rul_value = \'' . $user->user_login . '\' LIMIT 1');
     
-    if ( $rul_user ) {
-        $redirect_to = $rul_user;
+    if ( $rul_user )
+    {
+        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_user );
         return $redirect_to;
     }
 
@@ -97,10 +130,12 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
     $rul_roles = $wpdb->get_results('SELECT rul_value, rul_url FROM ' . $rul_db_addresses . 
         ' WHERE rul_type = \'role\'', OBJECT);
         
-    if ( $rul_roles ) {
-        foreach ( $rul_roles as $rul_role ) {
+    if ( $rul_roles )
+    {
+        foreach ( $rul_roles as $rul_role )
+        {
             if ( isset ( $user->{$wpdb->prefix . 'capabilities'}[$rul_role->rul_value] ) ) {
-                $redirect_to = $rul_role->rul_url;
+                $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_role->rul_url );
                 return $redirect_to;
             }
         }
@@ -110,10 +145,13 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
     $rul_levels = $wpdb->get_results('SELECT rul_value, rul_url FROM ' . $rul_db_addresses . 
         ' WHERE rul_type = \'level\' ORDER BY rul_order, rul_value', OBJECT);
         
-    if ( $rul_levels ) {
-        foreach ( $rul_levels as $rul_level ) {
-            if ( redirect_current_user_can ( $rul_level->rul_value, $user ) ) {
-                $redirect_to = $rul_level->rul_url;
+    if ( $rul_levels )
+    {
+        foreach ( $rul_levels as $rul_level )
+        {
+            if ( rulRedirectFunctionCollection::redirect_current_user_can ( $rul_level->rul_value, $user ) )
+            {
+                $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_level->rul_url );
                 return $redirect_to;
             }
         }
@@ -123,8 +161,9 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
     $rul_all = $wpdb->get_var('SELECT rul_url FROM ' . $rul_db_addresses . 
         ' WHERE rul_type = \'all\' LIMIT 1');
 
-    if ( $rul_all ) {
-        $redirect_to = $rul_all;
+    if( $rul_all )
+    {
+        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_all );
         return $redirect_to;
     }
     
@@ -624,7 +663,7 @@ if (is_admin()) {
 
                     $rul_usernamevalues .= '            <tr>' . "\n";
                     $rul_usernamevalues .= '                <td><p><input type="checkbox" name="rul_username[' . $i_user . ']" value="' . $rul_value . '" checked="checked" /> ' . $rul_value . '</p></td>' . "\n";
-                    $rul_usernamevalues .= '                <td><p><input type="text" size="45" maxlength="500" name="rul_usernameaddress[' . $i_user . ']" value="' . $rul_url . '" /></p></td>' . "\n";
+                    $rul_usernamevalues .= '                <td><p><input type="text" size="90" maxlength="500" name="rul_usernameaddress[' . $i_user . ']" value="' . $rul_url . '" /></p></td>' . "\n";
                     $rul_usernamevalues .= '            </tr>' . "\n";
                     
                     $rul_usernames_existing[] = $rul_value;
@@ -637,7 +676,7 @@ if (is_admin()) {
                 
                     $rul_rolevalues .= '            <tr>' . "\n";
                     $rul_rolevalues .= '                <td><p><input type="checkbox" name="rul_role[' . $i_role . ']" value="' . $rul_value . '" checked="checked" /> ' . $rul_value . '</p></td>' . "\n";
-                    $rul_rolevalues .= '                <td><p><input type="text" size="45" maxlength="500" name="rul_roleaddress[' . $i_role . ']" value="' . $rul_url . '" /></p></td>' . "\n";
+                    $rul_rolevalues .= '                <td><p><input type="text" size="90" maxlength="500" name="rul_roleaddress[' . $i_role . ']" value="' . $rul_url . '" /></p></td>' . "\n";
                     $rul_rolevalues .= '            </tr>' . "\n";
                     
                     $rul_roles_existing[$rul_value] = '';
@@ -650,7 +689,7 @@ if (is_admin()) {
                     $rul_levelvalues .= '            <tr>' . "\n";
                     $rul_levelvalues .= '                <td><p><input type="checkbox" name="rul_level[' . $i_level . ']" value="' . $rul_value . '" checked="checked" /> ' . $rul_value . '</p></td>' . "\n";
                     $rul_levelvalues .= '                <td><p><input type="text" size="2" maxlength="2" name="rul_levelorder[' . $i_level . ']" value="' . $rul_order . '" /></p></td>' . "\n";
-                    $rul_levelvalues .= '                <td><p><input type="text" size="45" maxlength="500" name="rul_leveladdress[' . $i_level . ']" value="' . $rul_url . '" /></p></td>' . "\n";
+                    $rul_levelvalues .= '                <td><p><input type="text" size="90" maxlength="500" name="rul_leveladdress[' . $i_level . ']" value="' . $rul_url . '" /></p></td>' . "\n";
                     $rul_levelvalues .= '            </tr>' . "\n";
 
                     $rul_levels_existing[$rul_value] = '';
@@ -672,6 +711,7 @@ if (is_admin()) {
         <h2>Manage login redirect rules</h2>
         <?php print $rul_process_submit; ?>
         <p>Define different local URLs to which different users, users with specific roles, users with specific levels, and all other users will be redirected.</p>
+        <p>Note that you can use the syntax <strong>[variable]username[/variable]</strong> in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username.</p>
 
         <h3>Specific users</h3>
         <form name="rul_usernameform" action="<?php print '?page=' . basename(__FILE__); ?>" method="post">
@@ -688,7 +728,7 @@ if (is_admin()) {
                 <option value="-1">Select a username</option>
 <?php print rul_returnusernames($rul_usernames_existing); ?>
             </select>
-            <br />URL: <input type="text" size="45" maxlength="500" name="rul_usernameaddress[<?php print $i_user; ?>]" />
+            <br />URL: <input type="text" size="90" maxlength="500" name="rul_usernameaddress[<?php print $i_user; ?>]" />
         </p>
         <p class="submit"><input type="submit" name="rul_usernamesubmit" value="Update" /></p>
         </form>
@@ -708,7 +748,7 @@ if (is_admin()) {
                 <option value="-1">Select a role</option>
 <?php print rul_returnroleoptions($rul_roles_existing); ?>
             </select>
-            <br />URL: <input type="text" size="45" maxlength="500" name="rul_roleaddress[<?php print $i_role; ?>]" />
+            <br />URL: <input type="text" size="90" maxlength="500" name="rul_roleaddress[<?php print $i_role; ?>]" />
         </p>
         <p class="submit"><input type="submit" name="rul_rolesubmit" value="Update" /></p>
         </form> 
@@ -730,14 +770,14 @@ if (is_admin()) {
 <?php print rul_returnleveloptions($rul_levels_existing); ?>
             </select>
             <br />Order: <input type="text" size="2" maxlength="2" name="rul_levelorder[<?php print $i_level; ?>]" />
-            <br />URL: <input type="text" size="45" maxlength="500" name="rul_leveladdress[<?php print $i_level; ?>]" />
+            <br />URL: <input type="text" size="90" maxlength="500" name="rul_leveladdress[<?php print $i_level; ?>]" />
         </p>
         <p class="submit"><input type="submit" name="rul_levelsubmit" value="Update" /></p>
         </form> 
         
         <h3>All other users</h3>
         <form name="rul_allform" action="<?php '?page=' . basename(__FILE__); ?>" method="post">
-        <p>URL: <input type="text" size="45" maxlength="500" name="rul_all" value="<?php print $rul_allvalue; ?>" /></p>
+        <p>URL: <input type="text" size="90" maxlength="500" name="rul_all" value="<?php print $rul_allvalue; ?>" /></p>
         <p class="submit"><input type="submit" name="rul_allsubmit" value="Update" /> <input type="submit" name="rul_allsubmit" value="Delete" /></p>
         </form>
     </div>
