@@ -70,8 +70,8 @@ class rulRedirectFunctionCollection
             // Returns the current user's username (only use this if you know they're logged in)
             case 'username':
             default:
-                global $current_user;
-                return 'pkthree';
+                global $user;
+                return $user->user_login;
                 break;
         }
     }
