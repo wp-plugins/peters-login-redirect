@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
 Author: Peter
-Version: 1.8.0
+Version: 1.8.1
 Change Log:
+2010-05-13  1.8.1: Added proper encoding of username in the redirect URL if the username has spaces.
 2010-03-18  1.8.0: Added the ability to specify a username in the redirect URL for more dynamic URL generation.
 2010-03-04  1.7.3: Minor tweak on settings page for better compatibility with different WordPress URL setups.
 2010-01-11  1.7.2: Plugin now removes its database tables when it is uninstalled, instead of when it is deactivated. This prevents the redirect rules from being deleted when upgrading WordPress automatically.
@@ -71,7 +72,7 @@ class rulRedirectFunctionCollection
             case 'username':
             default:
                 global $user;
-                return $user->user_login;
+                return rawurlencode( $user->user_login );
                 break;
         }
     }
