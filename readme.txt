@@ -3,7 +3,7 @@ Contributors: pkthree
 Donate link: http://www.theblog.ca
 Tags: login, redirect, admin, administration, dashboard, users, authentication
 Requires at least: 2.7
-Tested up to: 2.9
+Tested up to: 3.0
 Stable tag: trunk
 
 Redirect users to different locations after logging in.
