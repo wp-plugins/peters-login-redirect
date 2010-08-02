@@ -81,8 +81,8 @@ class rulRedirectFunctionCollection
             // Returns the current user's username (only use this if you know they're logged in)
             case 'username':
             default:
-                $current_user = wp_get_current_user();
-                return rawurlencode( $current_user->user_login );
+                global $user_login;
+                return rawurlencode( $user_login );
                 break;
         }
     }

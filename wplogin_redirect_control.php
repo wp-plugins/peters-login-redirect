@@ -8,7 +8,7 @@
     {
         print 'Plugin paths not configured correctly.';
     }
-    var_dump( $GLOBALS );
+
     $current_user = wp_get_current_user();
     $redirect_to = admin_url();
     $redirect_url = redirect_wrapper( $redirect_to, '', $current_user );
