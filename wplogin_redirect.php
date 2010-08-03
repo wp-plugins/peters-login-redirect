@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
 Author: Peter
-Version: 1.9.0
+Version: 1.9.1
 Change Log:
+2010-08-03  1.9.1: Bug fix for putting the username in the redirect URL.
 2010-08-02  1.9.0: Added support for a separate redirect controller URL for compatibility with Gigya and similar plugins that bypass the regular WordPress login redirect mechanism. See the $rul_use_redirect_controller setting within this plugin.
 2010-05-13  1.8.1: Added proper encoding of username in the redirect URL if the username has spaces.
 2010-03-18  1.8.0: Added the ability to specify a username in the redirect URL for more dynamic URL generation.
@@ -47,7 +48,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '1.9.0';
+$rul_version = '1.9.1';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -75,26 +76,25 @@ class rulRedirectFunctionCollection
     }
     
     // A generic function to return the value mapped to a particular variable
-    function rul_get_variable( $variable )
+    function rul_get_variable( $variable, $user )
     {
         switch( $variable ) {
             // Returns the current user's username (only use this if you know they're logged in)
             case 'username':
             default:
-                global $user_login;
-                return rawurlencode( $user_login );
+                return rawurlencode( $user->user_login );
                 break;
         }
     }
     
     // Replaces the syntax [variable]variable_name[/variable] with whatever has been mapped to the variable_name in the rul_get_variable function
-    function rul_replace_variable( $string )
+    function rul_replace_variable( $string, $user )
     {
         preg_match_all( "/\[variable\](.*?)\[\/variable\]/is", $string, $out );
 
         foreach( $out[0] as $instance => $full_match )
         {
-            $replaced_variable = rulRedirectFunctionCollection::rul_get_variable( $out[1][ $instance ] );
+            $replaced_variable = rulRedirectFunctionCollection::rul_get_variable( $out[1][ $instance ], $user );
             $string = str_replace( $full_match, $replaced_variable, $string );
         }
 
@@ -157,7 +157,7 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
     
     if ( $rul_user )
     {
-        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_user );
+        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_user, $user );
         return $redirect_to;
     }
 
@@ -170,7 +170,7 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
         foreach ( $rul_roles as $rul_role )
         {
             if ( isset ( $user->{$wpdb->prefix . 'capabilities'}[$rul_role->rul_value] ) ) {
-                $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_role->rul_url );
+                $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_role->rul_url, $user );
                 return $redirect_to;
             }
         }
@@ -186,7 +186,7 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
         {
             if ( rulRedirectFunctionCollection::redirect_current_user_can ( $rul_level->rul_value, $user ) )
             {
-                $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_level->rul_url );
+                $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_level->rul_url, $user );
                 return $redirect_to;
             }
         }
@@ -198,7 +198,7 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
 
     if( $rul_all )
     {
-        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_all );
+        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_all, $user );
         return $redirect_to;
     }
     
