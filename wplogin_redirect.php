@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
 Author: Peter
-Version: 1.9.1
+Version: 1.9.2
 Change Log:
+2010-08-20  1.9.2: Bug fix in code syntax.
 2010-08-03  1.9.1: Bug fix for putting the username in the redirect URL.
 2010-08-02  1.9.0: Added support for a separate redirect controller URL for compatibility with Gigya and similar plugins that bypass the regular WordPress login redirect mechanism. See the $rul_use_redirect_controller setting within this plugin.
 2010-05-13  1.8.1: Added proper encoding of username in the redirect URL if the username has spaces.
@@ -48,7 +49,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '1.9.1';
+$rul_version = '1.9.2';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -242,7 +243,7 @@ if (is_admin()) {
         $rul_returnusernames = '';
         
         // Build the "not in" part of the MySQL query
-        $exclude_users = "'" . implode($exclude, "','") . "'";
+        $exclude_users = "'" . implode( "','", $exclude ) . "'";
         
         $rul_userresults = $wpdb->get_results('SELECT user_login FROM ' . $wpdb->users . ' WHERE user_login NOT IN (' . $exclude_users . ') ORDER BY user_login', ARRAY_N);
         
@@ -384,7 +385,7 @@ if (is_admin()) {
             }
             
             // Prepare the "not in" MySQL code
-            $rul_usernames_notin = "'" . implode($rul_usernames_updated, "','") . "'";            
+            $rul_usernames_notin = "'" . implode( "','", $rul_usernames_updated ) . "'";            
             
             // Delete all username rules in the database that weren't updated (in other words, the user unchecked the box next to it)
             $wpdb->query('DELETE FROM ' . $rul_db_addresses . ' WHERE rul_type = \'user\' AND rul_value NOT IN (' . $rul_usernames_notin . ')');
@@ -461,7 +462,7 @@ if (is_admin()) {
             }
             
             // Built the "not in" MySQL query
-            $rul_roles_notin = "'" . implode($rul_roles_updated, "','") . "'";            
+            $rul_roles_notin = "'" . implode( "','", $rul_roles_updated ) . "'";            
             
             // Delete all role rules in the database that weren't updated (in other words, the user unchecked the box next to it)
             $wpdb->query('DELETE FROM ' . $rul_db_addresses . ' WHERE rul_type = \'role\' AND rul_value NOT IN (' . $rul_roles_notin . ')');
@@ -544,7 +545,7 @@ if (is_admin()) {
             }
             
             // Build the "not in" MySQL code
-            $rul_levels_notin = "'" . implode($rul_levels_updated, "','") . "'";
+            $rul_levels_notin = "'" . implode( "','", $rul_levels_updated ) . "'";
             
             // Delete all level rules in the database that weren't updated (in other words, the user unchecked the box next to it)
             $wpdb->query('DELETE FROM ' . $rul_db_addresses . ' WHERE rul_type = \'level\' AND rul_value NOT IN (' . $rul_levels_notin . ')');
@@ -682,13 +683,17 @@ if (is_admin()) {
         
         $rul_rules = $wpdb->get_results('SELECT rul_type, rul_value, rul_url, rul_order FROM ' . $rul_db_addresses . ' ORDER BY rul_type, rul_order, rul_value', ARRAY_N);
 
+        $rul_usernamevalues = '';
+        $rul_usernames_existing = array();
+        $rul_roles_existing = array();
+        $rul_levels_existing = array();
+        
         if ($rul_rules) {
         
             $i = 0;
-            $i_user = 0; $rul_usernames_existing = array();
-            $i_role = 0; $rul_roles_existing = array();
-            $i_level = 0; $rul_levels_existing = array();
-            $rul_usernamevalues = '';
+            $i_user = 0;
+            $i_role = 0;
+            $i_level = 0;
             
             while ($i < count($rul_rules)) {
 
