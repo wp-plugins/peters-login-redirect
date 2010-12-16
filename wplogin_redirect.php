@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
 Author: Peter
-Version: 1.9.2
+Version: 1.9.3
 Change Log:
+2010-12-15  1.9.3: Made plugin translatable (Thanks Anja!)
 2010-08-20  1.9.2: Bug fix in code syntax.
 2010-08-03  1.9.1: Bug fix for putting the username in the redirect URL.
 2010-08-02  1.9.0: Added support for a separate redirect controller URL for compatibility with Gigya and similar plugins that bypass the regular WordPress login redirect mechanism. See the $rul_use_redirect_controller setting within this plugin.
@@ -43,6 +44,13 @@ $rul_use_redirect_controller = false;
 All other settings are configured in Settings > Login redirects in the WordPress admin panel
 --------------
 */
+
+// Enable translations
+add_action( 'init', 'rul_textdomain' );
+function rul_textdomain()
+{
+	load_plugin_textdomain( 'peterloginrd', PLUGINDIR . '/' . dirname( plugin_basename(__FILE__) ), dirname( plugin_basename(__FILE__) ) );
+}
 
 global $wpdb;
 global $rul_db_addresses;
@@ -219,11 +227,11 @@ function rul_register( $before = '<li>', $after = '</li>', $give_echo = true ) {
     
 	if ( ! is_user_logged_in() ) {
 		if ( get_option('users_can_register') )
-			$link = $before . '<a href="' . site_url('wp-login.php?action=register', 'login') . '">' . __('Register') . '</a>' . $after;
+			$link = $before . '<a href="' . site_url('wp-login.php?action=register', 'login') . '">' . __('Register', 'peterloginrd') . '</a>' . $after;
 		else
 			$link = '';
 	} else {
-        $link = $before . '<a href="' . redirect_to_front_page('', '', $current_user) . '">' . __('Site Admin') . '</a>' . $after;;
+        $link = $before . '<a href="' . redirect_to_front_page('', '', $current_user) . '">' . __('Site Admin', 'peterloginrd') . '</a>' . $after;;
 	}
     
     if ($give_echo) {
@@ -360,8 +368,9 @@ if (is_admin()) {
                 
                     if (!$address) {
                         $rul_submit_success = false;
-                        $rul_process_submit .= '<p><strong>**** ERROR: Non-local or invalid URL submitted for user "' . $username . '" ****</strong></p>' . "\n";
+                        $rul_process_submit .= '<p><strong>****' .__('ERROR: Non-local or invalid URL submitted for user ','peterloginrd')  . $username .  '****</strong></p>' . "\n";
                     }
+                    
                     
                     else {
                         // Update the existing entry or insert a new one
@@ -369,7 +378,7 @@ if (is_admin()) {
                         
                         if (!$rul_update_username) {
                             $rul_submit_success = false;
-                            $rul_process_submit .= '<p><strong>**** ERROR: Unknown error updating user-specific URL for user "' . $username . '" ****</strong></p>' . "\n";
+                            $rul_process_submit .= '<p><strong>****' .__('ERROR: Unknown error updating user-specific URL for user ','peterloginrd') . $username . '****</strong></p>' . "\n";
                         }
                     }
                     
@@ -378,7 +387,7 @@ if (is_admin()) {
                 }
                 elseif ($username != -1) {
                     $rul_submit_success = false;
-                    $rul_process_submit .= '<p><strong>**** ERROR: Non-existent username submitted ****</strong></p>' . "\n";
+                    $rul_process_submit .= '<p><strong>****' .__('ERROR: Non-existent username submitted ','peterloginrd') .'****</strong></p>' . "\n";
                 }
                 
                 ++$rul_username_loop;
@@ -391,7 +400,7 @@ if (is_admin()) {
             $wpdb->query('DELETE FROM ' . $rul_db_addresses . ' WHERE rul_type = \'user\' AND rul_value NOT IN (' . $rul_usernames_notin . ')');
             
             if ($rul_submit_success) {
-                $rul_process_submit .= '<p>Successfully updated user-specific URLs</p>' . "\n";
+                $rul_process_submit .= '<p>'.__('Successfully updated user-specific URLs','peterloginrd').'</p>'. "\n";
             }
         }
 
@@ -437,7 +446,7 @@ if (is_admin()) {
                 
                     if (!$address) {
                         $rul_submit_success = false;
-                        $rul_process_submit .= '<p><strong>**** ERROR: Non-local or invalid URL submitted for role "' . $role . '" ****</strong></p>' . "\n";
+                        $rul_process_submit .= '<p><strong>****' .__('ERROR: Non-local or invalid URL submitted for role ','peterloginrd') . $role . '****</strong></p>' . "\n";
                     }
                     
                     else {
@@ -446,7 +455,7 @@ if (is_admin()) {
                         
                         if (!$rul_update_role) {
                             $rul_submit_success = false;
-                            $rul_process_submit .= '<p><strong>**** ERROR: Unknown error updating role-specific URL for role "' . $role . '" ****</strong></p>' . "\n";
+                            $rul_process_submit .= '<p><strong>****' .__('ERROR: Unknown error updating role-specific URL for role ','peterloginrd') . $role . '****</strong></p>' . "\n";
                         }
                     }
                     
@@ -455,7 +464,7 @@ if (is_admin()) {
                 }
                 elseif ($role != -1) {
                     $rul_submit_success = false;
-                    $rul_process_submit .= '<p><strong>**** ERROR: Non-existent role submitted ****</strong></p>' . "\n";
+                    $rul_process_submit .= '<p><strong>****' .__('ERROR: Non-existent role submitted ','peterloginrd') .'****</strong></p>' . "\n";
                 }
                 
                 ++$rul_role_loop;
@@ -468,7 +477,7 @@ if (is_admin()) {
             $wpdb->query('DELETE FROM ' . $rul_db_addresses . ' WHERE rul_type = \'role\' AND rul_value NOT IN (' . $rul_roles_notin . ')');
             
             if ($rul_submit_success) {
-                $rul_process_submit .= '<p>Successfully updated role-specific URLs</p>' . "\n";
+                $rul_process_submit .= '<p>'.__('Successfully updated role-specific URLs','peterloginrd') .'</p>' . "\n";
             }
         }
 
@@ -520,7 +529,7 @@ if (is_admin()) {
                 
                     if (!$address) {
                         $rul_submit_success = false;
-                        $rul_process_submit .= '<p><strong>**** ERROR: Non-local or invalid URL submitted for level "' . $level . '" ****</strong></p>' . "\n";
+                        $rul_process_submit .= '<p><strong>****' .__('ERROR: Non-local or invalid URL submitted for level ','peterloginrd')  . $level . '****</strong></p>' . "\n";
                     }
                     
                     else {
@@ -529,7 +538,7 @@ if (is_admin()) {
                         
                         if (!$rul_update_level) {
                             $rul_submit_success = false;
-                            $rul_process_submit .= '<p><strong>**** ERROR: Unknown error updating level-specific URL for level "' . $level . '" ****</strong></p>' . "\n";
+                            $rul_process_submit .= '<p><strong>****' .__('ERROR: Unknown error updating level-specific URL for level ','peterloginrd')  . $level . '****</strong></p>' . "\n";
                         }
                     }
                     
@@ -538,7 +547,7 @@ if (is_admin()) {
                 }
                 elseif ($level != -1) {
                     $rul_submit_success = false;
-                    $rul_process_submit .= '<p><strong>**** ERROR: Non-existent level submitted ****</strong></p>' . "\n";
+                    $rul_process_submit .= '<p><strong>****' .__('ERROR: Non-existent level submitted ','peterloginrd') .'****</strong></p>'. "\n";
                 }
                 
                 ++$rul_level_loop;
@@ -551,7 +560,7 @@ if (is_admin()) {
             $wpdb->query('DELETE FROM ' . $rul_db_addresses . ' WHERE rul_type = \'level\' AND rul_value NOT IN (' . $rul_levels_notin . ')');
             
             if ($rul_submit_success) {
-                $rul_process_submit .= '<p>Successfully updated level-specific URLs</p>' . "\n";
+                $rul_process_submit .= '<p>'.__('Successfully updated level-specific URLs','peterloginrd').'</p>'. "\n";
             }
         }
 
@@ -586,10 +595,10 @@ if (is_admin()) {
             );
             
             if ($update === false) {
-                $rul_process_submit .= '<p><strong>**** ERROR: Unknown database problem removing URL for "all other users" ****</strong></p>' . "\n";
+                $rul_process_submit .= '<p><strong>****' .__('ERROR: Unknown database problem removing URL for &#34;all other users&#34; ','peterloginrd') .'****</strong></p>' . "\n";
             }
             else {
-                $rul_process_submit .= '<p>Successfully removed URL for "all other users"</p>';
+                $rul_process_submit .= '<p>'.__('Successfully removed URL for &#34;all other users&#34; ','peterloginrd') .'</p>'. "\n";
             }
         }
         
@@ -597,7 +606,7 @@ if (is_admin()) {
             $address = rul_safe_redirect($address);
 
             if (!$address) {
-                $rul_process_submit .= '<p><strong>**** ERROR: Non-local or invalid URL submitted ****</strong></p>' . "\n";
+                $rul_process_submit .= '<p><strong>****' .__('ERROR: Non-local or invalid URL submitted ','peterloginrd') .'****</strong></p>' . "\n";
             }
             
             else {
@@ -608,10 +617,10 @@ if (is_admin()) {
                 );
 
                 if ($update === false) {
-                    $rul_process_submit .= '<p><strong>**** ERROR: Unknown database problem updating URL for "all other users" ****</strong></p>' . "\n";
+                    $rul_process_submit .= '<p><strong>****' .__('ERROR: Unknown database problem updating URL for &#34;all other users&#34; ','peterloginrd') .'****</strong></p>' . "\n";
                 }
                 else {
-                    $rul_process_submit .= '<p>Successfully updated URL for "all other users"</p>' . "\n";
+                    $rul_process_submit .= '<p>'.__('Successfully updated URL for &#34;all other users&#34;','peterloginrd') .'</p>'. "\n";
                 }
             }
         }
@@ -749,77 +758,77 @@ if (is_admin()) {
         }
 ?>
     <div class="wrap">
-        <h2>Manage login redirect rules</h2>
+        <h2><?php _e('Manage login redirect rules', 'peterloginrd' ); ?></h2>
         <?php print $rul_process_submit; ?>
-        <p>Define different local URLs to which different users, users with specific roles, users with specific levels, and all other users will be redirected.</p>
-        <p>Note that you can use the syntax <strong>[variable]username[/variable]</strong> in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username.</p>
+        <p><?php _e('Define different local URLs to which different users, users with specific roles, users with specific levels, and all other users will be redirected.', 'peterloginrd' ); ?></p>
+        <p><?php _e('Note that you can use the syntax <strong>[variable]username[/variable]</strong> in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the users username.', 'peterloginrd' ); ?></p>
 
-        <h3>Specific users</h3>
+        <h3><?php _e('Specific users', 'peterloginrd' ); ?></h3>
         <form name="rul_usernameform" action="<?php print '?page=' . basename(__FILE__); ?>" method="post">
         <table class="widefat">
             <tr>
-                <th>Username</th>
-                <th>URL</th>
+                <th><?php _e('Username', 'peterloginrd' ); ?></th>
+                <th><?php _e('URL', 'peterloginrd' ); ?></th>
             </tr>
 <?php print $rul_usernamevalues; ?>
             
         </table>
-        <p>Add: 
+        <p><?php _e('Add:', 'peterloginrd' ); ?> 
             <select name="rul_username[<?php print $i_user; ?>]" >
-                <option value="-1">Select a username</option>
+                <option value="-1"><?php _e('Select a username', 'peterloginrd' ); ?></option>
 <?php print rul_returnusernames($rul_usernames_existing); ?>
             </select>
-            <br />URL: <input type="text" size="90" maxlength="500" name="rul_usernameaddress[<?php print $i_user; ?>]" />
+            <br /><?php _e('URL:', 'peterloginrd' ); ?> <input type="text" size="90" maxlength="500" name="rul_usernameaddress[<?php print $i_user; ?>]" />
         </p>
-        <p class="submit"><input type="submit" name="rul_usernamesubmit" value="Update" /></p>
+        <p class="submit"><input type="submit" name="rul_usernamesubmit" value="<?php _e('Update', 'peterloginrd' ); ?>" /></p>
         </form>
             
-        <h3>Specific roles</h3>
+        <h3><?php _e('Specific roles', 'peterloginrd' ); ?></h3>
         <form name="rul_roleform" action="<?php print '?page=' . basename(__FILE__); ?>" method="post">
         <table class="widefat">
             <tr>
-                <th>Role</th>
-                <th>URL</th>
+                <th><?php _e('Role', 'peterloginrd' ); ?></th>
+                <th><?php _e('URL', 'peterloginrd' ); ?></th>
             </tr>
             <?php print $rul_rolevalues; ?>
             
         </table>
-        <p>Add: 
+        <p><?php _e('Add:', 'peterloginrd' ); ?> 
             <select name="rul_role[<?php print $i_role; ?>]" >
-                <option value="-1">Select a role</option>
+                <option value="-1"><?php _e('Select a role', 'peterloginrd' ); ?></option>
 <?php print rul_returnroleoptions($rul_roles_existing); ?>
             </select>
-            <br />URL: <input type="text" size="90" maxlength="500" name="rul_roleaddress[<?php print $i_role; ?>]" />
+            <br /><?php _e('URL:', 'peterloginrd' ); ?>  <input type="text" size="90" maxlength="500" name="rul_roleaddress[<?php print $i_role; ?>]" />
         </p>
-        <p class="submit"><input type="submit" name="rul_rolesubmit" value="Update" /></p>
+        <p class="submit"><input type="submit" name="rul_rolesubmit" value="<?php _e('Update', 'peterloginrd' ); ?>" /></p>
         </form> 
  
-        <h3>Specific levels</h3>
+        <h3><?php _e('Specific levels', 'peterloginrd' ); ?></h3>
         <form name="rul_levelform" action="<?php print '?page=' . basename(__FILE__); ?>" method="post">
         <table class="widefat">
             <tr>
-                <th>Level</th>
-                <th>Order</th>
-                <th>URL</th>
+                <th><?php _e('Level', 'peterloginrd' ); ?></th>
+                <th><?php _e('Order', 'peterloginrd' ); ?></th>
+                <th><?php _e('URL', 'peterloginrd' ); ?></th>
             </tr>
             <?php print $rul_levelvalues; ?>
             
         </table>
-        <p>Add: 
+        <p><?php _e('Add:', 'peterloginrd' ); ?> 
             <select name="rul_level[<?php print $i_level; ?>]" >
-                <option value="-1">Select a level</option>
+                <option value="-1"><?php _e('Select a level', 'peterloginrd' ); ?></option>
 <?php print rul_returnleveloptions($rul_levels_existing); ?>
             </select>
-            <br />Order: <input type="text" size="2" maxlength="2" name="rul_levelorder[<?php print $i_level; ?>]" />
-            <br />URL: <input type="text" size="90" maxlength="500" name="rul_leveladdress[<?php print $i_level; ?>]" />
+            <br /><?php _e('Order:', 'peterloginrd' ); ?> <input type="text" size="2" maxlength="2" name="rul_levelorder[<?php print $i_level; ?>]" />
+            <br /><?php _e('URL:', 'peterloginrd' ); ?> <input type="text" size="90" maxlength="500" name="rul_leveladdress[<?php print $i_level; ?>]" />
         </p>
-        <p class="submit"><input type="submit" name="rul_levelsubmit" value="Update" /></p>
+        <p class="submit"><input type="submit" name="rul_levelsubmit" value="<?php _e('Update', 'peterloginrd' ); ?>" /></p>
         </form> 
         
-        <h3>All other users</h3>
+        <h3><?php _e('All other users', 'peterloginrd' ); ?></h3>
         <form name="rul_allform" action="<?php '?page=' . basename(__FILE__); ?>" method="post">
-        <p>URL: <input type="text" size="90" maxlength="500" name="rul_all" value="<?php print $rul_allvalue; ?>" /></p>
-        <p class="submit"><input type="submit" name="rul_allsubmit" value="Update" /> <input type="submit" name="rul_allsubmit" value="Delete" /></p>
+        <p><?php _e('URL:', 'peterloginrd' ) ?> <input type="text" size="90" maxlength="500" name="rul_all" value="<?php print $rul_allvalue; ?>" /></p>
+        <p class="submit"><input type="submit" name="rul_allsubmit" value="<?php _e('Update', 'peterloginrd' ); ?>" /> <input type="submit" name="rul_allsubmit" value="<?php _e('Delete', 'peterloginrd' ); ?>" /></p>
         </form>
     </div>
 <?php

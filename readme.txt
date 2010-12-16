@@ -3,7 +3,7 @@ Contributors: pkthree
 Donate link: http://www.theblog.ca
 Tags: login, redirect, admin, administration, dashboard, users, authentication
 Requires at least: 2.7
-Tested up to: 3.0
+Tested up to: 3.1
 Stable tag: trunk
 
 Redirect users to different locations after logging in.
@@ -15,6 +15,10 @@ Define a set of redirect rules for specific users, users with specific roles, us
 You can use the syntax **[variable]username[/variable]** in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username.
 
 This plugin also includes a function `rul_register` that acts the same as the `wp_register` function you see in templates (typically producing the Register or Site Admin links in the sidebar), except that it will return the custom defined admin address. `rul_register` takes three parameters: the "before" code (by default "&lt;li&gt;"), the "after" code (by default "&lt;/li&gt;"), and whether to echo or return the result (default is `true` and thus echo).
+
+= Translations =
+
+* nl\_NL translation by Anja of http://werkgroepen.net
 
 == Installation ==
 
@@ -32,6 +36,7 @@ Please visit the plugin page at http://www.theblog.ca/wplogin-redirect with any 
 
 == Changelog ==
 
+* 2010-12-15  1.9.3: Made plugin translatable. (Thanks Anja!)
 * 2010-08-20  1.9.2: Bug fix in code syntax.
 * 2010-08-03  1.9.1: Bug fix for putting the username in the redirect URL.
 * 2010-08-02  1.9.0: Added support for a separate redirect controller URL for compatibility with Gigya and similar plugins that bypass the regular WordPress login redirect mechanism. See the $rul_use_redirect_controller setting within this plugin.
