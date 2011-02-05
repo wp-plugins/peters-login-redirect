@@ -35,8 +35,8 @@ Configuration
 $rul_local_only = 1;
 
 // Set this to true if you're using a plugin such as Gigya that bypasses the regular WordPress redirect process (and only allow one fixed redirect URL)
-// Then, set that plugin to redirect to http://www.yoursite.com/wp-content/plugins/peters-login-redirect/wplogin_redirect_controller.php
-// For more troubleshooting with this setting, make sure the paths are set correctly in wplogin_redirect_controller.php
+// Then, set that plugin to redirect to http://www.yoursite.com/wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php
+// For more troubleshooting with this setting, make sure the paths are set correctly in wplogin_redirect_control.php
 $rul_use_redirect_controller = false;
 
 /*
