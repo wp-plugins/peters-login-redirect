@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Peters'login redirect v1.9.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-15 20:53-0800\n"
+"POT-Creation-Date: 2011-03-04 07:26-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Peter <peter@keung.biz>\n"
 "Language-Team: werkgroepen.net <team@werkgroepen.net>\n"
@@ -15,318 +15,267 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: wplogin_redirect.php:230
-#: wplogin_redirect_new.php:230
-#: ../peters-login-redirect/wplogin_redirect.php:230
-#: ../peters-login-redirect/wplogin_redirect_new.php:230
-#: ../svn/trunk/wplogin_redirect.php:222
+#: wplogin_redirect.php:241
+#: ../peters-login-redirect/wplogin_redirect.php:241
+#: ../trunk/wplogin_redirect.php:241
 msgid "Register"
 msgstr ""
 
-#: wplogin_redirect.php:234
-#: wplogin_redirect_new.php:234
-#: ../peters-login-redirect/wplogin_redirect.php:234
-#: ../peters-login-redirect/wplogin_redirect_new.php:234
-#: ../svn/trunk/wplogin_redirect.php:226
+#: wplogin_redirect.php:245
+#: ../peters-login-redirect/wplogin_redirect.php:245
+#: ../trunk/wplogin_redirect.php:245
 msgid "Site Admin"
 msgstr ""
 
-#: wplogin_redirect.php:371
-#: wplogin_redirect_new.php:371
-#: ../peters-login-redirect/wplogin_redirect.php:371
-#: ../peters-login-redirect/wplogin_redirect_new.php:371
+#: wplogin_redirect.php:382
+#: ../peters-login-redirect/wplogin_redirect.php:382
+#: ../trunk/wplogin_redirect.php:382
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr ""
 
-#: wplogin_redirect.php:381
-#: wplogin_redirect_new.php:381
-#: ../peters-login-redirect/wplogin_redirect.php:381
-#: ../peters-login-redirect/wplogin_redirect_new.php:381
+#: wplogin_redirect.php:392
+#: ../peters-login-redirect/wplogin_redirect.php:392
+#: ../trunk/wplogin_redirect.php:392
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr ""
 
-#: wplogin_redirect.php:390
-#: wplogin_redirect_new.php:390
-#: ../peters-login-redirect/wplogin_redirect.php:390
-#: ../peters-login-redirect/wplogin_redirect_new.php:390
+#: wplogin_redirect.php:401
+#: ../peters-login-redirect/wplogin_redirect.php:401
+#: ../trunk/wplogin_redirect.php:401
 msgid "ERROR: Non-existent username submitted "
 msgstr ""
 
-#: wplogin_redirect.php:403
-#: wplogin_redirect_new.php:403
-#: ../peters-login-redirect/wplogin_redirect.php:403
-#: ../peters-login-redirect/wplogin_redirect_new.php:403
+#: wplogin_redirect.php:414
+#: ../peters-login-redirect/wplogin_redirect.php:414
+#: ../trunk/wplogin_redirect.php:414
 msgid "Successfully updated user-specific URLs"
 msgstr ""
 
-#: wplogin_redirect.php:449
-#: wplogin_redirect_new.php:449
-#: ../peters-login-redirect/wplogin_redirect.php:449
-#: ../peters-login-redirect/wplogin_redirect_new.php:449
+#: wplogin_redirect.php:460
+#: ../peters-login-redirect/wplogin_redirect.php:460
+#: ../trunk/wplogin_redirect.php:460
 msgid "ERROR: Non-local or invalid URL submitted for role "
 msgstr ""
 
-#: wplogin_redirect.php:458
-#: wplogin_redirect_new.php:458
-#: ../peters-login-redirect/wplogin_redirect.php:458
-#: ../peters-login-redirect/wplogin_redirect_new.php:458
+#: wplogin_redirect.php:469
+#: ../peters-login-redirect/wplogin_redirect.php:469
+#: ../trunk/wplogin_redirect.php:469
 msgid "ERROR: Unknown error updating role-specific URL for role "
 msgstr ""
 
-#: wplogin_redirect.php:467
-#: wplogin_redirect_new.php:467
-#: ../peters-login-redirect/wplogin_redirect.php:467
-#: ../peters-login-redirect/wplogin_redirect_new.php:467
+#: wplogin_redirect.php:478
+#: ../peters-login-redirect/wplogin_redirect.php:478
+#: ../trunk/wplogin_redirect.php:478
 msgid "ERROR: Non-existent role submitted "
 msgstr ""
 
-#: wplogin_redirect.php:480
-#: wplogin_redirect_new.php:480
-#: ../peters-login-redirect/wplogin_redirect.php:480
-#: ../peters-login-redirect/wplogin_redirect_new.php:480
+#: wplogin_redirect.php:491
+#: ../peters-login-redirect/wplogin_redirect.php:491
+#: ../trunk/wplogin_redirect.php:491
 msgid "Successfully updated role-specific URLs"
 msgstr ""
 
-#: wplogin_redirect.php:532
-#: wplogin_redirect_new.php:532
-#: ../peters-login-redirect/wplogin_redirect.php:532
-#: ../peters-login-redirect/wplogin_redirect_new.php:532
+#: wplogin_redirect.php:543
+#: ../peters-login-redirect/wplogin_redirect.php:543
+#: ../trunk/wplogin_redirect.php:543
 msgid "ERROR: Non-local or invalid URL submitted for level "
 msgstr ""
 
-#: wplogin_redirect.php:541
-#: wplogin_redirect_new.php:541
-#: ../peters-login-redirect/wplogin_redirect.php:541
-#: ../peters-login-redirect/wplogin_redirect_new.php:541
+#: wplogin_redirect.php:552
+#: ../peters-login-redirect/wplogin_redirect.php:552
+#: ../trunk/wplogin_redirect.php:552
 msgid "ERROR: Unknown error updating level-specific URL for level "
 msgstr ""
 
-#: wplogin_redirect.php:550
-#: wplogin_redirect_new.php:550
-#: ../peters-login-redirect/wplogin_redirect.php:550
-#: ../peters-login-redirect/wplogin_redirect_new.php:550
+#: wplogin_redirect.php:561
+#: ../peters-login-redirect/wplogin_redirect.php:561
+#: ../trunk/wplogin_redirect.php:561
 msgid "ERROR: Non-existent level submitted "
 msgstr ""
 
-#: wplogin_redirect.php:563
-#: wplogin_redirect_new.php:563
-#: ../peters-login-redirect/wplogin_redirect.php:563
-#: ../peters-login-redirect/wplogin_redirect_new.php:563
+#: wplogin_redirect.php:574
+#: ../peters-login-redirect/wplogin_redirect.php:574
+#: ../trunk/wplogin_redirect.php:574
 msgid "Successfully updated level-specific URLs"
 msgstr ""
 
-#: wplogin_redirect.php:598
-#: wplogin_redirect_new.php:598
-#: ../peters-login-redirect/wplogin_redirect.php:598
-#: ../peters-login-redirect/wplogin_redirect_new.php:598
+#: wplogin_redirect.php:609
+#: ../peters-login-redirect/wplogin_redirect.php:609
+#: ../trunk/wplogin_redirect.php:609
 msgid "ERROR: Unknown database problem removing URL for &#34;all other users&#34; "
 msgstr ""
 
-#: wplogin_redirect.php:601
-#: wplogin_redirect_new.php:601
-#: ../peters-login-redirect/wplogin_redirect.php:601
-#: ../peters-login-redirect/wplogin_redirect_new.php:601
+#: wplogin_redirect.php:612
+#: ../peters-login-redirect/wplogin_redirect.php:612
+#: ../trunk/wplogin_redirect.php:612
 msgid "Successfully removed URL for &#34;all other users&#34; "
 msgstr ""
 
-#: wplogin_redirect.php:609
-#: wplogin_redirect_new.php:609
-#: ../peters-login-redirect/wplogin_redirect.php:609
-#: ../peters-login-redirect/wplogin_redirect_new.php:609
+#: wplogin_redirect.php:620
+#: ../peters-login-redirect/wplogin_redirect.php:620
+#: ../trunk/wplogin_redirect.php:620
 msgid "ERROR: Non-local or invalid URL submitted "
 msgstr ""
 
-#: wplogin_redirect.php:620
-#: wplogin_redirect_new.php:620
-#: ../peters-login-redirect/wplogin_redirect.php:620
-#: ../peters-login-redirect/wplogin_redirect_new.php:620
+#: wplogin_redirect.php:631
+#: ../peters-login-redirect/wplogin_redirect.php:631
+#: ../trunk/wplogin_redirect.php:631
 msgid "ERROR: Unknown database problem updating URL for &#34;all other users&#34; "
 msgstr ""
 
-#: wplogin_redirect.php:623
-#: wplogin_redirect_new.php:623
-#: ../peters-login-redirect/wplogin_redirect.php:623
-#: ../peters-login-redirect/wplogin_redirect_new.php:623
+#: wplogin_redirect.php:634
+#: ../peters-login-redirect/wplogin_redirect.php:634
+#: ../trunk/wplogin_redirect.php:634
 msgid "Successfully updated URL for &#34;all other users&#34;"
 msgstr ""
 
-#: wplogin_redirect.php:761
-#: wplogin_redirect_new.php:761
-#: ../peters-login-redirect/wplogin_redirect.php:761
-#: ../peters-login-redirect/wplogin_redirect_new.php:761
+#: wplogin_redirect.php:772
+#: ../peters-login-redirect/wplogin_redirect.php:772
+#: ../trunk/wplogin_redirect.php:772
 msgid "Manage login redirect rules"
 msgstr ""
 
-#: wplogin_redirect.php:763
-#: wplogin_redirect_new.php:763
-#: ../peters-login-redirect/wplogin_redirect.php:763
-#: ../peters-login-redirect/wplogin_redirect_new.php:763
+#: wplogin_redirect.php:774
+#: ../peters-login-redirect/wplogin_redirect.php:774
+#: ../trunk/wplogin_redirect.php:774
 msgid "Define different local URLs to which different users, users with specific roles, users with specific levels, and all other users will be redirected."
 msgstr ""
 
-#: wplogin_redirect.php:764
-#: wplogin_redirect_new.php:764
-#: ../peters-login-redirect/wplogin_redirect.php:764
-#: ../peters-login-redirect/wplogin_redirect_new.php:764
+#: wplogin_redirect.php:775
+#: ../peters-login-redirect/wplogin_redirect.php:775
+#: ../trunk/wplogin_redirect.php:775
 msgid "Note that you can use the syntax <strong>[variable]username[/variable]</strong> in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the users username."
 msgstr ""
 
-#: wplogin_redirect.php:766
-#: wplogin_redirect_new.php:766
-#: ../peters-login-redirect/wplogin_redirect.php:766
-#: ../peters-login-redirect/wplogin_redirect_new.php:766
+#: wplogin_redirect.php:777
+#: ../peters-login-redirect/wplogin_redirect.php:777
+#: ../trunk/wplogin_redirect.php:777
 msgid "Specific users"
 msgstr ""
 
-#: wplogin_redirect.php:770
-#: wplogin_redirect_new.php:770
-#: ../peters-login-redirect/wplogin_redirect.php:770
-#: ../peters-login-redirect/wplogin_redirect_new.php:770
+#: wplogin_redirect.php:781
+#: ../peters-login-redirect/wplogin_redirect.php:781
+#: ../trunk/wplogin_redirect.php:781
 msgid "Username"
 msgstr ""
 
-#: wplogin_redirect.php:771
-#: wplogin_redirect.php:791
-#: wplogin_redirect.php:812
-#: wplogin_redirect_new.php:771
-#: wplogin_redirect_new.php:791
-#: wplogin_redirect_new.php:812
-#: ../peters-login-redirect/wplogin_redirect.php:771
-#: ../peters-login-redirect/wplogin_redirect.php:791
-#: ../peters-login-redirect/wplogin_redirect.php:812
-#: ../peters-login-redirect/wplogin_redirect_new.php:771
-#: ../peters-login-redirect/wplogin_redirect_new.php:791
-#: ../peters-login-redirect/wplogin_redirect_new.php:812
+#: wplogin_redirect.php:782
+#: wplogin_redirect.php:802
+#: wplogin_redirect.php:823
+#: ../peters-login-redirect/wplogin_redirect.php:782
+#: ../peters-login-redirect/wplogin_redirect.php:802
+#: ../peters-login-redirect/wplogin_redirect.php:823
+#: ../trunk/wplogin_redirect.php:782
+#: ../trunk/wplogin_redirect.php:802
+#: ../trunk/wplogin_redirect.php:823
 msgid "URL"
 msgstr ""
 
-#: wplogin_redirect.php:776
-#: wplogin_redirect.php:796
-#: wplogin_redirect.php:817
-#: wplogin_redirect_new.php:776
-#: wplogin_redirect_new.php:796
-#: wplogin_redirect_new.php:817
-#: ../peters-login-redirect/wplogin_redirect.php:776
-#: ../peters-login-redirect/wplogin_redirect.php:796
-#: ../peters-login-redirect/wplogin_redirect.php:817
-#: ../peters-login-redirect/wplogin_redirect_new.php:776
-#: ../peters-login-redirect/wplogin_redirect_new.php:796
-#: ../peters-login-redirect/wplogin_redirect_new.php:817
+#: wplogin_redirect.php:787
+#: wplogin_redirect.php:807
+#: wplogin_redirect.php:828
+#: ../peters-login-redirect/wplogin_redirect.php:787
+#: ../peters-login-redirect/wplogin_redirect.php:807
+#: ../peters-login-redirect/wplogin_redirect.php:828
+#: ../trunk/wplogin_redirect.php:787
+#: ../trunk/wplogin_redirect.php:807
+#: ../trunk/wplogin_redirect.php:828
 msgid "Add:"
 msgstr ""
 
-#: wplogin_redirect.php:778
-#: wplogin_redirect_new.php:778
-#: ../peters-login-redirect/wplogin_redirect.php:778
-#: ../peters-login-redirect/wplogin_redirect_new.php:778
+#: wplogin_redirect.php:789
+#: ../peters-login-redirect/wplogin_redirect.php:789
+#: ../trunk/wplogin_redirect.php:789
 msgid "Select a username"
 msgstr ""
 
-#: wplogin_redirect.php:781
-#: wplogin_redirect.php:801
-#: wplogin_redirect.php:823
-#: wplogin_redirect.php:830
-#: wplogin_redirect_new.php:781
-#: wplogin_redirect_new.php:801
-#: wplogin_redirect_new.php:823
-#: wplogin_redirect_new.php:830
-#: ../peters-login-redirect/wplogin_redirect.php:781
-#: ../peters-login-redirect/wplogin_redirect.php:801
-#: ../peters-login-redirect/wplogin_redirect.php:823
-#: ../peters-login-redirect/wplogin_redirect.php:830
-#: ../peters-login-redirect/wplogin_redirect_new.php:781
-#: ../peters-login-redirect/wplogin_redirect_new.php:801
-#: ../peters-login-redirect/wplogin_redirect_new.php:823
-#: ../peters-login-redirect/wplogin_redirect_new.php:830
+#: wplogin_redirect.php:792
+#: wplogin_redirect.php:812
+#: wplogin_redirect.php:834
+#: wplogin_redirect.php:841
+#: ../peters-login-redirect/wplogin_redirect.php:792
+#: ../peters-login-redirect/wplogin_redirect.php:812
+#: ../peters-login-redirect/wplogin_redirect.php:834
+#: ../peters-login-redirect/wplogin_redirect.php:841
+#: ../trunk/wplogin_redirect.php:792
+#: ../trunk/wplogin_redirect.php:812
+#: ../trunk/wplogin_redirect.php:834
+#: ../trunk/wplogin_redirect.php:841
 msgid "URL:"
 msgstr ""
 
-#: wplogin_redirect.php:783
-#: wplogin_redirect.php:803
-#: wplogin_redirect.php:825
-#: wplogin_redirect.php:831
-#: wplogin_redirect_new.php:783
-#: wplogin_redirect_new.php:803
-#: wplogin_redirect_new.php:825
-#: wplogin_redirect_new.php:831
-#: ../peters-login-redirect/wplogin_redirect.php:783
-#: ../peters-login-redirect/wplogin_redirect.php:803
-#: ../peters-login-redirect/wplogin_redirect.php:825
-#: ../peters-login-redirect/wplogin_redirect.php:831
-#: ../peters-login-redirect/wplogin_redirect_new.php:783
-#: ../peters-login-redirect/wplogin_redirect_new.php:803
-#: ../peters-login-redirect/wplogin_redirect_new.php:825
-#: ../peters-login-redirect/wplogin_redirect_new.php:831
+#: wplogin_redirect.php:794
+#: wplogin_redirect.php:814
+#: wplogin_redirect.php:836
+#: wplogin_redirect.php:842
+#: ../peters-login-redirect/wplogin_redirect.php:794
+#: ../peters-login-redirect/wplogin_redirect.php:814
+#: ../peters-login-redirect/wplogin_redirect.php:836
+#: ../peters-login-redirect/wplogin_redirect.php:842
+#: ../trunk/wplogin_redirect.php:794
+#: ../trunk/wplogin_redirect.php:814
+#: ../trunk/wplogin_redirect.php:836
+#: ../trunk/wplogin_redirect.php:842
 msgid "Update"
 msgstr ""
 
-#: wplogin_redirect.php:786
-#: wplogin_redirect_new.php:786
-#: ../peters-login-redirect/wplogin_redirect.php:786
-#: ../peters-login-redirect/wplogin_redirect_new.php:786
+#: wplogin_redirect.php:797
+#: ../peters-login-redirect/wplogin_redirect.php:797
+#: ../trunk/wplogin_redirect.php:797
 msgid "Specific roles"
 msgstr ""
 
-#: wplogin_redirect.php:790
-#: wplogin_redirect_new.php:790
-#: ../peters-login-redirect/wplogin_redirect.php:790
-#: ../peters-login-redirect/wplogin_redirect_new.php:790
+#: wplogin_redirect.php:801
+#: ../peters-login-redirect/wplogin_redirect.php:801
+#: ../trunk/wplogin_redirect.php:801
 msgid "Role"
 msgstr ""
 
-#: wplogin_redirect.php:798
-#: wplogin_redirect_new.php:798
-#: ../peters-login-redirect/wplogin_redirect.php:798
-#: ../peters-login-redirect/wplogin_redirect_new.php:798
+#: wplogin_redirect.php:809
+#: ../peters-login-redirect/wplogin_redirect.php:809
+#: ../trunk/wplogin_redirect.php:809
 msgid "Select a role"
 msgstr ""
 
-#: wplogin_redirect.php:806
-#: wplogin_redirect_new.php:806
-#: ../peters-login-redirect/wplogin_redirect.php:806
-#: ../peters-login-redirect/wplogin_redirect_new.php:806
+#: wplogin_redirect.php:817
+#: ../peters-login-redirect/wplogin_redirect.php:817
+#: ../trunk/wplogin_redirect.php:817
 msgid "Specific levels"
 msgstr ""
 
-#: wplogin_redirect.php:810
-#: wplogin_redirect_new.php:810
-#: ../peters-login-redirect/wplogin_redirect.php:810
-#: ../peters-login-redirect/wplogin_redirect_new.php:810
+#: wplogin_redirect.php:821
+#: ../peters-login-redirect/wplogin_redirect.php:821
+#: ../trunk/wplogin_redirect.php:821
 msgid "Level"
 msgstr ""
 
-#: wplogin_redirect.php:811
-#: wplogin_redirect_new.php:811
-#: ../peters-login-redirect/wplogin_redirect.php:811
-#: ../peters-login-redirect/wplogin_redirect_new.php:811
+#: wplogin_redirect.php:822
+#: ../peters-login-redirect/wplogin_redirect.php:822
+#: ../trunk/wplogin_redirect.php:822
 msgid "Order"
 msgstr ""
 
-#: wplogin_redirect.php:819
-#: wplogin_redirect_new.php:819
-#: ../peters-login-redirect/wplogin_redirect.php:819
-#: ../peters-login-redirect/wplogin_redirect_new.php:819
+#: wplogin_redirect.php:830
+#: ../peters-login-redirect/wplogin_redirect.php:830
+#: ../trunk/wplogin_redirect.php:830
 msgid "Select a level"
 msgstr ""
 
-#: wplogin_redirect.php:822
-#: wplogin_redirect_new.php:822
-#: ../peters-login-redirect/wplogin_redirect.php:822
-#: ../peters-login-redirect/wplogin_redirect_new.php:822
+#: wplogin_redirect.php:833
+#: ../peters-login-redirect/wplogin_redirect.php:833
+#: ../trunk/wplogin_redirect.php:833
 msgid "Order:"
 msgstr ""
 
-#: wplogin_redirect.php:828
-#: wplogin_redirect_new.php:828
-#: ../peters-login-redirect/wplogin_redirect.php:828
-#: ../peters-login-redirect/wplogin_redirect_new.php:828
+#: wplogin_redirect.php:839
+#: ../peters-login-redirect/wplogin_redirect.php:839
+#: ../trunk/wplogin_redirect.php:839
 msgid "All other users"
 msgstr ""
 
-#: wplogin_redirect.php:831
-#: wplogin_redirect_new.php:831
-#: ../peters-login-redirect/wplogin_redirect.php:831
-#: ../peters-login-redirect/wplogin_redirect_new.php:831
+#: wplogin_redirect.php:842
+#: ../peters-login-redirect/wplogin_redirect.php:842
+#: ../trunk/wplogin_redirect.php:842
 msgid "Delete"
 msgstr ""
 
