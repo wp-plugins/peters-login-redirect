@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
 Author: Peter
-Version: 1.9.3
+Version: 2.0.0
 Change Log:
+2011-03-03  2.0.0: Added option to allow a redirect_to POST or GET variable to take precedence over this plugin's rules.
 2010-12-15  1.9.3: Made plugin translatable (Thanks Anja!)
 2010-08-20  1.9.2: Bug fix in code syntax.
 2010-08-03  1.9.1: Bug fix for putting the username in the redirect URL.
@@ -34,6 +35,9 @@ Configuration
 // Setting this to true will make it so that you can only redirect to a local URL (one on the same domain)
 $rul_local_only = 1;
 
+// Allow a POST or GET "redirect_to" variable to take precedence over settings within the plugin
+$rul_allow_post_redirect_override = false;
+
 // Set this to true if you're using a plugin such as Gigya that bypasses the regular WordPress redirect process (and only allow one fixed redirect URL)
 // Then, set that plugin to redirect to http://www.yoursite.com/wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php
 // For more troubleshooting with this setting, make sure the paths are set correctly in wplogin_redirect_control.php
@@ -57,7 +61,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '1.9.2';
+$rul_version = '2.0.0';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -129,7 +133,7 @@ class rulRedirectFunctionCollection
 
 // This function wraps around the main redirect function to determine whether or not to bypass the WordPress local URL limitation
 function redirect_wrapper( $redirect_to, $requested_redirect_to, $user ) {
-    global $rul_local_only;
+    global $rul_local_only, $rul_allow_post_redirect_override;
 
     // If they're on the login page, don't do anything
     if( !isset( $user->user_login ) )
@@ -137,21 +141,28 @@ function redirect_wrapper( $redirect_to, $requested_redirect_to, $user ) {
         return $redirect_to;
     }
 
-    $rul_url = redirect_to_front_page( $redirect_to, $requested_redirect_to, $user );
+    if( ( admin_url() == $redirect_to && $rul_allow_post_redirect_override ) || !$rul_allow_post_redirect_override )
+    {
+        $rul_url = redirect_to_front_page( $redirect_to, $requested_redirect_to, $user );
 
-    if( 1 == $rul_local_only )
-    {
-        rulRedirectFunctionCollection::rul_trigger_allowed_host( $rul_url );
-        return $rul_url;
-    }
-    elseif( 2 == $rul_local_only )
-    {
-        wp_redirect( $rul_url );
-        die();
+        if( 1 == $rul_local_only )
+        {
+            rulRedirectFunctionCollection::rul_trigger_allowed_host( $rul_url );
+            return $rul_url;
+        }
+        elseif( 2 == $rul_local_only )
+        {
+            wp_redirect( $rul_url );
+            die();
+        }
+        else
+        {
+            return $rul_url;
+        }
     }
     else
     {
-        return $rul_url;
+        return $redirect_to;
     }
 }
 
