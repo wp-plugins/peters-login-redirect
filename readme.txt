@@ -22,7 +22,7 @@ This plugin also includes a function `rul_register` that acts the same as the `w
 
 * nl\_NL translation by Anja of http://werkgroepen.net
 * sk\_SK translation by Michal Miksik of http://moonpixel.com/michal-miksik/
-* ro\_RO translation by Anunturi Jibo
+* ro\_RO translation by Anunturi Jibo of http://www.jibo.ro
 
 == Installation ==
 
