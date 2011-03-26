@@ -40,6 +40,9 @@ Please visit the plugin page at http://www.theblog.ca/wplogin-redirect with any 
 
 == Changelog ==
 
+= 2.0.0 =
+* 2011-03-03: Added option to allow a redirect_to POST or GET variable to take precedence over this plugin's rules.
+
 = 1.9.3 =
 * 2010-12-15: Made plugin translatable. (Thanks Anja!)
 
