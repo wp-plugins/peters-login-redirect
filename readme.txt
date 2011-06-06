@@ -16,6 +16,8 @@ You can use the syntax **[variable]username[/variable]** in your URLs so that th
 
 If you're using a plugin such as Gigya that bypasses the regular WordPress redirect process (and only allows one fixed redirect URL), set that plugin to redirect to wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php and set the $rul_use_redirect_controller setting to "true" in the main plugin file.
 
+You can add your own code logic before and between any of the plugin's normal redirect checks if needed. See Other Notes / How to Extend for documentation.
+
 This plugin also includes a function `rul_register` that acts the same as the `wp_register` function you see in templates (typically producing the Register or Site Admin links in the sidebar), except that it will return the custom defined admin address. `rul_register` takes three parameters: the "before" code (by default "&lt;li&gt;"), the "after" code (by default "&lt;/li&gt;"), and whether to echo or return the result (default is `true` and thus echo).
 
 = Translations =
@@ -80,7 +82,7 @@ add_filter( 'rul_before_user', 'redirectByIP', 10, 4 );`
 == Changelog ==
 
 = 2.1.0 =
-* 2011-06-06: Added hooks to facilitate adding your own extensions to the plugin. See "How to Extend" for documentation.
+* 2011-06-06: Added hooks to facilitate adding your own extensions to the plugin. See Other Notes / How to Extend for documentation.
 
 = 2.0.0 =
 * 2011-03-03: Added option to allow a redirect_to POST or GET variable to take precedence over this plugin's rules.
