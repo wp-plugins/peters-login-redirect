@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
 Author: Peter
-Version: 2.0.0
+Version: 2.1.0
 Change Log:
+2011-06-06  2.1.0: Added hooks to facilitate adding your own extensions to the plugin. See readme.txt for documentation.
 2011-03-03  2.0.0: Added option to allow a redirect_to POST or GET variable to take precedence over this plugin's rules.
 2010-12-15  1.9.3: Made plugin translatable (Thanks Anja!)
 2010-08-20  1.9.2: Bug fix in code syntax.
@@ -168,8 +169,18 @@ function redirect_wrapper( $redirect_to, $requested_redirect_to, $user ) {
 
 // This function sets the URL to redirect to
 
-function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
+function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user )
+{
     global $wpdb, $rul_db_addresses;
+    
+    // Check for an extended custom redirect rule
+    $rul_custom_redirect = apply_filters( 'rul_before_user', false, $redirect_to, $requested_redirect_to, $user );
+
+    if( $rul_custom_redirect )
+    {
+        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_custom_redirect, $user );
+        return $redirect_to;
+    }
 
     // Check for a redirect rule for this user
     $rul_user = $wpdb->get_var('SELECT rul_url FROM ' . $rul_db_addresses . 
@@ -181,11 +192,19 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
         return $redirect_to;
     }
 
+    // Check for an extended custom redirect rule
+    $rul_custom_redirect = apply_filters( 'rul_before_role', false, $redirect_to, $requested_redirect_to, $user );
+    if( $rul_custom_redirect )
+    {
+        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_custom_redirect, $user );
+        return $redirect_to;
+    }
+
     // Check for a redirect rule that matches this user's role
     $rul_roles = $wpdb->get_results('SELECT rul_value, rul_url FROM ' . $rul_db_addresses . 
         ' WHERE rul_type = \'role\'', OBJECT);
         
-    if ( $rul_roles )
+    if( $rul_roles )
     {
         foreach ( $rul_roles as $rul_role )
         {
@@ -196,11 +215,19 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
         }
     }
 
+    // Check for an extended custom redirect rule
+    $rul_custom_redirect = apply_filters( 'rul_before_capability', false, $redirect_to, $requested_redirect_to, $user );
+    if( $rul_custom_redirect )
+    {
+        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_custom_redirect, $user );
+        return $redirect_to;
+    }
+
     // Check for a redirect rule that matches this user's capability
     $rul_levels = $wpdb->get_results('SELECT rul_value, rul_url FROM ' . $rul_db_addresses . 
         ' WHERE rul_type = \'level\' ORDER BY rul_order, rul_value', OBJECT);
         
-    if ( $rul_levels )
+    if( $rul_levels )
     {
         foreach ( $rul_levels as $rul_level )
         {
@@ -210,6 +237,14 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user ) {
                 return $redirect_to;
             }
         }
+    }
+
+    // Check for an extended custom redirect rule
+    $rul_custom_redirect = apply_filters( 'rul_before_fallback', false, $redirect_to, $requested_redirect_to, $user );
+    if( $rul_custom_redirect )
+    {
+        $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_custom_redirect, $user );
+        return $redirect_to;
     }
     
     // If none of the above matched, look for a rule to apply to all users    

@@ -16,7 +16,6 @@ msgstr ""
 "X-Poedit-Country: ROMANIA\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPath-1: ..\n"
 
 #: wplogin_redirect.php:241
 #: ../peters-login-redirect/wplogin_redirect.php:241

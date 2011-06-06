@@ -3,7 +3,7 @@ Contributors: pkthree
 Donate link: http://www.theblog.ca
 Tags: login, redirect, admin, administration, dashboard, users, authentication
 Requires at least: 2.7
-Tested up to: 3.1
+Tested up to: 3.2
 Stable tag: trunk
 
 Redirect users to different locations after logging in.
@@ -40,7 +40,47 @@ Redirect rules are configured in the Settings > Login redirects admin menu.
 
 Please visit the plugin page at http://www.theblog.ca/wplogin-redirect with any questions.
 
+== How to Extend ==
+
+You can write your own code logic before any of this plugin's checks for user-specific, role-specific, and capability-specific redirects, as well as before the fallback redirect URL.
+
+Available filters are:
+
+* rul_before_user
+* rul_before_role
+* rul_before_capability
+* rul_before_fallback
+
+Each takes the same 4 parameters:
+
+* $empty: This is simply set as false in case you don't have any redirect URL to set.
+* $redirect_to: Set by WordPress, usually the admin URL.
+* $requested_redirect_to: Set by WordPress, usually an override set in a GET parameter.
+* $user: A PHP object representing the current user.
+
+Your return value in your own code logic should be the URL to redirect to, or FALSE to continue the plugin's normal checks.
+
+An example of plugin code to redirect to a specific URL for only a specific IP range as the first redirect check:
+
+`function redirectByIP( $empty, $redirect_to, $requested_redirect_to, $user )
+{
+    $ip_check = '192.168.0';
+    if( 0 === strpos( $_SERVER['REMOTE_ADDR'], $ip_check ) )
+    {
+        return '/secret_area';
+    }
+    else
+    {
+        return false;
+    }
+}
+
+add_filter( 'rul_before_user', 'redirectByIP', 10, 4 );`
+
 == Changelog ==
+
+= 2.1.0 =
+* 2011-06-06: Added hooks to facilitate adding your own extensions to the plugin. See "How to Extend" for documentation.
 
 = 2.0.0 =
 * 2011-03-03: Added option to allow a redirect_to POST or GET variable to take precedence over this plugin's rules.
