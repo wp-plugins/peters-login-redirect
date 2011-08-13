@@ -81,6 +81,9 @@ add_filter( 'rul_before_user', 'redirectByIP', 10, 4 );`
 
 == Changelog ==
 
+= 2.1.1 =
+* 2011-08-13: Minor code cleanup. Note: users now need "manage_links" permissions to edit redirect settings by default.
+
 = 2.1.0 =
 * 2011-06-06: Added hooks to facilitate adding your own extensions to the plugin. See Other Notes / How to Extend for documentation.
 

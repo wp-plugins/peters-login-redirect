@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
 Author: Peter
-Version: 2.1.0
+Version: 2.1.1
 Change Log:
+2011-08-13  2.1.1: Minor code cleanup. Note: users now need "manage_links" permissions to edit redirect settings by default.
 2011-06-06  2.1.0: Added hooks to facilitate adding your own extensions to the plugin. See readme.txt for documentation.
 2011-03-03  2.0.0: Added option to allow a redirect_to POST or GET variable to take precedence over this plugin's rules.
 2010-12-15  1.9.3: Made plugin translatable (Thanks Anja!)
@@ -44,6 +45,11 @@ $rul_allow_post_redirect_override = false;
 // For more troubleshooting with this setting, make sure the paths are set correctly in wplogin_redirect_control.php
 $rul_use_redirect_controller = false;
 
+// To edit the redirect settings in the WordPress admin panel, users need this capability
+// Typically editors and up have "manage_links" capabilities
+// See http://codex.wordpress.org/Roles_and_Capabilities for more information about out of the box capabilities
+$rul_required_capability = 'manage_links';
+
 /*
 --------------
 All other settings are configured in Settings > Login redirects in the WordPress admin panel
@@ -62,7 +68,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.1.0';
+$rul_version = '2.1.1';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -718,18 +724,24 @@ if (is_admin()) {
     function rul_optionsmenu() {
         global $wpdb, $rul_db_addresses;
         
+        $rul_process_submit = '';
+        
         // Process submitted information to update redirect rules
-        if ($_POST['rul_usernamesubmit']) {    
-            $rul_process_submit = rul_submit_username($_POST['rul_username'], $_POST['rul_usernameaddress']);
+        if( isset( $_POST['rul_usernamesubmit'] ) )
+        {
+            $rul_process_submit = rul_submit_username( $_POST['rul_username'], $_POST['rul_usernameaddress'] );
         }
-        elseif ($_POST['rul_rolesubmit']) {
-            $rul_process_submit = rul_submit_role($_POST['rul_role'], $_POST['rul_roleaddress']);
+        elseif( isset( $_POST['rul_rolesubmit'] ) )
+        {
+            $rul_process_submit = rul_submit_role( $_POST['rul_role'], $_POST['rul_roleaddress'] );
         }
-        elseif ($_POST['rul_levelsubmit']) {
-            $rul_process_submit = rul_submit_level($_POST['rul_level'], $_POST['rul_levelorder'], $_POST['rul_leveladdress']);
+        elseif( isset( $_POST['rul_levelsubmit'] ) )
+        {
+            $rul_process_submit = rul_submit_level( $_POST['rul_level'], $_POST['rul_levelorder'], $_POST['rul_leveladdress'] );
         }
-        elseif ($_POST['rul_allsubmit']) {
-            $rul_process_submit = rul_submit_all($_POST['rul_allsubmit'], $_POST['rul_all']);
+        elseif( isset( $_POST['rul_allsubmit'] ) )
+        {
+            $rul_process_submit = rul_submit_all( $_POST['rul_allsubmit'], $_POST['rul_all'] );
         }
         
         // -----------------------------------
@@ -739,6 +751,8 @@ if (is_admin()) {
         $rul_rules = $wpdb->get_results('SELECT rul_type, rul_value, rul_url, rul_order FROM ' . $rul_db_addresses . ' ORDER BY rul_type, rul_order, rul_value', ARRAY_N);
 
         $rul_usernamevalues = '';
+        $rul_rolevalues = '';
+        $rul_levelvalues = '';
         $rul_usernames_existing = array();
         $rul_roles_existing = array();
         $rul_levels_existing = array();
@@ -882,48 +896,54 @@ if (is_admin()) {
     
     // Add and remove database tables when installing and uninstalling
 
-    function rul_install () {
-    global $wpdb, $rul_db_addresses, $rul_version;
-    
-    // Add the table to hold group information and moderator rules
-    if($wpdb->get_var('SHOW TABLES LIKE \'' . $rul_db_addresses . '\'') != $rul_db_addresses) {
-        $sql = 'CREATE TABLE ' . $rul_db_addresses . ' (
-        `rul_type` enum(\'user\',\'role\',\'level\',\'all\') NOT NULL,
-        `rul_value` varchar(255) NOT NULL default \'\',
-        `rul_url` longtext NOT NULL,
-        `rul_order` int(2) NOT NULL default \'0\',
-        UNIQUE KEY `rul_type` (`rul_type`,`rul_value`)
-        )';
-
-        $wpdb->query($sql);
+    function rul_install()
+    {
+        global $wpdb, $rul_db_addresses, $rul_version;
         
-        // Insert the "all" redirect entry
-        $wpdb->insert($rul_db_addresses,
-            array('rul_type' => 'all')
-        );
+        // Add the table to hold group information and moderator rules
+        if( $rul_db_addresses != $wpdb->get_var('SHOW TABLES LIKE \'' . $rul_db_addresses . '\'') )
+        {
+            $sql = 'CREATE TABLE ' . $rul_db_addresses . ' (
+            `rul_type` enum(\'user\',\'role\',\'level\',\'all\') NOT NULL,
+            `rul_value` varchar(255) NOT NULL default \'\',
+            `rul_url` longtext NOT NULL,
+            `rul_order` int(2) NOT NULL default \'0\',
+            UNIQUE KEY `rul_type` (`rul_type`,`rul_value`)
+            )';
 
-        // Set the version number in the database
-        add_option( 'rul_version', $rul_version, '', 'no' );
-    }
-}
+            $wpdb->query($sql);
+            
+            // Insert the "all" redirect entry
+            $wpdb->insert($rul_db_addresses,
+                array('rul_type' => 'all')
+            );
 
-function rul_uninstall () {
-    global $wpdb, $rul_db_addresses;
-    
-    // Remove the table we created
-    if($wpdb->get_var('SHOW TABLES LIKE \'' . $rul_db_addresses . '\'') == $rul_db_addresses) {
-        $sql = 'DROP TABLE ' . $rul_db_addresses;
-		$wpdb->query($sql);
-    }
-    
-    delete_option( 'rul_version' );
-}
-
-    function rul_addoptionsmenu() {
-    	add_options_page('Login redirects', 'Login redirects', 7, 'wplogin_redirect.php', 'rul_optionsmenu');
+            // Set the version number in the database
+            add_option( 'rul_version', $rul_version, '', 'no' );
+        }
     }
 
-    add_action('admin_menu','rul_addoptionsmenu',1);
+    function rul_uninstall()
+    {
+        global $wpdb, $rul_db_addresses;
+        
+        // Remove the table we created
+        if( $rul_db_addresses == $wpdb->get_var('SHOW TABLES LIKE \'' . $rul_db_addresses . '\'') )
+        {
+            $sql = 'DROP TABLE ' . $rul_db_addresses;
+            $wpdb->query($sql);
+        }
+        
+        delete_option( 'rul_version' );
+    }
+
+    function rul_addoptionsmenu()
+    {
+        global $rul_required_capability;
+    	add_options_page( 'Login redirects', 'Login redirects', $rul_required_capability, 'wplogin_redirect.php', 'rul_optionsmenu' );
+    }
+
+    add_action( 'admin_menu','rul_addoptionsmenu',1 );
 }
 
 register_activation_hook( __FILE__, 'rul_install' );
