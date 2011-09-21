@@ -1,20 +1,20 @@
-﻿=== Plugin Name ===
+=== Plugin Name ===
 Contributors: pkthree
 Donate link: http://www.theblog.ca
-Tags: login, redirect, admin, administration, dashboard, users, authentication
+Tags: login, logout, redirect, admin, administration, dashboard, users, authentication
 Requires at least: 2.7
 Tested up to: 3.2
 Stable tag: trunk
 
-Redirect users to different locations after logging in.
+Redirect users to different locations after logging in and logging out.
 
 == Description ==
 
-Define a set of redirect rules for specific users, users with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
+Define a set of redirect rules for specific users, users with specific roles, users with specific capabilities, and a blanket rule for all other users (logout redirects in this plugin support only this blanket rule). This is all managed in Settings > Login/logout redirects.
 
 You can use the syntax **[variable]username[/variable]** in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username.
 
-If you're using a plugin such as Gigya that bypasses the regular WordPress redirect process (and only allows one fixed redirect URL), set that plugin to redirect to wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php and set the $rul_use_redirect_controller setting to "true" in the main plugin file.
+If you're using a plugin such as Gigya that bypasses the regular WordPress login redirect process (and only allows one fixed redirect URL), set that plugin to redirect to wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php and set the $rul_use_redirect_controller setting to "true" in the main plugin file.
 
 You can add your own code logic before and between any of the plugin's normal redirect checks if needed. See Other Notes / How to Extend for documentation.
 
@@ -32,7 +32,7 @@ This plugin also includes a function `rul_register` that acts the same as the `w
 
 Unzip wplogin\_redirect.php to your WordPress plugins folder.
 
-Redirect rules are configured in the Settings > Login redirects admin menu.
+Redirect rules are configured in the Settings > Login/logout redirects admin menu.
 
 == Screenshots ==
 
@@ -79,7 +79,20 @@ An example of plugin code to redirect to a specific URL for only a specific IP r
 
 add_filter( 'rul_before_user', 'redirectByIP', 10, 4 );`
 
+Note that the same extensibility is available for logout redirects with this filter:
+
+* rul_before_fallback_logout
+
+It takes 3 parameters:
+
+* $empty: This is simply set as false in case you don't have any redirect URL to set.
+* $requested_redirect_to: A redirect parameter set via POST or GET.
+* $user: A PHP object representing the current user.
+
 == Changelog ==
+
+= 2.2.0 =
+* 2011-09-21: Support basic custom logout redirect URL for all users only. Future versions will have the same framework for logout redirects as for login redirects.
 
 = 2.1.1 =
 * 2011-08-13: Minor code cleanup. Note: users now need "manage_links" permissions to edit redirect settings by default.

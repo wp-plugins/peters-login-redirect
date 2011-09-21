@@ -2,10 +2,11 @@
 /*
 Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
-Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login redirects.
+Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter
-Version: 2.1.1
+Version: 2.2.0
 Change Log:
+2011-09-21  2.2.0: Support basic custom logout redirect URL for all users only. Future versions will have the same framework for logout redirects as for login redirects.
 2011-08-13  2.1.1: Minor code cleanup. Note: users now need "manage_links" permissions to edit redirect settings by default.
 2011-06-06  2.1.0: Added hooks to facilitate adding your own extensions to the plugin. See readme.txt for documentation.
 2011-03-03  2.0.0: Added option to allow a redirect_to POST or GET variable to take precedence over this plugin's rules.
@@ -32,13 +33,16 @@ Configuration
 */
 
 
-// Setting this to 1 will make it so that you can redirect to any valid http or https URL, even outside of your current domain
-// Setting this to 2 will make it so that you can redirect to any URL you want (include crazy ones like data:), essentially bypassing the WordPress functions wp_sanitize_redirect() and wp_validate_redirect()
-// Setting this to true will make it so that you can only redirect to a local URL (one on the same domain)
+// Setting this to 1 will make it so that you can redirect (login and logout) to any valid http or https URL, even outside of your current domain
+// Setting this to 2 will make it so that you can redirect (login and logout) to any URL you want (include crazy ones like data:), essentially bypassing the WordPress functions wp_sanitize_redirect() and wp_validate_redirect()
+// Setting this to true will make it so that you can only redirect (login and logout) to a local URL (one on the same domain)
 $rul_local_only = 1;
 
 // Allow a POST or GET "redirect_to" variable to take precedence over settings within the plugin
 $rul_allow_post_redirect_override = false;
+
+// Allow a POST or GET logout "redirect_to" variable to take precedence over settings within the plugin
+$rul_allow_post_redirect_override_logout = false;
 
 // Set this to true if you're using a plugin such as Gigya that bypasses the regular WordPress redirect process (and only allow one fixed redirect URL)
 // Then, set that plugin to redirect to http://www.yoursite.com/wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php
@@ -52,7 +56,7 @@ $rul_required_capability = 'manage_links';
 
 /*
 --------------
-All other settings are configured in Settings > Login redirects in the WordPress admin panel
+All other settings are configured in Settings > Login/logout redirects in the WordPress admin panel
 --------------
 */
 
@@ -68,7 +72,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.1.1';
+$rul_version = '2.2.0';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -138,6 +142,140 @@ class rulRedirectFunctionCollection
     }
 }
 
+// Functions specific to logout redirecting
+class rulLogoutFunctionCollection
+{
+    function logout_redirect()
+    {
+        global $rul_allow_post_redirect_override_logout, $rul_local_only;
+
+        $requested_redirect_to = !empty( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : false;
+        if( is_user_logged_in() && ( !$requested_redirect_to || !$rul_allow_post_redirect_override_logout ) )
+        {
+            $current_user = wp_get_current_user();
+            $rul_url = rulLogoutFunctionCollection::get_redirect_url( $current_user, $requested_redirect_to );
+
+            if( $rul_url )
+            {
+                if( 1 === $rul_local_only )
+                {
+                    rulRedirectFunctionCollection::rul_trigger_allowed_host( $rul_url );
+                    wp_safe_redirect( $rul_url );
+                    die();
+                }
+                elseif( 2 === $rul_local_only )
+                {
+                    wp_redirect( $rul_url );
+                    die();
+                }
+                else
+                {
+                    wp_safe_redirect( $rul_url );
+                    die();
+                }
+            }
+        }
+        return false;
+    }
+    // Get the logout redirect URL according to defined rules
+    // Functionality for user-, role-, and capability-specific redirect rules is available
+    // Note that only the "all other users" redirect URL is currently implemented in the UI
+    function get_redirect_url( $user, $requested_redirect_to )
+    {
+        global $wpdb, $rul_db_addresses;
+        
+        $redirect_to = false;
+        
+        // Check for an extended custom redirect rule
+        $rul_custom_redirect = apply_filters( 'rul_before_user_logout', false, $requested_redirect_to, $user );
+
+        if( $rul_custom_redirect )
+        {
+            $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_custom_redirect, $requested_redirect_to, $user );
+            return $redirect_to;
+        }
+
+        // Check for a redirect rule for this user
+        $rul_user = $wpdb->get_var('SELECT rul_url_logout FROM ' . $rul_db_addresses . 
+            ' WHERE rul_type = \'user\' AND rul_value = \'' . $user->user_login . '\' LIMIT 1');
+        
+        if ( $rul_user )
+        {
+            $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_user, $user );
+            return $redirect_to;
+        }
+
+        // Check for an extended custom redirect rule
+        $rul_custom_redirect = apply_filters( 'rul_before_role_logout', false, $requested_redirect_to, $user );
+        if( $rul_custom_redirect )
+        {
+            $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_custom_redirect, $user );
+            return $redirect_to;
+        }
+
+        // Check for a redirect rule that matches this user's role
+        $rul_roles = $wpdb->get_results('SELECT rul_value, rul_url_logout FROM ' . $rul_db_addresses . 
+            ' WHERE rul_type = \'role\'', OBJECT);
+            
+        if( $rul_roles )
+        {
+            foreach( $rul_roles as $rul_role )
+            {
+                if( '' != $rul_role->rul_url_logout && isset( $user->{$wpdb->prefix . 'capabilities'}[$rul_role->rul_value] ) )
+                {
+                    $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_role->rul_url_logout, $user );
+                    return $redirect_to;
+                }
+            }
+        }
+
+        // Check for an extended custom redirect rule
+        $rul_custom_redirect = apply_filters( 'rul_before_capability_logout', false, $requested_redirect_to, $user );
+        if( $rul_custom_redirect )
+        {
+            $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_custom_redirect, $user );
+            return $redirect_to;
+        }
+
+        // Check for a redirect rule that matches this user's capability
+        $rul_levels = $wpdb->get_results( 'SELECT rul_value, rul_url_logout FROM ' . $rul_db_addresses . 
+            ' WHERE rul_type = \'level\' ORDER BY rul_order, rul_value', OBJECT );
+            
+        if( $rul_levels )
+        {
+            foreach( $rul_levels as $rul_level )
+            {
+                if( '' != $rul_level->rul_url_logout && rulRedirectFunctionCollection::redirect_current_user_can( $rul_level->rul_value, $user ) )
+                {
+                    $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_level->rul_url_logout, $user );
+                    return $redirect_to;
+                }
+            }
+        }
+
+        // Check for an extended custom redirect rule
+        $rul_custom_redirect = apply_filters( 'rul_before_fallback_logout', false, $requested_redirect_to, $user );
+        if( $rul_custom_redirect )
+        {
+            $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_custom_redirect, $user );
+            return $redirect_to;
+        }
+        
+        // If none of the above matched, look for a rule to apply to all users
+        $rul_all = $wpdb->get_var('SELECT rul_url_logout FROM ' . $rul_db_addresses . 
+            ' WHERE rul_type = \'all\' LIMIT 1');
+
+        if( $rul_all )
+        {
+            $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_all, $user );
+            return $redirect_to;
+        }
+        
+        // No rules matched or existed, so just send them to the WordPress admin panel as usual
+        return $redirect_to;
+    }
+}
+
 // This function wraps around the main redirect function to determine whether or not to bypass the WordPress local URL limitation
 function redirect_wrapper( $redirect_to, $requested_redirect_to, $user ) {
     global $rul_local_only, $rul_allow_post_redirect_override;
@@ -152,12 +290,12 @@ function redirect_wrapper( $redirect_to, $requested_redirect_to, $user ) {
     {
         $rul_url = redirect_to_front_page( $redirect_to, $requested_redirect_to, $user );
 
-        if( 1 == $rul_local_only )
+        if( 1 === $rul_local_only )
         {
             rulRedirectFunctionCollection::rul_trigger_allowed_host( $rul_url );
             return $rul_url;
         }
-        elseif( 2 == $rul_local_only )
+        elseif( 2 === $rul_local_only )
         {
             wp_redirect( $rul_url );
             die();
@@ -212,9 +350,10 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user )
         
     if( $rul_roles )
     {
-        foreach ( $rul_roles as $rul_role )
+        foreach( $rul_roles as $rul_role )
         {
-            if ( isset ( $user->{$wpdb->prefix . 'capabilities'}[$rul_role->rul_value] ) ) {
+            if( '' != $rul_role->rul_url && isset( $user->{$wpdb->prefix . 'capabilities'}[$rul_role->rul_value] ) )
+            {
                 $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_role->rul_url, $user );
                 return $redirect_to;
             }
@@ -235,9 +374,9 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user )
         
     if( $rul_levels )
     {
-        foreach ( $rul_levels as $rul_level )
+        foreach( $rul_levels as $rul_level )
         {
-            if ( rulRedirectFunctionCollection::redirect_current_user_can ( $rul_level->rul_value, $user ) )
+            if( '' != $rul_level->rul_url && rulRedirectFunctionCollection::redirect_current_user_can ( $rul_level->rul_value, $user ) )
             {
                 $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_level->rul_url, $user );
                 return $redirect_to;
@@ -253,7 +392,7 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user )
         return $redirect_to;
     }
     
-    // If none of the above matched, look for a rule to apply to all users    
+    // If none of the above matched, look for a rule to apply to all users
     $rul_all = $wpdb->get_var('SELECT rul_url FROM ' . $rul_db_addresses . 
         ' WHERE rul_type = \'all\' LIMIT 1');
 
@@ -623,27 +762,30 @@ if (is_admin()) {
         return $rul_process_submit;
     }
     
-    function rul_submit_all($update_or_delete, $address) {
+    function rul_submit_all( $update_or_delete, $address, $address_logout )
+    {
         global $wpdb, $rul_db_addresses;
         
-        $rul_whitespace = '        ';
+        $address = trim( $address );
+        $address_logout = trim( $address_logout );
 
         // Open the informational div
         $rul_process_submit = '<div id="message" class="updated fade">' . "\n";
         
         // Code for closing the informational div
-        $rul_process_close = $rul_whitespace . '</div>' . "\n";
+        $rul_process_close = '</div>' . "\n";
         
         // ----------------------------------
         // Process the rule changes
         // ----------------------------------
         
         // Since we never actually, remove the "all" entry, here we just make its value empty
-        if($update_or_delete == 'Delete' || $address == '') {
+        if( $update_or_delete == 'Delete' )
+        {
             $update = $wpdb->update (
                 $rul_db_addresses,
-                array ('rul_url' => '' ),
-                array ('rul_type' => 'all')
+                array( 'rul_url' => '', 'rul_url_logout' => '' ),
+                array( 'rul_type' => 'all' )
             );
             
             if ($update === false) {
@@ -654,24 +796,30 @@ if (is_admin()) {
             }
         }
         
-        elseif($update_or_delete == 'Update') {
-            $address = rul_safe_redirect($address);
-
-            if (!$address) {
+        elseif( $update_or_delete == 'Update' )
+        {
+            $address = rul_safe_redirect( $address );
+            $address_logout = rul_safe_redirect( $address_logout );
+            
+            if( ( '' != $address && !$address ) || ( '' != $address_logout && !$address_logout ) )
+            {
                 $rul_process_submit .= '<p><strong>****' .__('ERROR: Non-local or invalid URL submitted ','peterloginrd') .'****</strong></p>' . "\n";
             }
             
-            else {
-                $update = $wpdb->update (
+            else
+            {
+                $update = $wpdb->update(
                     $rul_db_addresses,
-                    array ('rul_url' => $address ),
-                    array ('rul_type' => 'all')
+                    array( 'rul_url' => $address, 'rul_url_logout' => $address_logout ),
+                    array( 'rul_type' => 'all' )
                 );
 
-                if ($update === false) {
+                if( $update === false )
+                {
                     $rul_process_submit .= '<p><strong>****' .__('ERROR: Unknown database problem updating URL for &#34;all other users&#34; ','peterloginrd') .'****</strong></p>' . "\n";
                 }
-                else {
+                else
+                {
                     $rul_process_submit .= '<p>'.__('Successfully updated URL for &#34;all other users&#34;','peterloginrd') .'</p>'. "\n";
                 }
             }
@@ -720,10 +868,13 @@ if (is_admin()) {
         }
     }
     
-    // This is the Settings > Login redirects menu
+    // This is the Settings > Login/logout redirects menu
     function rul_optionsmenu() {
         global $wpdb, $rul_db_addresses;
-        
+
+        // Upgrade check here because it's the only place we know they will visit
+        rul_upgrade();
+
         $rul_process_submit = '';
         
         // Process submitted information to update redirect rules
@@ -741,14 +892,14 @@ if (is_admin()) {
         }
         elseif( isset( $_POST['rul_allsubmit'] ) )
         {
-            $rul_process_submit = rul_submit_all( $_POST['rul_allsubmit'], $_POST['rul_all'] );
+            $rul_process_submit = rul_submit_all( $_POST['rul_allsubmit'], $_POST['rul_all'], $_POST['rul_all_logout'] );
         }
         
         // -----------------------------------
         // Get the existing rules
         // -----------------------------------
         
-        $rul_rules = $wpdb->get_results('SELECT rul_type, rul_value, rul_url, rul_order FROM ' . $rul_db_addresses . ' ORDER BY rul_type, rul_order, rul_value', ARRAY_N);
+        $rul_rules = $wpdb->get_results('SELECT rul_type, rul_value, rul_url, rul_url_logout, rul_order FROM ' . $rul_db_addresses . ' ORDER BY rul_type, rul_order, rul_value', ARRAY_N);
 
         $rul_usernamevalues = '';
         $rul_rolevalues = '';
@@ -757,7 +908,8 @@ if (is_admin()) {
         $rul_roles_existing = array();
         $rul_levels_existing = array();
         
-        if ($rul_rules) {
+        if( $rul_rules )
+        {
         
             $i = 0;
             $i_user = 0;
@@ -766,11 +918,11 @@ if (is_admin()) {
             
             while ($i < count($rul_rules)) {
 
-                list($rul_type, $rul_value, $rul_url, $rul_order) = $rul_rules[$i];
+                list($rul_type, $rul_value, $rul_url, $rul_url_logout, $rul_order) = $rul_rules[$i];
 
                 // Specific users
-                if ($rul_type == 'user') {
-
+                if( $rul_type == 'user' )
+                {
                     $rul_usernamevalues .= '            <tr>' . "\n";
                     $rul_usernamevalues .= '                <td><p><input type="checkbox" name="rul_username[' . $i_user . ']" value="' . $rul_value . '" checked="checked" /> ' . $rul_value . '</p></td>' . "\n";
                     $rul_usernamevalues .= '                <td><p><input type="text" size="90" maxlength="500" name="rul_usernameaddress[' . $i_user . ']" value="' . $rul_url . '" /></p></td>' . "\n";
@@ -782,7 +934,8 @@ if (is_admin()) {
                     ++$i;
                 }
                 
-                elseif ($rul_type == 'role') {
+                elseif( $rul_type == 'role' )
+                {
                 
                     $rul_rolevalues .= '            <tr>' . "\n";
                     $rul_rolevalues .= '                <td><p><input type="checkbox" name="rul_role[' . $i_role . ']" value="' . $rul_value . '" checked="checked" /> ' . $rul_value . '</p></td>' . "\n";
@@ -795,7 +948,8 @@ if (is_admin()) {
                     ++$i;
                     
                 }
-                elseif ($rul_type == 'level') {
+                elseif( $rul_type == 'level' )
+                {
                     $rul_levelvalues .= '            <tr>' . "\n";
                     $rul_levelvalues .= '                <td><p><input type="checkbox" name="rul_level[' . $i_level . ']" value="' . $rul_value . '" checked="checked" /> ' . $rul_value . '</p></td>' . "\n";
                     $rul_levelvalues .= '                <td><p><input type="text" size="2" maxlength="2" name="rul_levelorder[' . $i_level . ']" value="' . $rul_order . '" /></p></td>' . "\n";
@@ -806,21 +960,22 @@ if (is_admin()) {
                     
                     ++$i_level;
                     ++$i;
-                    
                 }
-                elseif ($rul_type == 'all') {
+                elseif( $rul_type == 'all' )
+                {
                     $rul_allvalue = $rul_url;
+                    $rul_allvalue_logout = $rul_url_logout;
                     ++$i;
-                    
                 }
             }
 
         }
 ?>
     <div class="wrap">
-        <h2><?php _e('Manage login redirect rules', 'peterloginrd' ); ?></h2>
+        <h2><?php _e('Manage redirect rules', 'peterloginrd' ); ?></h2>
         <?php print $rul_process_submit; ?>
-        <p><?php _e('Define different local URLs to which different users, users with specific roles, users with specific levels, and all other users will be redirected.', 'peterloginrd' ); ?></p>
+        <p><?php _e('Define custom URLs to which different users, users with specific roles, users with specific levels, and all other users will be redirected upon login.', 'peterloginrd' ); ?></p>
+        <p><?php _e('Define a custom URL to which all users will be redirected upon logout', 'peterloginrd' ); ?></p>
         <p><?php _e('Note that you can use the syntax <strong>[variable]username[/variable]</strong> in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the users username.', 'peterloginrd' ); ?></p>
 
         <h3><?php _e('Specific users', 'peterloginrd' ); ?></h3>
@@ -888,6 +1043,7 @@ if (is_admin()) {
         <h3><?php _e('All other users', 'peterloginrd' ); ?></h3>
         <form name="rul_allform" action="<?php '?page=' . basename(__FILE__); ?>" method="post">
         <p><?php _e('URL:', 'peterloginrd' ) ?> <input type="text" size="90" maxlength="500" name="rul_all" value="<?php print $rul_allvalue; ?>" /></p>
+                <p><?php _e('Logout URL:', 'peterloginrd' ) ?> <input type="text" size="90" maxlength="500" name="rul_all_logout" value="<?php print $rul_allvalue_logout; ?>" /></p>
         <p class="submit"><input type="submit" name="rul_allsubmit" value="<?php _e('Update', 'peterloginrd' ); ?>" /> <input type="submit" name="rul_allsubmit" value="<?php _e('Delete', 'peterloginrd' ); ?>" /></p>
         </form>
     </div>
@@ -896,6 +1052,27 @@ if (is_admin()) {
     
     // Add and remove database tables when installing and uninstalling
 
+    // Perform upgrade functions
+    // Some newer operations are duplicated from rul_install() as there's no guarantee that the user will follow a specific upgrade procedure
+    function rul_upgrade()
+    {
+        global $wpdb, $rul_version, $rul_db_addresses;
+
+        // Turn version into an integer for comparisons
+        $current_version = intval( str_replace( '.', '', get_option( 'rul_version' ) ) );
+
+        if( $current_version < 220 )
+        {
+            $wpdb->query( 'ALTER TABLE `' . $rul_db_addresses . '` ADD `rul_url_logout` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL AFTER `rul_url`' );
+        }
+        
+        if( $current_version != intval( str_replace( '.', '', $rul_version ) ) )
+        {
+            // Add the version number to the database
+            delete_option( 'rul_version' );
+            add_option( 'rul_version', $rul_version, '', 'no' );
+        }
+    }
     function rul_install()
     {
         global $wpdb, $rul_db_addresses, $rul_version;
@@ -921,6 +1098,8 @@ if (is_admin()) {
             // Set the version number in the database
             add_option( 'rul_version', $rul_version, '', 'no' );
         }
+        
+        rul_upgrade();
     }
 
     function rul_uninstall()
@@ -940,10 +1119,10 @@ if (is_admin()) {
     function rul_addoptionsmenu()
     {
         global $rul_required_capability;
-    	add_options_page( 'Login redirects', 'Login redirects', $rul_required_capability, 'wplogin_redirect.php', 'rul_optionsmenu' );
+    	add_options_page( 'Login/logout redirects', 'Login/logout redirects', $rul_required_capability, 'wplogin_redirect.php', 'rul_optionsmenu' );
     }
 
-    add_action( 'admin_menu','rul_addoptionsmenu',1 );
+    add_action( 'admin_menu', 'rul_addoptionsmenu', 1 );
 }
 
 register_activation_hook( __FILE__, 'rul_install' );
@@ -952,4 +1131,5 @@ if( !$rul_use_redirect_controller )
 {
     add_filter('login_redirect', 'redirect_wrapper', 10, 3);
 }
+add_action( 'wp_logout', array( 'rulLogoutFunctionCollection', 'logout_redirect' ), 10 );
 ?>
