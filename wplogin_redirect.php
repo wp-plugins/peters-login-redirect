@@ -1063,7 +1063,7 @@ if (is_admin()) {
 
         if( $current_version < 220 )
         {
-            $wpdb->query( 'ALTER TABLE `' . $rul_db_addresses . '` ADD `rul_url_logout` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL AFTER `rul_url`' );
+            $wpdb->query( 'ALTER TABLE `' . $rul_db_addresses . '` ADD `rul_url_logout` LONGTEXT NOT NULL AFTER `rul_url`' );
         }
         
         if( $current_version != intval( str_replace( '.', '', $rul_version ) ) )
@@ -1083,7 +1083,8 @@ if (is_admin()) {
             $sql = 'CREATE TABLE ' . $rul_db_addresses . ' (
             `rul_type` enum(\'user\',\'role\',\'level\',\'all\') NOT NULL,
             `rul_value` varchar(255) NOT NULL default \'\',
-            `rul_url` longtext NOT NULL,
+            `rul_url` LONGTEXT NOT NULL,
+            `rul_url_logout` LONGTEXT NOT NULL,
             `rul_order` int(2) NOT NULL default \'0\',
             UNIQUE KEY `rul_type` (`rul_type`,`rul_value`)
             )';
