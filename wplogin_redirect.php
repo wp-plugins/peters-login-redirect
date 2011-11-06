@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter
-Version: 2.2.0
+Version: 2.3.0
 Change Log:
+2011-11-06  2.3.0: Added support for URL variable "siteurl" and "homeurl". Also added filter to support custom replacement variables in the URL. See readme.txt for documentation.
 2011-09-21  2.2.0: Support basic custom logout redirect URL for all users only. Future versions will have the same framework for logout redirects as for login redirects.
 2011-08-13  2.1.1: Minor code cleanup. Note: users now need "manage_links" permissions to edit redirect settings by default.
 2011-06-06  2.1.0: Added hooks to facilitate adding your own extensions to the plugin. See readme.txt for documentation.
@@ -35,7 +36,7 @@ Configuration
 
 // Setting this to 1 will make it so that you can redirect (login and logout) to any valid http or https URL, even outside of your current domain
 // Setting this to 2 will make it so that you can redirect (login and logout) to any URL you want (include crazy ones like data:), essentially bypassing the WordPress functions wp_sanitize_redirect() and wp_validate_redirect()
-// Setting this to true will make it so that you can only redirect (login and logout) to a local URL (one on the same domain)
+// Setting this to true will make it so that you can only redirect (login and logout) to a local URL (one on the same domain). If you make use of the siteurl or homeurl custom variables, do not set this to true
 $rul_local_only = 1;
 
 // Allow a POST or GET "redirect_to" variable to take precedence over settings within the plugin
@@ -72,7 +73,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.2.0';
+$rul_version = '2.3.0';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -102,13 +103,29 @@ class rulRedirectFunctionCollection
     // A generic function to return the value mapped to a particular variable
     function rul_get_variable( $variable, $user )
     {
-        switch( $variable ) {
-            // Returns the current user's username (only use this if you know they're logged in)
-            case 'username':
-            default:
-                return rawurlencode( $user->user_login );
-                break;
+        $variable_value = apply_filters( 'rul_replace_variable', false, $variable, $user );
+        if( !$variable_value )
+        {
+            switch( $variable )
+            {
+                // Returns the current user's username (only use this if you know they're logged in)
+                case 'username':
+                    $variable_value = rawurlencode( $user->user_login );
+                    break;
+                // Returns the URL of the WordPress files; see http://codex.wordpress.org/Function_Reference/network_site_url
+                case 'siteurl':
+                    $variable_value = network_site_url();
+                    break;
+                // Returns the URL of the site, possibly different from where the WordPress files are; see http://codex.wordpress.org/Function_Reference/network_home_url
+                case 'homeurl':
+                    $variable_value = network_home_url();
+                    break;
+                default:
+                    $variable_value = '';
+                    break;
+            }
         }
+        return $variable_value;
     }
     
     // Replaces the syntax [variable]variable_name[/variable] with whatever has been mapped to the variable_name in the rul_get_variable function

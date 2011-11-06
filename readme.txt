@@ -12,7 +12,7 @@ Redirect users to different locations after logging in and logging out.
 
 Define a set of redirect rules for specific users, users with specific roles, users with specific capabilities, and a blanket rule for all other users (logout redirects in this plugin support only this blanket rule). This is all managed in Settings > Login/logout redirects.
 
-You can use the syntax **[variable]username[/variable]** in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username.
+You can use the syntax **[variable]username[/variable]** in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username. In addition to username, there is "homeurl" and "siteurl", and you can also add your own custom URL "variables". See Other Notes / How to Extend for documentation.
 
 If you're using a plugin such as Gigya that bypasses the regular WordPress login redirect process (and only allows one fixed redirect URL), set that plugin to redirect to wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php and set the $rul_use_redirect_controller setting to "true" in the main plugin file.
 
@@ -43,6 +43,8 @@ Redirect rules are configured in the Settings > Login/logout redirects admin men
 Please visit the plugin page at http://www.theblog.ca/wplogin-redirect with any questions.
 
 == How to Extend ==
+
+= Custom redirect rules =
 
 You can write your own code logic before any of this plugin's checks for user-specific, role-specific, and capability-specific redirects, as well as before the fallback redirect URL.
 
@@ -89,7 +91,30 @@ It takes 3 parameters:
 * $requested_redirect_to: A redirect parameter set via POST or GET.
 * $user: A PHP object representing the current user.
 
+= Custom variable parameters =
+
+There is an available filter "rul_replace_variable" for adding your own custom variable names. For example, to replace **[variable]month[/variable]** in the redirect URL with the numeric representation of the current month (with leading zeros):
+
+`function customRULVariableMonth( $empty, $variable, $user )
+{
+    if( 'month' == $variable )
+    {
+        return date( 'm' );
+    }
+    else
+    {
+        return false;
+    }
+}
+
+add_filter( 'rul_replace_variable', 'customRULVariableMonth', 10, 3 );`
+
+Be sure to rawurlencode the returned variable if necessary.
+
 == Changelog ==
+
+= 2.3.0 =
+* 2011-11-06: Added support for URL variable "siteurl" and "homeurl". Also added filter to support custom replacement variables in the URL. See Other Notes / How to Extend for documentation.
 
 = 2.2.0 =
 * 2011-09-21: Support basic custom logout redirect URL for all users only. Future versions will have the same framework for logout redirects as for login redirects.
