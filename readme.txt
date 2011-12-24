@@ -3,7 +3,7 @@ Contributors: pkthree
 Donate link: http://www.theblog.ca
 Tags: login, logout, redirect, admin, administration, dashboard, users, authentication
 Requires at least: 2.7
-Tested up to: 3.2
+Tested up to: 3.3
 Stable tag: trunk
 
 Redirect users to different locations after logging in and logging out.
@@ -57,16 +57,78 @@ Available filters are:
 
 Each takes the same 4 parameters:
 
-* $empty: This is simply set as false in case you don't have any redirect URL to set.
+* $custom_redirect_to: This is set as false in case you don't have any redirect URL to set. Return this instead of false in case you have multiple filters running.
 * $redirect_to: Set by WordPress, usually the admin URL.
 * $requested_redirect_to: Set by WordPress, usually an override set in a GET parameter.
 * $user: A PHP object representing the current user.
 
-Your return value in your own code logic should be the URL to redirect to, or FALSE to continue the plugin's normal checks.
+Your return value in your own code logic should be the URL to redirect to, or $custom_redirect_to to continue the plugin's normal checks.
+
+An example of plugin code to redirect users on first login. See http://www.theblog.ca/wordpress-redirect-first-login for standalone functionality:
+
+`// Send new users to a special page
+function redirectOnFirstLogin( $custom_redirect_to, $redirect_to, $requested_redirect_to, $user )
+{
+    // URL to redirect to
+    $redirect_url = 'http://yoursite.com/firstloginpage';
+    // How many times to redirect the user
+    $num_redirects = 1;
+    // If implementing this on an existing site, this is here so that existing users don't suddenly get the "first login" treatment
+    // On a new site, you might remove this setting and the associated check
+    // Alternative approach: run a script to assign the "already redirected" property to all existing users
+    // Alternative approach: use a date-based check so that all registered users before a certain date are ignored
+    // 172800 seconds = 48 hours
+    $message_period = 172800;
+
+    /*
+        Cookie-based solution: captures users who registered within the last n hours
+        The reason to set it as "last n hours" is so that if a user clears their cookies or logs in with a different browser,
+        they don't get this same redirect treatment long after they're already a registered user
+    */
+    /*
+
+    $key_name = 'redirect_on_first_login_' . $user->ID;
+    
+    if( strtotime( $user->user_registered ) > ( time() - $message_period )
+        && ( !isset( $_COOKIE[$key_name] ) || intval( $_COOKIE[$key_name] ) < $num_redirects )
+      )
+    {
+        if( isset( $_COOKIE[$key_name] ) )
+        {
+            $num_redirects = intval( $_COOKIE[$key_name] ) + 1;
+        }
+        setcookie( $key_name, $num_redirects, time() + $message_period, COOKIEPATH, COOKIE_DOMAIN );
+        return $redirect_url;
+    }
+    */
+    /*
+        User meta value-based solution, stored in the database
+    */
+    $key_name = 'redirect_on_first_login';
+    // Third parameter ensures that the result is a string
+    $current_redirect_value = get_user_meta( $user->ID, $key_name, true );
+    if( strtotime( $user->user_registered ) > ( time() - $message_period )
+        && ( '' == $current_redirect_value || intval( $current_redirect_value ) < $num_redirects )
+      )
+    {
+        if( '' != $current_redirect_value )
+        {
+            $num_redirects = intval( $current_redirect_value ) + 1;
+        }
+        update_user_meta( $user->ID, $key_name, $num_redirects );
+        return $redirect_url;
+    }
+    else
+    {
+        return $custom_redirect_to;
+    }
+}
+
+add_filter( 'rul_before_user', 'redirectOnFirstLogin', 10, 4 );`
 
 An example of plugin code to redirect to a specific URL for only a specific IP range as the first redirect check:
 
-`function redirectByIP( $empty, $redirect_to, $requested_redirect_to, $user )
+`function redirectByIP( $custom_redirect_to, $redirect_to, $requested_redirect_to, $user )
 {
     $ip_check = '192.168.0';
     if( 0 === strpos( $_SERVER['REMOTE_ADDR'], $ip_check ) )
@@ -75,7 +137,7 @@ An example of plugin code to redirect to a specific URL for only a specific IP r
     }
     else
     {
-        return false;
+        return $custom_redirect_to;
     }
 }
 
@@ -87,7 +149,7 @@ Note that the same extensibility is available for logout redirects with this fil
 
 It takes 3 parameters:
 
-* $empty: This is simply set as false in case you don't have any redirect URL to set.
+* $custom_redirect_to: This is set as false in case you don't have any redirect URL to set. Return this instead of false in case you have multiple filters running.
 * $requested_redirect_to: A redirect parameter set via POST or GET.
 * $user: A PHP object representing the current user.
 
@@ -95,7 +157,7 @@ It takes 3 parameters:
 
 There is an available filter "rul_replace_variable" for adding your own custom variable names. For example, to replace **[variable]month[/variable]** in the redirect URL with the numeric representation of the current month (with leading zeros):
 
-`function customRULVariableMonth( $empty, $variable, $user )
+`function customRULVariableMonth( $custom_redirect_to, $variable, $user )
 {
     if( 'month' == $variable )
     {
@@ -103,7 +165,7 @@ There is an available filter "rul_replace_variable" for adding your own custom v
     }
     else
     {
-        return false;
+        return $custom_redirect_to;
     }
 }
 
