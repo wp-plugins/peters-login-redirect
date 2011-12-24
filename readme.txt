@@ -16,7 +16,7 @@ You can use the syntax **[variable]username[/variable]** in your URLs so that th
 
 If you're using a plugin such as Gigya that bypasses the regular WordPress login redirect process (and only allows one fixed redirect URL), set that plugin to redirect to wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php and set the $rul_use_redirect_controller setting to "true" in the main plugin file.
 
-You can add your own code logic before and between any of the plugin's normal redirect checks if needed. See Other Notes / How to Extend for documentation.
+You can add your own code logic before and between any of the plugin's normal redirect checks if needed. See Other Notes / How to Extend for documentation. Some examples include: redirecting the user based on their IP address; and redirect users to a special page on first login.
 
 This plugin also includes a function `rul_register` that acts the same as the `wp_register` function you see in templates (typically producing the Register or Site Admin links in the sidebar), except that it will return the custom defined admin address. `rul_register` takes three parameters: the "before" code (by default "&lt;li&gt;"), the "after" code (by default "&lt;/li&gt;"), and whether to echo or return the result (default is `true` and thus echo).
 
