@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter
-Version: 2.3.0
+Version: 2.4.0
 Change Log:
+2012-01-05  2.4.0: Added support for URL variable "postid-<idnumber>". Also added documentation on how to set up redirect on first login.
 2011-11-06  2.3.0: Added support for URL variable "siteurl" and "homeurl". Also added filter to support custom replacement variables in the URL. See readme.txt for documentation.
 2011-09-21  2.2.0: Support basic custom logout redirect URL for all users only. Future versions will have the same framework for logout redirects as for login redirects.
 2011-08-13  2.1.1: Minor code cleanup. Note: users now need "manage_links" permissions to edit redirect settings by default.
@@ -73,7 +74,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.3.0';
+$rul_version = '2.4.0';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -106,23 +107,36 @@ class rulRedirectFunctionCollection
         $variable_value = apply_filters( 'rul_replace_variable', false, $variable, $user );
         if( !$variable_value )
         {
-            switch( $variable )
+            // Return the permalink of the post ID
+            if( 0 === strpos( $variable, 'postid-' ) )
             {
-                // Returns the current user's username (only use this if you know they're logged in)
-                case 'username':
-                    $variable_value = rawurlencode( $user->user_login );
-                    break;
-                // Returns the URL of the WordPress files; see http://codex.wordpress.org/Function_Reference/network_site_url
-                case 'siteurl':
-                    $variable_value = network_site_url();
-                    break;
-                // Returns the URL of the site, possibly different from where the WordPress files are; see http://codex.wordpress.org/Function_Reference/network_home_url
-                case 'homeurl':
-                    $variable_value = network_home_url();
-                    break;
-                default:
-                    $variable_value = '';
-                    break;
+                $post_id = str_replace( 'postid-', '', $variable );
+                $permalink = get_permalink( $post_id );
+                if( $permalink )
+                {
+                    $variable_value = $permalink;
+                }
+            }
+            else
+            {
+                switch( $variable )
+                {
+                    // Returns the current user's username (only use this if you know they're logged in)
+                    case 'username':
+                        $variable_value = rawurlencode( $user->user_login );
+                        break;
+                    // Returns the URL of the WordPress files; see http://codex.wordpress.org/Function_Reference/network_site_url
+                    case 'siteurl':
+                        $variable_value = network_site_url();
+                        break;
+                    // Returns the URL of the site, possibly different from where the WordPress files are; see http://codex.wordpress.org/Function_Reference/network_home_url
+                    case 'homeurl':
+                        $variable_value = network_home_url();
+                        break;
+                    default:
+                        $variable_value = '';
+                        break;
+                }
             }
         }
         return $variable_value;
@@ -306,26 +320,25 @@ function redirect_wrapper( $redirect_to, $requested_redirect_to, $user ) {
     if( ( admin_url() == $redirect_to && $rul_allow_post_redirect_override ) || !$rul_allow_post_redirect_override )
     {
         $rul_url = redirect_to_front_page( $redirect_to, $requested_redirect_to, $user );
-
-        if( 1 === $rul_local_only )
+        if( $rul_url )
         {
-            rulRedirectFunctionCollection::rul_trigger_allowed_host( $rul_url );
-            return $rul_url;
-        }
-        elseif( 2 === $rul_local_only )
-        {
-            wp_redirect( $rul_url );
-            die();
-        }
-        else
-        {
-            return $rul_url;
+            if( 1 === $rul_local_only )
+            {
+                rulRedirectFunctionCollection::rul_trigger_allowed_host( $rul_url );
+                return $rul_url;
+            }
+            elseif( 2 === $rul_local_only )
+            {
+                wp_redirect( $rul_url );
+                die();
+            }
+            else
+            {
+                return $rul_url;
+            }
         }
     }
-    else
-    {
-        return $redirect_to;
-    }
+    return $redirect_to;
 }
 
 // This function sets the URL to redirect to
@@ -336,7 +349,6 @@ function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user )
     
     // Check for an extended custom redirect rule
     $rul_custom_redirect = apply_filters( 'rul_before_user', false, $redirect_to, $requested_redirect_to, $user );
-
     if( $rul_custom_redirect )
     {
         $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_custom_redirect, $user );

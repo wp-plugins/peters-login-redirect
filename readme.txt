@@ -12,7 +12,7 @@ Redirect users to different locations after logging in and logging out.
 
 Define a set of redirect rules for specific users, users with specific roles, users with specific capabilities, and a blanket rule for all other users (logout redirects in this plugin support only this blanket rule). This is all managed in Settings > Login/logout redirects.
 
-You can use the syntax **[variable]username[/variable]** in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username. In addition to username, there is "homeurl" and "siteurl", and you can also add your own custom URL "variables". See Other Notes / How to Extend for documentation.
+You can use the syntax **[variable]username[/variable]** in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username. In addition to username, there is "homeurl", "siteurl", and "postid-<idnumber>"and you can also add your own custom URL "variables". See Other Notes / How to Extend for documentation.
 
 If you're using a plugin such as Gigya that bypasses the regular WordPress login redirect process (and only allows one fixed redirect URL), set that plugin to redirect to wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php and set the $rul_use_redirect_controller setting to "true" in the main plugin file.
 
@@ -174,6 +174,9 @@ add_filter( 'rul_replace_variable', 'customRULVariableMonth', 10, 3 );`
 Be sure to rawurlencode the returned variable if necessary.
 
 == Changelog ==
+
+= 2.4.0 =
+* 2012-01-05: Added support for URL variable "postid-<idnumber>". Also added documentation on how to set up redirect on first login.
 
 = 2.3.0 =
 * 2011-11-06: Added support for URL variable "siteurl" and "homeurl". Also added filter to support custom replacement variables in the URL. See Other Notes / How to Extend for documentation.
