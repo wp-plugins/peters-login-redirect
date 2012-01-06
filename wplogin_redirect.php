@@ -6,7 +6,7 @@ Description: Redirect users to different locations after logging in. Define a se
 Author: Peter
 Version: 2.4.0
 Change Log:
-2012-01-05  2.4.0: Added support for URL variable "postid-<idnumber>". Also added documentation on how to set up redirect on first login.
+2012-01-05  2.4.0: Added support for URL variable "postid-23". Also added documentation on how to set up redirect on first login.
 2011-11-06  2.3.0: Added support for URL variable "siteurl" and "homeurl". Also added filter to support custom replacement variables in the URL. See readme.txt for documentation.
 2011-09-21  2.2.0: Support basic custom logout redirect URL for all users only. Future versions will have the same framework for logout redirects as for login redirects.
 2011-08-13  2.1.1: Minor code cleanup. Note: users now need "manage_links" permissions to edit redirect settings by default.
