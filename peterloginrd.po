@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Peter's Login Redirect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-06 11:36-0800\n"
+"POT-Creation-Date: 2012-01-05 21:34-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Peter <peter@keung.biz>\n"
 "Language-Team: theblog.ca\n"
@@ -14,177 +14,177 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wplogin_redirect.php:438
+#: wplogin_redirect.php:450
 msgid "Register"
 msgstr ""
 
-#: wplogin_redirect.php:442
+#: wplogin_redirect.php:454
 msgid "Site Admin"
 msgstr ""
 
-#: wplogin_redirect.php:579
+#: wplogin_redirect.php:591
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr ""
 
-#: wplogin_redirect.php:589
+#: wplogin_redirect.php:601
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr ""
 
-#: wplogin_redirect.php:598
+#: wplogin_redirect.php:610
 msgid "ERROR: Non-existent username submitted "
 msgstr ""
 
-#: wplogin_redirect.php:611
+#: wplogin_redirect.php:623
 msgid "Successfully updated user-specific URLs"
 msgstr ""
 
-#: wplogin_redirect.php:657
+#: wplogin_redirect.php:669
 msgid "ERROR: Non-local or invalid URL submitted for role "
 msgstr ""
 
-#: wplogin_redirect.php:666
+#: wplogin_redirect.php:678
 msgid "ERROR: Unknown error updating role-specific URL for role "
 msgstr ""
 
-#: wplogin_redirect.php:675
+#: wplogin_redirect.php:687
 msgid "ERROR: Non-existent role submitted "
 msgstr ""
 
-#: wplogin_redirect.php:688
+#: wplogin_redirect.php:700
 msgid "Successfully updated role-specific URLs"
 msgstr ""
 
-#: wplogin_redirect.php:740
+#: wplogin_redirect.php:752
 msgid "ERROR: Non-local or invalid URL submitted for level "
 msgstr ""
 
-#: wplogin_redirect.php:749
+#: wplogin_redirect.php:761
 msgid "ERROR: Unknown error updating level-specific URL for level "
 msgstr ""
 
-#: wplogin_redirect.php:758
+#: wplogin_redirect.php:770
 msgid "ERROR: Non-existent level submitted "
 msgstr ""
 
-#: wplogin_redirect.php:771
+#: wplogin_redirect.php:783
 msgid "Successfully updated level-specific URLs"
 msgstr ""
 
-#: wplogin_redirect.php:809
+#: wplogin_redirect.php:821
 msgid "ERROR: Unknown database problem removing URL for &#34;all other users&#34; "
 msgstr ""
 
-#: wplogin_redirect.php:812
+#: wplogin_redirect.php:824
 msgid "Successfully removed URL for &#34;all other users&#34; "
 msgstr ""
 
-#: wplogin_redirect.php:823
+#: wplogin_redirect.php:835
 msgid "ERROR: Non-local or invalid URL submitted "
 msgstr ""
 
-#: wplogin_redirect.php:836
+#: wplogin_redirect.php:848
 msgid "ERROR: Unknown database problem updating URL for &#34;all other users&#34; "
 msgstr ""
 
-#: wplogin_redirect.php:840
+#: wplogin_redirect.php:852
 msgid "Successfully updated URL for &#34;all other users&#34;"
 msgstr ""
 
-#: wplogin_redirect.php:992
+#: wplogin_redirect.php:1004
 msgid "Manage redirect rules"
 msgstr ""
 
-#: wplogin_redirect.php:994
+#: wplogin_redirect.php:1006
 msgid "Define custom URLs to which different users, users with specific roles, users with specific levels, and all other users will be redirected upon login."
 msgstr ""
 
-#: wplogin_redirect.php:995
+#: wplogin_redirect.php:1007
 msgid "Define a custom URL to which all users will be redirected upon logout"
 msgstr ""
 
-#: wplogin_redirect.php:996
+#: wplogin_redirect.php:1008
 msgid "Note that you can use the syntax <strong>[variable]username[/variable]</strong> in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the users username."
 msgstr ""
 
-#: wplogin_redirect.php:998
+#: wplogin_redirect.php:1010
 msgid "Specific users"
 msgstr ""
 
-#: wplogin_redirect.php:1002
+#: wplogin_redirect.php:1014
 msgid "Username"
-msgstr ""
-
-#: wplogin_redirect.php:1003
-#: wplogin_redirect.php:1023
-#: wplogin_redirect.php:1044
-msgid "URL"
-msgstr ""
-
-#: wplogin_redirect.php:1008
-#: wplogin_redirect.php:1028
-#: wplogin_redirect.php:1049
-msgid "Add:"
-msgstr ""
-
-#: wplogin_redirect.php:1010
-msgid "Select a username"
-msgstr ""
-
-#: wplogin_redirect.php:1013
-#: wplogin_redirect.php:1033
-#: wplogin_redirect.php:1055
-#: wplogin_redirect.php:1062
-msgid "URL:"
 msgstr ""
 
 #: wplogin_redirect.php:1015
 #: wplogin_redirect.php:1035
-#: wplogin_redirect.php:1057
-#: wplogin_redirect.php:1064
-msgid "Update"
+#: wplogin_redirect.php:1056
+msgid "URL"
 msgstr ""
 
-#: wplogin_redirect.php:1018
-msgid "Specific roles"
+#: wplogin_redirect.php:1020
+#: wplogin_redirect.php:1040
+#: wplogin_redirect.php:1061
+msgid "Add:"
 msgstr ""
 
 #: wplogin_redirect.php:1022
-msgid "Role"
+msgid "Select a username"
+msgstr ""
+
+#: wplogin_redirect.php:1025
+#: wplogin_redirect.php:1045
+#: wplogin_redirect.php:1067
+#: wplogin_redirect.php:1074
+msgid "URL:"
+msgstr ""
+
+#: wplogin_redirect.php:1027
+#: wplogin_redirect.php:1047
+#: wplogin_redirect.php:1069
+#: wplogin_redirect.php:1076
+msgid "Update"
 msgstr ""
 
 #: wplogin_redirect.php:1030
-msgid "Select a role"
+msgid "Specific roles"
 msgstr ""
 
-#: wplogin_redirect.php:1038
-msgid "Specific levels"
+#: wplogin_redirect.php:1034
+msgid "Role"
 msgstr ""
 
 #: wplogin_redirect.php:1042
-msgid "Level"
+msgid "Select a role"
 msgstr ""
 
-#: wplogin_redirect.php:1043
-msgid "Order"
-msgstr ""
-
-#: wplogin_redirect.php:1051
-msgid "Select a level"
+#: wplogin_redirect.php:1050
+msgid "Specific levels"
 msgstr ""
 
 #: wplogin_redirect.php:1054
-msgid "Order:"
+msgid "Level"
 msgstr ""
 
-#: wplogin_redirect.php:1060
-msgid "All other users"
+#: wplogin_redirect.php:1055
+msgid "Order"
 msgstr ""
 
 #: wplogin_redirect.php:1063
+msgid "Select a level"
+msgstr ""
+
+#: wplogin_redirect.php:1066
+msgid "Order:"
+msgstr ""
+
+#: wplogin_redirect.php:1072
+msgid "All other users"
+msgstr ""
+
+#: wplogin_redirect.php:1075
 msgid "Logout URL:"
 msgstr ""
 
-#: wplogin_redirect.php:1064
+#: wplogin_redirect.php:1076
 msgid "Delete"
 msgstr ""
 
