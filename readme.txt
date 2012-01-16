@@ -10,7 +10,7 @@ Redirect users to different locations after logging in and logging out.
 
 == Description ==
 
-Define a set of redirect rules for specific users, users with specific roles, users with specific capabilities, and a blanket rule for all other users (logout redirects in this plugin support only this blanket rule). This is all managed in Settings > Login/logout redirects.
+Define a set of redirect rules for specific users, users with specific roles, users with specific capabilities, and a blanket rule for all other users (logout redirects in this plugin support only this blanket rule). Also, set a redirect URL for post-registration. This is all managed in Settings > Login/logout redirects.
 
 You can use the syntax **[variable]username[/variable]** in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username. In addition to username, there is "homeurl", "siteurl", and "postid-23" and you can also add your own custom URL "variables". See Other Notes / How to Extend for documentation.
 
@@ -175,8 +175,11 @@ Be sure to rawurlencode the returned variable if necessary.
 
 == Changelog ==
 
+= 2.5.0 =
+* 2012-01-12: Added redirect after registration option. Also made plugin settings editable in the WordPress admin panel.
+
 = 2.4.0 =
-* 2012-01-05: Added support for URL variable "postid-<idnumber>". Also added documentation on how to set up redirect on first login.
+* 2012-01-05: Added support for URL variable "postid-23". Also added documentation on how to set up redirect on first login.
 
 = 2.3.0 =
 * 2011-11-06: Added support for URL variable "siteurl" and "homeurl". Also added filter to support custom replacement variables in the URL. See Other Notes / How to Extend for documentation.
