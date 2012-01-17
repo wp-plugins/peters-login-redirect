@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter
-Version: 2.5.0
+Version: 2.5.1
 Change Log:
+2012-01-17  2.5.1: Bug fix: redirect after registration back-end code was missed in 2.5.0, and thus that feature wasn't actually working.
 2012-01-15  2.5.0: Added redirect after registration option. Also made plugin settings editable in the WordPress admin panel.
 2012-01-05  2.4.0: Added support for URL variable "postid-23". Also added documentation on how to set up redirect on first login.
 2011-11-06  2.3.0: Added support for URL variable "siteurl" and "homeurl". Also added filter to support custom replacement variables in the URL. See readme.txt for documentation.
@@ -47,7 +48,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.5.0';
+$rul_version = '2.5.1';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -344,6 +345,47 @@ class rulLogoutFunctionCollection
         }
         
         // No rules matched or existed, so just send them to the WordPress admin panel as usual
+        return $redirect_to;
+    }
+}
+
+// Functions for redirecting post-registration
+class rulRedirectPostRegistration
+{
+    function post_registration_wrapper( $requested_redirect_to )
+    {
+        /*
+            Some limitations:
+                - Not yet implemented but possible: toggle whether to allow a GET or POST override of the redirect_to variable (currently it is "yes")
+                - Not yet possible: Redirect to a non-local URL, due to the fact that the WordPress hook is implemented pre-registration, not post-registration
+                - Not yet possible: Username-customized page, since the WordPress hook is implemented pre-registration, not post-registration
+        */
+
+        $rul_url = rulRedirectPostRegistration::get_redirect_url( $requested_redirect_to );
+        if( $rul_url )
+        {
+            return $rul_url;
+        }
+        return $requested_redirect_to;
+    }
+    
+    // Looks up the redirect URL, if any
+    function get_redirect_url( $requested_redirect_to )
+    {
+        global $wpdb, $rul_db_addresses;
+        
+        $redirect_to = false;
+        
+        $rul_all = $wpdb->get_var('SELECT rul_url FROM ' . $rul_db_addresses . 
+            ' WHERE rul_type = \'register\' LIMIT 1');
+
+        if( $rul_all )
+        {
+            $redirect_to = rulRedirectFunctionCollection::rul_replace_variable( $rul_all, false );
+            return $redirect_to;
+        }
+        
+        // No rule exists
         return $redirect_to;
     }
 }
@@ -1407,5 +1449,6 @@ if( !rulRedirectFunctionCollection::get_settings( 'rul_use_redirect_controller' 
 {
     add_filter( 'login_redirect', 'redirect_wrapper', 10, 3 );
 }
+add_filter( 'registration_redirect', array( 'rulRedirectPostRegistration', 'post_registration_wrapper' ), 10, 2 );
 add_action( 'wp_logout', array( 'rulLogoutFunctionCollection', 'logout_redirect' ), 10 );
 ?>

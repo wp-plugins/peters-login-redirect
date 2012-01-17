@@ -175,8 +175,11 @@ Be sure to rawurlencode the returned variable if necessary.
 
 == Changelog ==
 
+= 2.5.1 =
+* 2012-01-17: Bug fix: redirect after registration back-end code was missed in 2.5.0, and thus that feature wasn't actually working.
+
 = 2.5.0 =
-* 2012-01-12: Added redirect after registration option. Also made plugin settings editable in the WordPress admin panel.
+* 2012-01-15: Added redirect after registration option. Also made plugin settings editable in the WordPress admin panel.
 
 = 2.4.0 =
 * 2012-01-05: Added support for URL variable "postid-23". Also added documentation on how to set up redirect on first login.
