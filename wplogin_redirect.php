@@ -4,9 +4,10 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter
-Version: 2.5.1
+Version: 2.5.2
 Change Log:
-2012-01-17  2.5.1: Bug fix: redirect after registration back-end code was missed in 2.5.0, and thus that feature wasn't actually working.
+2012-02-06  2.5.2: Bug fix: Fallback redirect rule updates were broken for non-English installs.
+2012-01-17  2.5.1: Bug fix: Redirect after registration back-end code was missed in 2.5.0, and thus that feature wasn't actually working.
 2012-01-15  2.5.0: Added redirect after registration option. Also made plugin settings editable in the WordPress admin panel.
 2012-01-05  2.4.0: Added support for URL variable "postid-23". Also added documentation on how to set up redirect on first login.
 2011-11-06  2.3.0: Added support for URL variable "siteurl" and "homeurl". Also added filter to support custom replacement variables in the URL. See readme.txt for documentation.
@@ -48,7 +49,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.5.1';
+$rul_version = '2.5.2';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -431,7 +432,7 @@ function redirect_wrapper( $redirect_to, $requested_redirect_to, $user )
 function redirect_to_front_page( $redirect_to, $requested_redirect_to, $user )
 {
     global $wpdb, $rul_db_addresses;
-    
+
     // Check for an extended custom redirect rule
     $rul_custom_redirect = apply_filters( 'rul_before_user', false, $redirect_to, $requested_redirect_to, $user );
     if( $rul_custom_redirect )
@@ -888,7 +889,7 @@ if (is_admin()) {
         // ----------------------------------
         
         // Since we never actually, remove the "all" entry, here we just make its value empty
-        if( $update_or_delete == 'Delete' )
+        if( $update_or_delete == 'delete' )
         {
             $update = $wpdb->update (
                 $rul_db_addresses,
@@ -906,7 +907,7 @@ if (is_admin()) {
             }
         }
         
-        elseif( $update_or_delete == 'Update' )
+        elseif( $update_or_delete == 'update' )
         {
             $address_safe = rul_safe_redirect( $address );
             $address_safe_logout = rul_safe_redirect( $address_logout );
@@ -959,7 +960,7 @@ if (is_admin()) {
         // ----------------------------------
         
         // Since we never actually, remove the "register" entry, here we just make its value empty
-        if( $update_or_delete == 'Delete' )
+        if( $update_or_delete == 'delete' )
         {
             $update = $wpdb->update (
                 $rul_db_addresses,
@@ -976,7 +977,7 @@ if (is_admin()) {
             }
         }
         
-        elseif( $update_or_delete == 'Update' )
+        elseif( $update_or_delete == 'update' )
         {
             $address_safe = rul_safe_redirect( $address );
 
@@ -1093,13 +1094,21 @@ if (is_admin()) {
         {
             $rul_process_submit = rul_submit_level( $_POST['rul_level'], $_POST['rul_levelorder'], $_POST['rul_leveladdress'] );
         }
-        elseif( isset( $_POST['rul_allsubmit'] ) )
+        elseif( isset( $_POST['rul_allupdatesubmit'] ) )
         {
-            $rul_process_submit = rul_submit_all( $_POST['rul_allsubmit'], $_POST['rul_all'], $_POST['rul_all_logout'] );
+            $rul_process_submit = rul_submit_all( 'update', $_POST['rul_all'], $_POST['rul_all_logout'] );
         }
-        elseif( isset( $_POST['rul_registersubmit'] ) )
+        elseif( isset( $_POST['rul_alldeletesubmit'] ) )
         {
-            $rul_process_submit = rul_submit_register( $_POST['rul_registersubmit'], $_POST['rul_register'] );
+            $rul_process_submit = rul_submit_all( 'delete', $_POST['rul_all'], $_POST['rul_all_logout'] );
+        }
+        elseif( isset( $_POST['rul_registerupdatesubmit'] ) )
+        {
+            $rul_process_submit = rul_submit_register( 'update', $_POST['rul_register'] );
+        }
+        elseif( isset( $_POST['rul_registerdeletesubmit'] ) )
+        {
+            $rul_process_submit = rul_submit_register( 'delete', $_POST['rul_register'] );
         }
         elseif( isset( $_POST['rul_settingssubmit'] ) )
         {
@@ -1229,7 +1238,7 @@ if (is_admin()) {
             </select>
             <br /><?php _e('URL:', 'peterloginrd' ); ?>  <input type="text" size="90" maxlength="500" name="rul_roleaddress[<?php print $i_role; ?>]" />
         </p>
-        <p class="submit"><input type="submit" name="rul_rolesubmit" value="<?php _e('Update', 'peterloginrd' ); ?>" /></p>
+        <p class="submit"><input type="submit" name="rul_rolesubmit" value="<?php _e( 'Update', 'peterloginrd' ); ?>" /></p>
         </form> 
  
         <h3><?php _e('Specific levels', 'peterloginrd' ); ?></h3>
@@ -1258,7 +1267,7 @@ if (is_admin()) {
         <form name="rul_allform" action="<?php '?page=' . basename(__FILE__); ?>" method="post">
             <p><?php _e('URL:', 'peterloginrd' ) ?> <input type="text" size="90" maxlength="500" name="rul_all" value="<?php print $rul_allvalue; ?>" /></p>
             <p><?php _e('Logout URL:', 'peterloginrd' ) ?> <input type="text" size="90" maxlength="500" name="rul_all_logout" value="<?php print $rul_allvalue_logout; ?>" /></p>
-            <p class="submit"><input type="submit" name="rul_allsubmit" value="<?php _e('Update', 'peterloginrd' ); ?>" /> <input type="submit" name="rul_allsubmit" value="<?php _e('Delete', 'peterloginrd' ); ?>" /></p>
+            <p class="submit"><input type="submit" name="rul_allupdatesubmit" value="<?php _e('Update', 'peterloginrd' ); ?>" /> <input type="submit" name="rul_alldeletesubmit" value="<?php _e('Delete', 'peterloginrd' ); ?>" /></p>
         </form>
         
         <hr />
@@ -1266,7 +1275,7 @@ if (is_admin()) {
         <h3><?php _e( 'Post-registration', 'peterloginrd' ); ?></h3>
         <form name="rul_registerform" action="<?php '?page=' . basename(__FILE__); ?>" method="post">
             <p><?php _e( 'URL:', 'peterloginrd' ) ?> <input type="text" size="90" maxlength="500" name="rul_register" value="<?php print $rul_registervalue; ?>" /></p>
-            <p class="submit"><input type="submit" name="rul_registersubmit" value="<?php _e( 'Update', 'peterloginrd' ); ?>" /> <input type="submit" name="rul_registersubmit" value="<?php _e( 'Delete', 'peterloginrd' ); ?>" /></p>
+            <p class="submit"><input type="submit" name="rul_registerupdatesubmit" value="<?php _e( 'Update', 'peterloginrd' ); ?>" /> <input type="submit" name="rul_registerdeletesubmit" value="<?php _e( 'Delete', 'peterloginrd' ); ?>" /></p>
         </form>
         
         <hr />
@@ -1343,7 +1352,7 @@ if (is_admin()) {
             </td>
         </tr>
         </table>
-        <p class="submit"><input name="rul_settingssubmit" type="submit" value="Update" /></p>
+        <p class="submit"><input name="rul_settingssubmit" type="submit" value="<?php _e( 'Update', 'peterloginrd' ); ?>" /></p>
         </form>
     </div>
 <?php

@@ -175,8 +175,11 @@ Be sure to rawurlencode the returned variable if necessary.
 
 == Changelog ==
 
+= 2.5.2 =
+* 2012-02-06: Bug fix: Fallback redirect rule updates were broken for non-English installs.
+
 = 2.5.1 =
-* 2012-01-17: Bug fix: redirect after registration back-end code was missed in 2.5.0, and thus that feature wasn't actually working.
+* 2012-01-17: Bug fix: Redirect after registration back-end code was missed in 2.5.0, and thus that feature wasn't actually working.
 
 = 2.5.0 =
 * 2012-01-15: Added redirect after registration option. Also made plugin settings editable in the WordPress admin panel.
