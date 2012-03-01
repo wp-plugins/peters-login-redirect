@@ -27,6 +27,7 @@ This plugin also includes a function `rul_register` that acts the same as the `w
 * ro\_RO translation by Anunturi Jibo of http://www.jibo.ro
 * cs\_CZ translation by Petr Mašek
 * de\_DE translation by Lara of http://www.u-center.nl
+* es\_ES translation by Closemarketing of http://www.closemarketing.es
 
 == Installation ==
 
