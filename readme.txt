@@ -177,7 +177,7 @@ Be sure to rawurlencode the returned variable if necessary.
 
 == Changelog ==
 
-= 2.5.2 =
+= 2.5.3 =
 * 2012-06-15: Bug fix: Fallback redirect rule wouldn't update properly if logout URL was blank on MySQL installs with strict mode enabled (thanks kvandekrol!)
 
 = 2.5.2 =
