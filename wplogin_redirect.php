@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter
-Version: 2.5.3
+Version: 2.6.0
 Change Log:
+2012-09-22  2.6.0: Added support for URL variable "http_referer" (note the single "r") to redirect the user back to the page that hosted the login form, as long as the login page isn't the standard wp-login.php. There are several caveats to this, such as: If you want to redirect only on certain forms and/or specify a redirect on the standard wp-login.php page, you should modify the form itself to use a "redirect_to" form variable instead.
 2012-06-15  2.5.3: Bug fix: Fallback redirect rule wouldn't update properly if logout URL was blank on MySQL installs with strict mode enabled (thanks kvandekrol!)
 2012-02-06  2.5.2: Bug fix: Fallback redirect rule updates were broken for non-English installs.
 2012-01-17  2.5.1: Bug fix: Redirect after registration back-end code was missed in 2.5.0, and thus that feature wasn't actually working.
@@ -50,7 +51,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.5.3';
+$rul_version = '2.6.0';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -171,6 +172,19 @@ class rulRedirectFunctionCollection
                     // Returns the URL of the site, possibly different from where the WordPress files are; see http://codex.wordpress.org/Function_Reference/network_home_url
                     case 'homeurl':
                         $variable_value = network_home_url();
+                        break;
+                    // Returns the login referrer in order to redirect back to the same page
+                    // Note that this will not work if the referrer is the same as the login processor (otherwise in a standard setup you'd redirect to the login form)
+                    case 'http_referer':
+                        $http_referer_parts = parse_url( $_SERVER['HTTP_REFERER'] );
+                        if( $_SERVER['REQUEST_URI'] != $http_referer_parts['path'] )
+                        {
+                            $variable_value = $_SERVER['HTTP_REFERER'];
+                        }
+                        else
+                        {
+                            $variable_value = '';
+                        }
                         break;
                     default:
                         $variable_value = '';
