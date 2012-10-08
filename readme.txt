@@ -178,7 +178,11 @@ Be sure to rawurlencode the returned variable if necessary.
 = Custom "My Portal" link =
 
 A common need is to display the "redirect" link for a user in the site navigation or sidebar.
+
 Look at the function rul_register() in the plugin file for inspiration; it makes use of the redirect_to_front_page() function to determine the URL and then provides the relevant output code.
+
+For a deeper dive into this feature, please see this video:
+http://www.screenr.com/Gqi8
 
 == Changelog ==
 
