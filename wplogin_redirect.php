@@ -3,9 +3,10 @@
 Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
-Author: Peter
-Version: 2.6.0
+Author: Peter Keung
+Version: 2.6.1
 Change Log:
+2012-12-22: 2.6.1: Allow editors to manage redirects in WordPress 3.5+ (required capability is now "manage_categories" instead of "manage_links").
 2012-09-22  2.6.0: Added support for URL variable "http_referer" (note the single "r") to redirect the user back to the page that hosted the login form, as long as the login page isn't the standard wp-login.php. There are several caveats to this, such as: If you want to redirect only on certain forms and/or specify a redirect on the standard wp-login.php page, you should modify the form itself to use a "redirect_to" form variable instead.
 2012-06-15  2.5.3: Bug fix: Fallback redirect rule wouldn't update properly if logout URL was blank on MySQL installs with strict mode enabled (thanks kvandekrol!)
 2012-02-06  2.5.2: Bug fix: Fallback redirect rule updates were broken for non-English installs.
@@ -51,7 +52,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.6.0';
+$rul_version = '2.6.1';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -85,9 +86,9 @@ class rulRedirectFunctionCollection
         $rul_settings['rul_use_redirect_controller'] = false;
 
         // To edit the redirect settings in the WordPress admin panel, users need this capability
-        // Typically editors and up have "manage_links" capabilities
+        // Typically editors and up have "manage_categories" capabilities
         // See http://codex.wordpress.org/Roles_and_Capabilities for more information about out of the box capabilities
-        $rul_settings['rul_required_capability'] = 'manage_links';
+        $rul_settings['rul_required_capability'] = 'manage_categories';
         
         $rul_settings_from_options_table = rulRedirectFunctionCollection::get_settings_from_options_table();
         
@@ -116,6 +117,18 @@ class rulRedirectFunctionCollection
     function get_settings_from_options_table()
     {
         return get_option( 'rul_settings', array() );
+    }
+    function set_setting( $setting = false, $value = false )
+    {
+        if( $setting )
+        {
+            $current_settings = rulRedirectFunctionCollection::get_settings();
+            if( $current_settings )
+            {
+                $current_settings[$setting] = $value;
+                update_option( 'rul_settings', $current_settings );
+            }
+        }
     }
 
     /*
@@ -1386,12 +1399,9 @@ if (is_admin()) {
         // Turn version into an integer for comparisons
         $current_version = intval( str_replace( '.', '', get_option( 'rul_version' ) ) );
 
-        if( $current_version < 253 )
+        if( $current_version < 220 )
         {
-            // Allow NULL values for non-essential fields
-            $wpdb->query( "ALTER TABLE '$rul_db_addresses' CHANGE `rul_value` `rul_value` varchar(255) NULL default NULL" );
-            $wpdb->query( "ALTER TABLE '$rul_db_addresses' CHANGE `rul_url` `rul_url` LONGTEXT NULL default NULL" );
-            $wpdb->query( "ALTER TABLE '$rul_db_addresses' CHANGE `rul_url_logout` `rul_url_logout` LONGTEXT NULL default NULL" );
+            $wpdb->query( "ALTER TABLE '$rul_db_addresses' ADD `rul_url_logout` LONGTEXT NOT NULL default '' AFTER `rul_url`" );
         }
 
         if( $current_version < 250 )
@@ -1404,9 +1414,18 @@ if (is_admin()) {
             );
         }
 
-        if( $current_version < 220 )
+        if( $current_version < 253 )
         {
-            $wpdb->query( "ALTER TABLE '$rul_db_addresses' ADD `rul_url_logout` LONGTEXT NOT NULL default '' AFTER `rul_url`" );
+            // Allow NULL values for non-essential fields
+            $wpdb->query( "ALTER TABLE '$rul_db_addresses' CHANGE `rul_value` `rul_value` varchar(255) NULL default NULL" );
+            $wpdb->query( "ALTER TABLE '$rul_db_addresses' CHANGE `rul_url` `rul_url` LONGTEXT NULL default NULL" );
+            $wpdb->query( "ALTER TABLE '$rul_db_addresses' CHANGE `rul_url_logout` `rul_url_logout` LONGTEXT NULL default NULL" );
+        }
+
+        if( $current_version < 261 )
+        {
+            // Change required capability to access settings page to manage_categories (since manage_links is deprecated)
+            rulRedirectFunctionCollection::set_setting( 'rul_required_capability', 'manage_categories' );
         }
         
         if( $current_version != intval( str_replace( '.', '', $rul_version ) ) )
