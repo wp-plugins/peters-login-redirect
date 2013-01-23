@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Peter's Login Redirect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 08:53-0800\n"
+"POT-Creation-Date: 2013-01-23 08:57-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Peter <peter@keung.biz>\n"
 "Language-Team: theblog.ca\n"
@@ -282,6 +282,14 @@ msgid ""
 msgstr ""
 "Tillad et indlæg eller GET &#34;redirect_to&#34; log ud variabel at tage "
 "omdirigerings præcedens"
+
+#: wplogin_redirect.php:1351
+#, php-format
+msgid ""
+"Use external redirect file. Set this to &#34;Yes&#34; if you are using a "
+"plugin such as Gigya that bypasses the regular WordPress redirect process "
+"(and allows only one fixed redirect URL). Then, set the redirect URL to %s"
+msgstr ""
 
 #: wplogin_redirect.php:1362
 msgid "Permission level required to edit redirect URLs"

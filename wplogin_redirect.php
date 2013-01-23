@@ -1348,7 +1348,7 @@ if (is_admin()) {
         
         <tr>
             <td>
-                <p><strong><?php _e( sprintf( 'Use external redirect file. Set this to &#34;Yes&#34; if you are using a plugin such as Gigya that bypasses the regular WordPress redirect process (and allows only one fixed redirect URL). Then, set the redirect URL to %s', '<br />http://www.yoursite.com/wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php' ), 'peterloginrd' ); ?></strong></p>
+                <p><strong><?php sprintf( _e( 'Use external redirect file. Set this to &#34;Yes&#34; if you are using a plugin such as Gigya that bypasses the regular WordPress redirect process (and allows only one fixed redirect URL). Then, set the redirect URL to %s', 'peterloginrd' ), '<br />http://www.yoursite.com/wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php' ); ?></strong></p>
             </td>
             <td>
                 <select name="rul_use_redirect_controller">
