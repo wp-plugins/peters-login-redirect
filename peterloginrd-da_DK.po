@@ -290,6 +290,10 @@ msgid ""
 "plugin such as Gigya that bypasses the regular WordPress redirect process "
 "(and allows only one fixed redirect URL). Then, set the redirect URL to %s"
 msgstr ""
+"Brug ekstern omdirigerings fil. Indstil denne til &#34;Ja&#34; hvis du "
+"bruger et plugin så som Gigya, der overskriver den almindelige WordPress "
+"omdirigerings process (og tillad kun en fast omdirigerings URL). Så indstil "
+"omdirigerings URL til %s"
 
 #: wplogin_redirect.php:1362
 msgid "Permission level required to edit redirect URLs"
