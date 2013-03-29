@@ -31,6 +31,7 @@ This plugin also includes a function `rul_register` that acts the same as the `w
 * lt\_LT translation by Vincent G of http://www.host1free.com
 * da\_DK translation by Tom of http://artikelforlaget.dk
 * id\_ID translation by Syamsul Alam of http://www.syamsulalam.net/
+* uk translation by Yura
 
 == Installation ==
 
