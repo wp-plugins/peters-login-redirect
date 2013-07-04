@@ -10,7 +10,7 @@ Redirect users to different locations after logging in and logging out.
 
 == Description ==
 
-Define a set of redirect rules for specific users, users with specific roles, users with specific capabilities, and a blanket rule for all other users (logout redirects in this plugin support only this blanket rule). Also, set a redirect URL for post-registration. This is all managed in Settings > Login/logout redirects.
+Define a set of redirect rules for specific users, users with specific roles, users with specific capabilities, and a blanket rule for all other users. Also, set a redirect URL for post-registration. This is all managed in Settings > Login/logout redirects.
 
 You can use the syntax **[variable]username[/variable]** in your URLs so that the system will build a dynamic URL upon each login, replacing that text with the user's username. In addition to username, there is "homeurl", "siteurl", "postid-23", "http_referer" and you can also add your own custom URL "variables". See Other Notes / How to Extend for documentation.
 
@@ -148,8 +148,11 @@ An example of plugin code to redirect to a specific URL for only a specific IP r
 
 add_filter( 'rul_before_user', 'redirectByIP', 10, 4 );`
 
-Note that the same extensibility is available for logout redirects with this filter:
+Note that the same extensibility is available for logout redirects with these filters:
 
+* rul_before_user_logout
+* rul_before_role_logout
+* rul_before_capability_logout
 * rul_before_fallback_logout
 
 It takes 3 parameters:
@@ -188,6 +191,9 @@ For a deeper dive into this feature, please see this video:
 http://www.screenr.com/Gqi8
 
 == Changelog ==
+
+= 2.7.0 =
+* 2013-07-04: Add logout redirect URL control per-user, per-role, and per-level
 
 = 2.6.1 =
 * 2012-12-22: Allow editors to manage redirects in WordPress 3.5+ (required capability is now "manage_categories" instead of "manage_links").

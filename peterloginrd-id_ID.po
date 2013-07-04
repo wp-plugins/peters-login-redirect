@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Peter's Login Redirect v2.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-30 19:53-0800\n"
-"PO-Revision-Date: 2013-01-30 19:54-0800\n"
+"POT-Creation-Date: 2013-07-04 14:14-0800\n"
+"PO-Revision-Date: 2013-07-04 14:14-0800\n"
 "Last-Translator: Syamsul Alam <admin@alampintar.org>\n"
 "Language-Team: \n"
 "Language: id_ID\n"
@@ -19,81 +19,81 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 # @ peterloginrd
-#: wplogin_redirect.php:564
+#: wplogin_redirect.php:565
 msgid "Register"
 msgstr "Daftar"
 
 # @ peterloginrd
-#: wplogin_redirect.php:568
+#: wplogin_redirect.php:569
 msgid "Site Admin"
 msgstr "Site Admin"
 
 # @ peterloginrd
-#: wplogin_redirect.php:703
+#: wplogin_redirect.php:709
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr "ERROR: Non-lokal atau proses URL salah oleh pemakai "
 
 # @ peterloginrd
-#: wplogin_redirect.php:713
+#: wplogin_redirect.php:719
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr ""
 "ERROR: error tidak diketahui memperbarui pengguna-URL tertentu oleh pengguna "
 
 # @ peterloginrd
-#: wplogin_redirect.php:722
+#: wplogin_redirect.php:729
 msgid "ERROR: Non-existent username submitted "
 msgstr "ERROR: Tidak ada nama pengguna untuk diproses "
 
 # @ peterloginrd
-#: wplogin_redirect.php:735
+#: wplogin_redirect.php:743
 msgid "Successfully updated user-specific URLs"
 msgstr "berhasil update URL tertentu pemakai  "
 
 # @ peterloginrd
-#: wplogin_redirect.php:779
+#: wplogin_redirect.php:793
 msgid "ERROR: Non-local or invalid URL submitted for role "
 msgstr "ERROR: Non-lokal atau proses URL salah untuk peran "
 
 # @ peterloginrd
-#: wplogin_redirect.php:788
+#: wplogin_redirect.php:803
 msgid "ERROR: Unknown error updating role-specific URL for role "
 msgstr ""
 "ERROR: Error tidak diketahui untuk memperbarui URL tertentu yang disertakan "
 
 # @ peterloginrd
-#: wplogin_redirect.php:797
+#: wplogin_redirect.php:812
 msgid "ERROR: Non-existent role submitted "
 msgstr "ERROR: peran yang tidak ada terproses "
 
 # @ peterloginrd
-#: wplogin_redirect.php:810
+#: wplogin_redirect.php:825
 msgid "Successfully updated role-specific URLs"
 msgstr "Berhasil perbarui peran URL tertentu  "
 
 # @ peterloginrd
-#: wplogin_redirect.php:860
+#: wplogin_redirect.php:881
 msgid "ERROR: Non-local or invalid URL submitted for level "
 msgstr "ERROR: Non-lokal atau proses URL salah untuk tingkatan "
 
 # @ peterloginrd
-#: wplogin_redirect.php:869
+#: wplogin_redirect.php:890
 msgid "ERROR: Unknown error updating level-specific URL for level "
 msgstr ""
 "ERROR: Error tidak diketahui memperbarui tingkat-URL tertentu untuk "
 "tingkatan "
 
 # @ peterloginrd
-#: wplogin_redirect.php:878
+#: wplogin_redirect.php:900
 msgid "ERROR: Non-existent level submitted "
 msgstr "ERROR: tingkatan yang tidak ada terproses "
 
 # @ peterloginrd
-#: wplogin_redirect.php:891
+#: wplogin_redirect.php:913
 msgid "Successfully updated level-specific URLs"
 msgstr "berhasil update tingkatan-URL tertentu  "
 
 # @ peterloginrd
-#: wplogin_redirect.php:930
+#: wplogin_redirect.php:952
 msgid ""
 "ERROR: Unknown database problem removing URL for &#34;all other users&#34; "
 msgstr ""
@@ -101,17 +101,17 @@ msgstr ""
 "other users&#34; "
 
 # @ peterloginrd
-#: wplogin_redirect.php:934
+#: wplogin_redirect.php:956
 msgid "Successfully removed URL for &#34;all other users&#34; "
 msgstr "Berhasil menghapus URL untuk &#34;all other users&#34; "
 
 # @ peterloginrd
-#: wplogin_redirect.php:945 wplogin_redirect.php:1014
+#: wplogin_redirect.php:967 wplogin_redirect.php:1036
 msgid "ERROR: Non-local or invalid URL submitted "
 msgstr "ERROR: Non-lokal atau URL yang salah terproses "
 
 # @ peterloginrd
-#: wplogin_redirect.php:958
+#: wplogin_redirect.php:980
 msgid ""
 "ERROR: Unknown database problem updating URL for &#34;all other users&#34; "
 msgstr ""
@@ -119,12 +119,12 @@ msgstr ""
 "users&#34; "
 
 # @ peterloginrd
-#: wplogin_redirect.php:962
+#: wplogin_redirect.php:984
 msgid "Successfully updated URL for &#34;all other users&#34;"
 msgstr "Berhasil update URL untuk &#34;all other users&#34; "
 
 # @ peterloginrd
-#: wplogin_redirect.php:1001
+#: wplogin_redirect.php:1023
 msgid ""
 "ERROR: Unknown database problem removing URL for &#34;post-registration&#34; "
 msgstr ""
@@ -132,12 +132,12 @@ msgstr ""
 "registration&#34; "
 
 # @ peterloginrd
-#: wplogin_redirect.php:1004
+#: wplogin_redirect.php:1026
 msgid "Successfully removed URL for &#34;post-registration&#34; "
 msgstr "Berhasil menghapus URL untuk &#34;post-registration&#34; "
 
 # @ peterloginrd
-#: wplogin_redirect.php:1027
+#: wplogin_redirect.php:1049
 msgid ""
 "ERROR: Unknown database problem updating URL for &#34;post-registration&#34; "
 msgstr ""
@@ -145,22 +145,22 @@ msgstr ""
 "registration&#34; "
 
 # @ peterloginrd
-#: wplogin_redirect.php:1031
+#: wplogin_redirect.php:1053
 msgid "Successfully updated URL for &#34;post-registration&#34;"
 msgstr "Berhasil memperbarui URL untuk &#34;post-registration&#34;"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1057
+#: wplogin_redirect.php:1079
 msgid "Successfully updated plugin settings"
 msgstr "Berhasil memperbarui pengaturan plugin"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1226
+#: wplogin_redirect.php:1251
 msgid "Manage redirect rules"
 msgstr "Atur aturan pengalihan"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1228
+#: wplogin_redirect.php:1253
 msgid ""
 "Define custom URLs to which different users, users with specific roles, "
 "users with specific levels, and all other users will be redirected upon "
@@ -171,14 +171,14 @@ msgstr ""
 "masuk."
 
 # @ peterloginrd
-#: wplogin_redirect.php:1229
+#: wplogin_redirect.php:1254
 msgid "Define a custom URL to which all users will be redirected upon logout"
 msgstr ""
 "Tentukan sebuah URL kustom dimana semua pengguna akan diarahkan ketika "
 "keluar."
 
 # @ peterloginrd
-#: wplogin_redirect.php:1230
+#: wplogin_redirect.php:1255
 msgid ""
 "Note that you can use the syntax <strong>[variable]username[/variable]</"
 "strong> in your URLs so that the system will build a dynamic URL upon each "
@@ -189,133 +189,141 @@ msgstr ""
 "setiap masuk, mengganti kata dengan nama pengguna"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1232
+#: wplogin_redirect.php:1257
 msgid "Specific users"
 msgstr "Pengguna tertentu"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1236
+#: wplogin_redirect.php:1261
 msgid "Username"
 msgstr "Nama Pengguna"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1237 wplogin_redirect.php:1257
-#: wplogin_redirect.php:1278
+#: wplogin_redirect.php:1262 wplogin_redirect.php:1284
+#: wplogin_redirect.php:1307
 msgid "URL"
 msgstr "URL"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1242 wplogin_redirect.php:1262
-#: wplogin_redirect.php:1283
+#: wplogin_redirect.php:1263 wplogin_redirect.php:1285
+#: wplogin_redirect.php:1308
+#, fuzzy
+msgid "Logout URL"
+msgstr "Keluar URL:"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1268 wplogin_redirect.php:1290
+#: wplogin_redirect.php:1313
 msgid "Add:"
 msgstr "Tambahkan:"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1244
+#: wplogin_redirect.php:1270
 msgid "Select a username"
 msgstr "Pilih nama pengguna"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1247 wplogin_redirect.php:1267
-#: wplogin_redirect.php:1289 wplogin_redirect.php:1296
-#: wplogin_redirect.php:1305
+#: wplogin_redirect.php:1273 wplogin_redirect.php:1295
+#: wplogin_redirect.php:1319 wplogin_redirect.php:1327
+#: wplogin_redirect.php:1336
 msgid "URL:"
 msgstr "URL:"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1249 wplogin_redirect.php:1269
-#: wplogin_redirect.php:1291 wplogin_redirect.php:1298
-#: wplogin_redirect.php:1306 wplogin_redirect.php:1383
-msgid "Update"
-msgstr "Perbarui"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1252
-msgid "Specific roles"
-msgstr "Peran tertentu"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1256
-msgid "Role"
-msgstr "Peran"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1264
-msgid "Select a role"
-msgstr "Pilih sebuah peran"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1272
-msgid "Specific levels"
-msgstr "Tingkat tertentu"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1276
-msgid "Level"
-msgstr "Tingkat"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1277
-msgid "Order"
-msgstr "Urutan"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1285
-msgid "Select a level"
-msgstr "Pilih sebuah tingkat"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1288
-msgid "Order:"
-msgstr "urutan:"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1294
-msgid "All other users"
-msgstr "Seluruh pengguna lain"
-
-# @ peterloginrd
-#: wplogin_redirect.php:1297
+#: wplogin_redirect.php:1274 wplogin_redirect.php:1296
+#: wplogin_redirect.php:1320 wplogin_redirect.php:1328
 msgid "Logout URL:"
 msgstr "Keluar URL:"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1298 wplogin_redirect.php:1306
+#: wplogin_redirect.php:1276 wplogin_redirect.php:1298
+#: wplogin_redirect.php:1322 wplogin_redirect.php:1329
+#: wplogin_redirect.php:1337 wplogin_redirect.php:1414
+msgid "Update"
+msgstr "Perbarui"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1279
+msgid "Specific roles"
+msgstr "Peran tertentu"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1283
+msgid "Role"
+msgstr "Peran"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1292
+msgid "Select a role"
+msgstr "Pilih sebuah peran"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1301
+msgid "Specific levels"
+msgstr "Tingkat tertentu"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1305
+msgid "Level"
+msgstr "Tingkat"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1306
+msgid "Order"
+msgstr "Urutan"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1315
+msgid "Select a level"
+msgstr "Pilih sebuah tingkat"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1318
+msgid "Order:"
+msgstr "urutan:"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1325
+msgid "All other users"
+msgstr "Seluruh pengguna lain"
+
+# @ peterloginrd
+#: wplogin_redirect.php:1329 wplogin_redirect.php:1337
 msgid "Delete"
 msgstr "Hapus"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1303
+#: wplogin_redirect.php:1334
 msgid "Post-registration"
 msgstr "Pasca-pendaftaran"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1311
+#: wplogin_redirect.php:1342
 msgid "Customize plugin settings"
 msgstr "Kustom aturan plugin"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1316
+#: wplogin_redirect.php:1347
 msgid "Redirect restrictions"
 msgstr "Batasan pengalihan"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1320
+#: wplogin_redirect.php:1351
 msgid "Any http or https URL"
 msgstr "Setiap http atau https URL"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1321
+#: wplogin_redirect.php:1352
 msgid "Any URL"
 msgstr "Setiap URL"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1322
+#: wplogin_redirect.php:1353
 msgid "Any URL on the same domain"
 msgstr "Setiap URL di domain yang sama"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1328
+#: wplogin_redirect.php:1359
 msgid ""
 "Allow a POST or GET &#34;redirect_to&#34; variable to take redirect "
 "precedence"
@@ -324,19 +332,19 @@ msgstr ""
 "pengambilan pengalihan "
 
 # @ peterloginrd
-#: wplogin_redirect.php:1332 wplogin_redirect.php:1343
-#: wplogin_redirect.php:1355
+#: wplogin_redirect.php:1363 wplogin_redirect.php:1374
+#: wplogin_redirect.php:1386
 msgid "Yes"
 msgstr "Ya"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1333 wplogin_redirect.php:1344
-#: wplogin_redirect.php:1356
+#: wplogin_redirect.php:1364 wplogin_redirect.php:1375
+#: wplogin_redirect.php:1387
 msgid "No"
 msgstr "Tidak"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1339
+#: wplogin_redirect.php:1370
 msgid ""
 "Allow a POST or GET &#34;redirect_to&#34; logout variable to take redirect "
 "precedence"
@@ -345,7 +353,7 @@ msgstr ""
 "mengutamakan pengalihan"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1351
+#: wplogin_redirect.php:1382
 #, php-format
 msgid ""
 "Use external redirect file. Set this to &#34;Yes&#34; if you are using a "
@@ -358,6 +366,6 @@ msgstr ""
 "pengalihan  ke % s"
 
 # @ peterloginrd
-#: wplogin_redirect.php:1362
+#: wplogin_redirect.php:1393
 msgid "Permission level required to edit redirect URLs"
 msgstr "Izin tingkatan dibutuhkan untuk mengedit pengalihan URL"
