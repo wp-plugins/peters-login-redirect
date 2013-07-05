@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Peter's Login Redirect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-04 14:14-0800\n"
+"POT-Creation-Date: 2013-07-05 14:21-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Peter <peter@keung.biz>\n"
 "Language-Team: theblog.ca\n"
@@ -17,27 +17,27 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wplogin_redirect.php:565
+#: wplogin_redirect.php:566
 msgid "Register"
 msgstr "Registere"
 
-#: wplogin_redirect.php:569
+#: wplogin_redirect.php:570
 msgid "Site Admin"
 msgstr "Side administrator"
 
-#: wplogin_redirect.php:709
+#: wplogin_redirect.php:710
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr "FEJL: Ikke lokal eller ugyldig URL indsendt for bruger"
 
-#: wplogin_redirect.php:719
+#: wplogin_redirect.php:720
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr "FEJL: Ukendt fejl under opdatering af bruger specifik URL for bruger"
 
-#: wplogin_redirect.php:729
+#: wplogin_redirect.php:730
 msgid "ERROR: Non-existent username submitted "
 msgstr "FEJL: Ikke eksisterne bruger navn indsendt"
 
-#: wplogin_redirect.php:743
+#: wplogin_redirect.php:744
 msgid "Successfully updated user-specific URLs"
 msgstr "Bruger specifikke URL's opdateret succesfuldt"
 

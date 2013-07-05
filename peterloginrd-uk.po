@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Peter's Login Redirect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-04 14:15-0800\n"
+"POT-Creation-Date: 2013-07-05 14:22-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Iurii <yurqua@gmail.com>\n"
 "Language-Team: theblog.ca\n"
@@ -17,31 +17,31 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wplogin_redirect.php:565
+#: wplogin_redirect.php:566
 #, fuzzy
 msgid "Register"
 msgstr "Зареєструватись"
 
-#: wplogin_redirect.php:569
+#: wplogin_redirect.php:570
 msgid "Site Admin"
 msgstr "Адміністратор сайта"
 
-#: wplogin_redirect.php:709
+#: wplogin_redirect.php:710
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr ""
 "ПОМИЛКА: під час налаштування перенаправлення за користувачем, введено "
 "хибний або не локальний URL"
 
-#: wplogin_redirect.php:719
+#: wplogin_redirect.php:720
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr ""
 "ПОМИЛКА: невідома помилка встановлення URL перенаправлення за користувачем"
 
-#: wplogin_redirect.php:729
+#: wplogin_redirect.php:730
 msgid "ERROR: Non-existent username submitted "
 msgstr "ПОМИЛКА: надано неіснуюче ім’я користувача"
 
-#: wplogin_redirect.php:743
+#: wplogin_redirect.php:744
 msgid "Successfully updated user-specific URLs"
 msgstr "URL перенаправлень за користувачами успішно оновлено"
 

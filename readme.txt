@@ -192,6 +192,9 @@ http://www.screenr.com/Gqi8
 
 == Changelog ==
 
+= 2.7.1 =
+* 2013-07-05: Bug fix: Role-based login URLs weren't saving correctly.
+
 = 2.7.0 =
 * 2013-07-04: Add logout redirect URL control per-user, per-role, and per-level
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Peter's Login Redirect v2.6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-04 14:14-0800\n"
-"PO-Revision-Date: 2013-07-04 14:14-0800\n"
+"POT-Creation-Date: 2013-07-05 14:21-0800\n"
+"PO-Revision-Date: 2013-07-05 14:21-0800\n"
 "Last-Translator: Syamsul Alam <admin@alampintar.org>\n"
 "Language-Team: \n"
 "Language: id_ID\n"
@@ -19,33 +19,33 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 # @ peterloginrd
-#: wplogin_redirect.php:565
+#: wplogin_redirect.php:566
 msgid "Register"
 msgstr "Daftar"
 
 # @ peterloginrd
-#: wplogin_redirect.php:569
+#: wplogin_redirect.php:570
 msgid "Site Admin"
 msgstr "Site Admin"
 
 # @ peterloginrd
-#: wplogin_redirect.php:709
+#: wplogin_redirect.php:710
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr "ERROR: Non-lokal atau proses URL salah oleh pemakai "
 
 # @ peterloginrd
-#: wplogin_redirect.php:719
+#: wplogin_redirect.php:720
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr ""
 "ERROR: error tidak diketahui memperbarui pengguna-URL tertentu oleh pengguna "
 
 # @ peterloginrd
-#: wplogin_redirect.php:729
+#: wplogin_redirect.php:730
 msgid "ERROR: Non-existent username submitted "
 msgstr "ERROR: Tidak ada nama pengguna untuk diproses "
 
 # @ peterloginrd
-#: wplogin_redirect.php:743
+#: wplogin_redirect.php:744
 msgid "Successfully updated user-specific URLs"
 msgstr "berhasil update URL tertentu pemakai  "
 

@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter Keung
-Version: 2.7.0
+Version: 2.7.1
 Change Log:
+2013-07-05  2.7.1: Bug fix: Role-based login URLs weren't saving correctly.
 2013-07-04  2.7.0: Add logout redirect URL control per-user, per-role, and per-level
 2012-12-22  2.6.1: Allow editors to manage redirects in WordPress 3.5+ (required capability is now "manage_categories" instead of "manage_links").
 2012-09-22  2.6.0: Added support for URL variable "http_referer" (note the single "r") to redirect the user back to the page that hosted the login form, as long as the login page isn't the standard wp-login.php. There are several caveats to this, such as: If you want to redirect only on certain forms and/or specify a redirect on the standard wp-login.php page, you should modify the form itself to use a "redirect_to" form variable instead.
@@ -784,7 +785,6 @@ if (is_admin()) {
                 {
                     // Check to see whether it matches the "local URL" test
                     $address = rul_safe_redirect( $addresses[$i] );
-                    $address = false;
                     $address_logout = rul_safe_redirect( $addresses_logout[$i] );
 
                     if( !$address && !$address_logout )

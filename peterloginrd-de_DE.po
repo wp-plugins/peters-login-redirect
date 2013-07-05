@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peters login redirect v2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-04 14:14-0800\n"
+"POT-Creation-Date: 2013-07-05 14:21-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Peter <peter@keung.biz>\n"
 "Language-Team: \n"
@@ -18,30 +18,30 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wplogin_redirect.php:565
+#: wplogin_redirect.php:566
 msgid "Register"
 msgstr "Registrieren"
 
-#: wplogin_redirect.php:569
+#: wplogin_redirect.php:570
 msgid "Site Admin"
 msgstr "Websiteadministrator"
 
-#: wplogin_redirect.php:709
+#: wplogin_redirect.php:710
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr ""
 "FEHLER: nicht-lokale oder ung&uuml;ltige URL f&uuml;r Benutzer eingegeben"
 
-#: wplogin_redirect.php:719
+#: wplogin_redirect.php:720
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr ""
 "FEHLER: unbekannter Fehler beim Aktualisieren der Benutzerspezifischen URL "
 "f&uuml;r Benutzer"
 
-#: wplogin_redirect.php:729
+#: wplogin_redirect.php:730
 msgid "ERROR: Non-existent username submitted "
 msgstr "FEHLER: eingegebener Benutzername existiert nicht"
 
-#: wplogin_redirect.php:743
+#: wplogin_redirect.php:744
 msgid "Successfully updated user-specific URLs"
 msgstr "Benutzerspezifische URLs aktualisiert"
 

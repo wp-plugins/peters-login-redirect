@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peters login redirect v2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-04 14:14-0800\n"
+"POT-Creation-Date: 2013-07-05 14:21-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Peter <peter@keung.biz>\n"
 "Language-Team: \n"
@@ -18,30 +18,30 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wplogin_redirect.php:565
+#: wplogin_redirect.php:566
 msgid "Register"
 msgstr "Registruotis"
 
-#: wplogin_redirect.php:569
+#: wplogin_redirect.php:570
 msgid "Site Admin"
 msgstr "Svetainės Administratorius"
 
-#: wplogin_redirect.php:709
+#: wplogin_redirect.php:710
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr ""
 "KLAIDA: Vartotojui priskirta nevietinė arba neteisinga Universalioji nuoroda"
 
-#: wplogin_redirect.php:719
+#: wplogin_redirect.php:720
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr ""
 "KLAIDA: Nežinoma klaida, atnaujinant specifinio vartotojo Universaliąją "
 "nuorodą vartotojui"
 
-#: wplogin_redirect.php:729
+#: wplogin_redirect.php:730
 msgid "ERROR: Non-existent username submitted "
 msgstr "KLAIDA: Pateiktas neegzistuojantis vartotojo vardas"
 
-#: wplogin_redirect.php:743
+#: wplogin_redirect.php:744
 msgid "Successfully updated user-specific URLs"
 msgstr "Sėkmingai atnaujintos specifinio vartotojo Universaliosios nuorodos"
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peterloginrd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-04 14:15-0800\n"
-"PO-Revision-Date: 2013-07-04 14:15-0800\n"
+"POT-Creation-Date: 2013-07-05 14:22-0800\n"
+"PO-Revision-Date: 2013-07-05 14:22-0800\n"
 "Last-Translator: Peter <peter@keung.biz>\n"
 "Language-Team: Moonpixel.com <info@moonpixel.com>\n"
 "Language: sk_SK\n"
@@ -15,27 +15,27 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wplogin_redirect.php:565
+#: wplogin_redirect.php:566
 msgid "Register"
 msgstr "Registrovať"
 
-#: wplogin_redirect.php:569
+#: wplogin_redirect.php:570
 msgid "Site Admin"
 msgstr "Administrátor"
 
-#: wplogin_redirect.php:709
+#: wplogin_redirect.php:710
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr "CHYBA: Zadané nelokálne alebo neplatné URL užívateľa"
 
-#: wplogin_redirect.php:719
+#: wplogin_redirect.php:720
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr "CHYBA: Nezistená chyba aktualizácie URL pre daného používateľa"
 
-#: wplogin_redirect.php:729
+#: wplogin_redirect.php:730
 msgid "ERROR: Non-existent username submitted "
 msgstr "CHYBA: Zadané neplatné meno užívateľa"
 
-#: wplogin_redirect.php:743
+#: wplogin_redirect.php:744
 msgid "Successfully updated user-specific URLs"
 msgstr "URL pre daného užívateľa bolo úspešne aktualizované"
 
