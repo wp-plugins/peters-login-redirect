@@ -2,8 +2,8 @@
 Contributors: pkthree
 Donate link: http://www.theblog.ca
 Tags: login, logout, redirect, admin, administration, dashboard, users, authentication
-Requires at least: 2.7
-Tested up to: 3.5
+Requires at least: 3.2
+Tested up to: 3.6
 Stable tag: trunk
 
 Redirect users to different locations after logging in and logging out.
@@ -191,6 +191,9 @@ For a deeper dive into this feature, please see this video:
 http://www.screenr.com/Gqi8
 
 == Changelog ==
+
+= 2.7.2 =
+* 2013-10-07: Support PHP 5 static function calls, bumping WordPress requirement to 3.2+.
 
 = 2.7.1 =
 * 2013-07-05: Bug fix: Role-based login URLs weren't saving correctly.

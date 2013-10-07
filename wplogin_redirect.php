@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter Keung
-Version: 2.7.1
+Version: 2.7.2
 Change Log:
+2013-10-07  2.7.2: Support PHP 5 static function calls, bumping WordPress requirement to 3.2+.
 2013-07-05  2.7.1: Bug fix: Role-based login URLs weren't saving correctly.
 2013-07-04  2.7.0: Add logout redirect URL control per-user, per-role, and per-level
 2012-12-22  2.6.1: Allow editors to manage redirects in WordPress 3.5+ (required capability is now "manage_categories" instead of "manage_links").
@@ -67,7 +68,7 @@ class rulRedirectFunctionCollection
         Defaults are defined here, but the settings values should be edited in the WordPress admin panel.
         If no setting is asked for, then it returns an array of all settings; otherwise it returns a specific setting
     */
-    function get_settings( $setting=false )
+    static function get_settings( $setting=false )
     {
         $rul_settings = array();
 
@@ -116,11 +117,11 @@ class rulRedirectFunctionCollection
             return false;
         }
     }
-    function get_settings_from_options_table()
+    static function get_settings_from_options_table()
     {
         return get_option( 'rul_settings', array() );
     }
-    function set_setting( $setting = false, $value = false )
+    static function set_setting( $setting = false, $value = false )
     {
         if( $setting )
         {
@@ -137,7 +138,7 @@ class rulRedirectFunctionCollection
         This extra function is necessary to support the use case where someone was previously logged in
         Thanks to http://wordpress.org/support/topic/97314 for this function
     */
-    function redirect_current_user_can($capability, $current_user)
+    static function redirect_current_user_can($capability, $current_user)
     {
         global $wpdb;
 
@@ -157,7 +158,7 @@ class rulRedirectFunctionCollection
     /*
         A generic function to return the value mapped to a particular variable
     */
-    function rul_get_variable( $variable, $user )
+    static function rul_get_variable( $variable, $user )
     {
         $variable_value = apply_filters( 'rul_replace_variable', false, $variable, $user );
         if( !$variable_value )
@@ -213,7 +214,7 @@ class rulRedirectFunctionCollection
     /*
         Replaces the syntax [variable]variable_name[/variable] with whatever has been mapped to the variable_name in the rul_get_variable function
     */
-    function rul_replace_variable( $string, $user )
+    static function rul_replace_variable( $string, $user )
     {
         preg_match_all( "/\[variable\](.*?)\[\/variable\]/is", $string, $out );
 
@@ -228,7 +229,7 @@ class rulRedirectFunctionCollection
     /*
         Allow users to be redirected to external URLs as specified by redirect rules
     */
-    function rul_trigger_allowed_host( $url )
+    static function rul_trigger_allowed_host( $url )
     {
         global $rul_allowed_hosts;
         $url_parsed = parse_url( $url );
@@ -238,7 +239,7 @@ class rulRedirectFunctionCollection
             add_filter( 'allowed_redirect_hosts', array( 'rulRedirectFunctionCollection', 'rul_add_allowed_host' ), 10, 1 );
         }
     }
-    function rul_add_allowed_host( $hosts )
+    static function rul_add_allowed_host( $hosts )
     {
         global $rul_allowed_hosts;
         return array_merge( $hosts, $rul_allowed_hosts );
@@ -248,7 +249,7 @@ class rulRedirectFunctionCollection
 // Functions specific to logout redirecting
 class rulLogoutFunctionCollection
 {
-    function logout_redirect()
+    static function logout_redirect()
     {   
         $rul_local_only = rulRedirectFunctionCollection::get_settings( 'rul_local_only' );
         $rul_allow_post_redirect_override_logout = rulRedirectFunctionCollection::get_settings( 'rul_allow_post_redirect_override_logout' );
@@ -284,7 +285,7 @@ class rulLogoutFunctionCollection
     // Get the logout redirect URL according to defined rules
     // Functionality for user-, role-, and capability-specific redirect rules is available
     // Note that only the "all other users" redirect URL is currently implemented in the UI
-    function get_redirect_url( $user, $requested_redirect_to )
+    static function get_redirect_url( $user, $requested_redirect_to )
     {
         global $wpdb, $rul_db_addresses;
         
@@ -383,7 +384,7 @@ class rulLogoutFunctionCollection
 // Functions for redirecting post-registration
 class rulRedirectPostRegistration
 {
-    function post_registration_wrapper( $requested_redirect_to )
+    static function post_registration_wrapper( $requested_redirect_to )
     {
         /*
             Some limitations:
@@ -401,7 +402,7 @@ class rulRedirectPostRegistration
     }
     
     // Looks up the redirect URL, if any
-    function get_redirect_url( $requested_redirect_to )
+    static function get_redirect_url( $requested_redirect_to )
     {
         global $wpdb, $rul_db_addresses;
         
