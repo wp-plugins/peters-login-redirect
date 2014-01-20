@@ -3,7 +3,7 @@ Contributors: pkthree
 Donate link: http://www.theblog.ca
 Tags: login, logout, redirect, admin, administration, dashboard, users, authentication
 Requires at least: 3.2
-Tested up to: 3.6
+Tested up to: 3.8
 Stable tag: trunk
 
 Redirect users to different locations after logging in and logging out.
@@ -32,6 +32,7 @@ This plugin also includes a function `rul_register` that acts the same as the `w
 * da\_DK translation by Tom of http://artikelforlaget.dk
 * id\_ID translation by Syamsul Alam of http://www.syamsulalam.net/
 * uk translation by Yura
+* sr\_RS translation by Borisa Djuraskovic of http://www.webhostinghub.com/
 
 == Installation ==
 
