@@ -33,6 +33,7 @@ This plugin also includes a function `rul_register` that acts the same as the `w
 * id\_ID translation by Syamsul Alam of http://www.syamsulalam.net/
 * uk translation by Yura
 * sr\_RS translation by Borisa Djuraskovic of http://www.webhostinghub.com/
+* fr\_FR translation by DomBonj
 
 == Installation ==
 
