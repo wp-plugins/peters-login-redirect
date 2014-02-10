@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: peterloginrd\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-05 14:21-0800\n"
-"PO-Revision-Date: 2013-07-05 14:21-0800\n"
-"Last-Translator: Peter <peter@keung.biz>\n"
+"POT-Creation-Date: 2014-02-09 20:18-0800\n"
+"PO-Revision-Date: 2014-02-09 20:18-0800\n"
+"Last-Translator: Michal Kuk <michal.kuk@gmail.com>\n"
 "Language-Team: Moonpixel.com <info@moonpixel.com>\n"
 "Language: sk_SK\n"
 "MIME-Version: 1.0\n"
@@ -15,288 +15,290 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wplogin_redirect.php:566
+#: wplogin_redirect.php:567
 msgid "Register"
 msgstr "Registrovat"
 
-#: wplogin_redirect.php:570
+#: wplogin_redirect.php:571
 msgid "Site Admin"
 msgstr "Administrátor"
 
-#: wplogin_redirect.php:710
+#: wplogin_redirect.php:711
 msgid "ERROR: Non-local or invalid URL submitted for user "
 msgstr "CHYBA: Zadané nelokální nebo neplatné URL uživatele"
 
-#: wplogin_redirect.php:720
+#: wplogin_redirect.php:721
 msgid "ERROR: Unknown error updating user-specific URL for user "
 msgstr "CHYBA: Nezjištěná chyba aktualizace URL pro daného uživatele"
 
-#: wplogin_redirect.php:730
+#: wplogin_redirect.php:731
 msgid "ERROR: Non-existent username submitted "
 msgstr "CHYBA: Zadané neplatné jméno uživatele"
 
-#: wplogin_redirect.php:744
+#: wplogin_redirect.php:745
 msgid "Successfully updated user-specific URLs"
 msgstr "URL pro daného uživatele bylo úspěšně aktualizované"
 
-#: wplogin_redirect.php:793
+#: wplogin_redirect.php:794
 msgid "ERROR: Non-local or invalid URL submitted for role "
 msgstr "CHYBA: Zadané nelokální nebo neplatné URL pro danou roli"
 
-#: wplogin_redirect.php:803
+#: wplogin_redirect.php:804
 msgid "ERROR: Unknown error updating role-specific URL for role "
 msgstr "CHYBA: Nezjištěná chyba aktualizace URL pro danou roli"
 
-#: wplogin_redirect.php:812
+#: wplogin_redirect.php:813
 msgid "ERROR: Non-existent role submitted "
 msgstr "CHYBA: Zadaná neplatná role uživatele"
 
-#: wplogin_redirect.php:825
+#: wplogin_redirect.php:826
 msgid "Successfully updated role-specific URLs"
 msgstr "URL pro danou roli bylo úspěšně aktualizováno"
 
-#: wplogin_redirect.php:881
+#: wplogin_redirect.php:882
 msgid "ERROR: Non-local or invalid URL submitted for level "
 msgstr "CHYBA: Zadané nelokální nebo neplatné URL pro danou úroveň"
 
-#: wplogin_redirect.php:890
+#: wplogin_redirect.php:891
 msgid "ERROR: Unknown error updating level-specific URL for level "
 msgstr "CHYBA: Nezjištěná chyba aktualizace URL pro danou úroveň"
 
-#: wplogin_redirect.php:900
+#: wplogin_redirect.php:901
 msgid "ERROR: Non-existent level submitted "
 msgstr "CHYBA: Zadaná neexistující úroveň"
 
-#: wplogin_redirect.php:913
+#: wplogin_redirect.php:914
 msgid "Successfully updated level-specific URLs"
 msgstr "URL pro dané úrovně úspěšně aktualizováno"
 
-#: wplogin_redirect.php:952
+#: wplogin_redirect.php:953
 msgid ""
 "ERROR: Unknown database problem removing URL for &#34;all other users&#34; "
 msgstr ""
 "CHYBA: Nezjištěná chyba databáze odstranění URL pro &#34;všechny ostatní "
 "uživatele&#34;"
 
-#: wplogin_redirect.php:956
+#: wplogin_redirect.php:957
 msgid "Successfully removed URL for &#34;all other users&#34; "
 msgstr "Úspěšně odstraněné URL pro &#34;všechny ostatní uživatele&#34;"
 
-#: wplogin_redirect.php:967 wplogin_redirect.php:1036
+#: wplogin_redirect.php:968 wplogin_redirect.php:1037
 msgid "ERROR: Non-local or invalid URL submitted "
 msgstr "CHYBA: Zadané nelokální nebo neplatné URL"
 
-#: wplogin_redirect.php:980
+#: wplogin_redirect.php:981
 msgid ""
 "ERROR: Unknown database problem updating URL for &#34;all other users&#34; "
 msgstr ""
 "CHYBA: Nezjištěná chyba databáze aktualizace URL pro &#34;všechny ostatní "
 "uživatele&#34;"
 
-#: wplogin_redirect.php:984
+#: wplogin_redirect.php:985
 msgid "Successfully updated URL for &#34;all other users&#34;"
 msgstr "Úspěšně aktualizované URL pro &#34;všechny ostatní uživatele&#34;"
 
-#: wplogin_redirect.php:1023
-#, fuzzy
+#: wplogin_redirect.php:1024
 msgid ""
 "ERROR: Unknown database problem removing URL for &#34;post-registration&#34; "
 msgstr ""
-"CHYBA: Nezjištěná chyba databáze odstranění URL pro &#34;všechny ostatní "
-"uživatele&#34;"
+"CHYBA: Nezjištěná chyba databáze odstranění URL pro &#34;Registrační "
+"příspěvek&#34;"
 
-#: wplogin_redirect.php:1026
-#, fuzzy
+#: wplogin_redirect.php:1027
 msgid "Successfully removed URL for &#34;post-registration&#34; "
-msgstr "Úspěšně odstraněné URL pro &#34;všechny ostatní uživatele&#34;"
+msgstr "Úspěšně odstraněné URL pro &#34;registrační příspěvek&#34;"
 
-#: wplogin_redirect.php:1049
-#, fuzzy
+#: wplogin_redirect.php:1050
 msgid ""
 "ERROR: Unknown database problem updating URL for &#34;post-registration&#34; "
 msgstr ""
-"CHYBA: Nezjištěná chyba databáze aktualizace URL pro &#34;všechny ostatní "
-"uživatele&#34;"
+"CHYBA: Nezjištěná chyba databáze aktualizace URL pro &#34;registrační "
+"příspěvek&#34;"
 
-#: wplogin_redirect.php:1053
-#, fuzzy
+#: wplogin_redirect.php:1054
 msgid "Successfully updated URL for &#34;post-registration&#34;"
-msgstr "Úspěšně aktualizované URL pro &#34;všechny ostatní uživatele&#34;"
+msgstr "Úspěšně aktualizované URL pro &#34;registrační příspěvek&#34;"
 
-#: wplogin_redirect.php:1079
-#, fuzzy
+#: wplogin_redirect.php:1080
 msgid "Successfully updated plugin settings"
-msgstr "URL pro daného uživatele bylo úspěšně aktualizované"
+msgstr "Nastavená pluginu bylo úspěšně aktualizováno"
 
-#: wplogin_redirect.php:1251
-#, fuzzy
+#: wplogin_redirect.php:1252
 msgid "Manage redirect rules"
-msgstr "Správa pravidel pro přesměrování po přihlášení"
+msgstr "Správa pravidel pro přesměrování"
 
-#: wplogin_redirect.php:1253
-#, fuzzy
+#: wplogin_redirect.php:1254
 msgid ""
 "Define custom URLs to which different users, users with specific roles, "
 "users with specific levels, and all other users will be redirected upon "
 "login."
 msgstr ""
-"Definovat různé lokální URL, na které různí uživatelé, uživatelé s "
+"Definovat různé URL, na kterou budou různí uživatelé, uživatelé s "
 "konkrétními rolemi, uživatelé s konkrétními úrovněmi a všichni ostatní "
-"uživatelé budou přesměrováni."
-
-#: wplogin_redirect.php:1254
-msgid "Define a custom URL to which all users will be redirected upon logout"
-msgstr ""
+"uživatelé přesměrováni."
 
 #: wplogin_redirect.php:1255
+msgid "Define a custom URL to which all users will be redirected upon logout"
+msgstr ""
+"Definujte vlastní URL na kterou budou přesměrování všichni uživatele po "
+"odhlášení"
+
+#: wplogin_redirect.php:1256
 msgid ""
 "Note that you can use the syntax <strong>[variable]username[/variable]</"
 "strong> in your URLs so that the system will build a dynamic URL upon each "
 "login, replacing that text with the users username."
 msgstr ""
-"Poznámka: je možné používat syntaxi <strong>[variable]username[/variable]</"
-"strong> v URL. Systém vytvoří dynamické URL po každém přihlášení, "
+"Poznámka: je možné používat syntaxi <strong>[variable]uživatelské jméno[/"
+"variable]</strong> v URL. Systém vytvoří dynamické URL po každém přihlášení, "
 "nahrazujíce tento text uživatelským jménem."
 
-#: wplogin_redirect.php:1257
+#: wplogin_redirect.php:1258
 msgid "Specific users"
 msgstr "Konkrétní uživatelé"
 
-#: wplogin_redirect.php:1261
+#: wplogin_redirect.php:1262
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: wplogin_redirect.php:1262 wplogin_redirect.php:1284
-#: wplogin_redirect.php:1307
+#: wplogin_redirect.php:1263 wplogin_redirect.php:1285
+#: wplogin_redirect.php:1308
 msgid "URL"
 msgstr "URL"
 
-#: wplogin_redirect.php:1263 wplogin_redirect.php:1285
-#: wplogin_redirect.php:1308
+#: wplogin_redirect.php:1264 wplogin_redirect.php:1286
+#: wplogin_redirect.php:1309
 msgid "Logout URL"
-msgstr ""
+msgstr "URL odhlášení"
 
-#: wplogin_redirect.php:1268 wplogin_redirect.php:1290
-#: wplogin_redirect.php:1313
+#: wplogin_redirect.php:1269 wplogin_redirect.php:1291
+#: wplogin_redirect.php:1314
 msgid "Add:"
 msgstr "Přidat:"
 
-#: wplogin_redirect.php:1270
+#: wplogin_redirect.php:1271
 msgid "Select a username"
 msgstr "Vybrat uživatelské jméno"
 
-#: wplogin_redirect.php:1273 wplogin_redirect.php:1295
-#: wplogin_redirect.php:1319 wplogin_redirect.php:1327
-#: wplogin_redirect.php:1336
+#: wplogin_redirect.php:1274 wplogin_redirect.php:1296
+#: wplogin_redirect.php:1320 wplogin_redirect.php:1328
+#: wplogin_redirect.php:1337
 msgid "URL:"
 msgstr "URL:"
 
-#: wplogin_redirect.php:1274 wplogin_redirect.php:1296
-#: wplogin_redirect.php:1320 wplogin_redirect.php:1328
+#: wplogin_redirect.php:1275 wplogin_redirect.php:1297
+#: wplogin_redirect.php:1321 wplogin_redirect.php:1329
 msgid "Logout URL:"
-msgstr ""
+msgstr "URL odhlášení:"
 
-#: wplogin_redirect.php:1276 wplogin_redirect.php:1298
-#: wplogin_redirect.php:1322 wplogin_redirect.php:1329
-#: wplogin_redirect.php:1337 wplogin_redirect.php:1414
+#: wplogin_redirect.php:1277 wplogin_redirect.php:1299
+#: wplogin_redirect.php:1323 wplogin_redirect.php:1330
+#: wplogin_redirect.php:1338 wplogin_redirect.php:1415
 msgid "Update"
-msgstr "Aktualizace"
+msgstr "Aktualizovat"
 
-#: wplogin_redirect.php:1279
+#: wplogin_redirect.php:1280
 msgid "Specific roles"
 msgstr "Konkrétní role"
 
-#: wplogin_redirect.php:1283
+#: wplogin_redirect.php:1284
 msgid "Role"
 msgstr "Role"
 
-#: wplogin_redirect.php:1292
+#: wplogin_redirect.php:1293
 msgid "Select a role"
 msgstr "Vybrat roli"
 
-#: wplogin_redirect.php:1301
+#: wplogin_redirect.php:1302
 msgid "Specific levels"
 msgstr "Konkrétní úrovně"
 
-#: wplogin_redirect.php:1305
+#: wplogin_redirect.php:1306
 msgid "Level"
 msgstr "Úroveň"
 
-#: wplogin_redirect.php:1306
+#: wplogin_redirect.php:1307
 msgid "Order"
 msgstr "Příkaz"
 
-#: wplogin_redirect.php:1315
+#: wplogin_redirect.php:1316
 msgid "Select a level"
 msgstr "Vybrat úroveň"
 
-#: wplogin_redirect.php:1318
+#: wplogin_redirect.php:1319
 msgid "Order:"
 msgstr "Příkaz:"
 
-#: wplogin_redirect.php:1325
+#: wplogin_redirect.php:1326
 msgid "All other users"
 msgstr "Všichni ostatní uživatelé"
 
-#: wplogin_redirect.php:1329 wplogin_redirect.php:1337
+#: wplogin_redirect.php:1330 wplogin_redirect.php:1338
 msgid "Delete"
 msgstr "Odstranit"
 
-#: wplogin_redirect.php:1334
+#: wplogin_redirect.php:1335
 msgid "Post-registration"
-msgstr ""
+msgstr "Registrační příspěvek"
 
-#: wplogin_redirect.php:1342
+#: wplogin_redirect.php:1343
 msgid "Customize plugin settings"
-msgstr ""
+msgstr "Vlastní nastavení pluginu"
 
-#: wplogin_redirect.php:1347
+#: wplogin_redirect.php:1348
 msgid "Redirect restrictions"
-msgstr ""
-
-#: wplogin_redirect.php:1351
-msgid "Any http or https URL"
-msgstr ""
+msgstr "Omezení přesměrování"
 
 #: wplogin_redirect.php:1352
-#, fuzzy
-msgid "Any URL"
-msgstr "URL"
+msgid "Any http or https URL"
+msgstr "Libovolné http nebo https URL"
 
 #: wplogin_redirect.php:1353
-msgid "Any URL on the same domain"
-msgstr ""
+msgid "Any URL"
+msgstr "Libovolná URL"
 
-#: wplogin_redirect.php:1359
+#: wplogin_redirect.php:1354
+msgid "Any URL on the same domain"
+msgstr "Libovolné URL na stejné doméně"
+
+#: wplogin_redirect.php:1360
 msgid ""
 "Allow a POST or GET &#34;redirect_to&#34; variable to take redirect "
 "precedence"
 msgstr ""
-
-#: wplogin_redirect.php:1363 wplogin_redirect.php:1374
-#: wplogin_redirect.php:1386
-msgid "Yes"
-msgstr ""
+"Povolit POST nebo GET &#34;redirect_to&#34; promněnou pro přednostní "
+"přesměrování"
 
 #: wplogin_redirect.php:1364 wplogin_redirect.php:1375
 #: wplogin_redirect.php:1387
-msgid "No"
-msgstr ""
+msgid "Yes"
+msgstr "Ano"
 
-#: wplogin_redirect.php:1370
+#: wplogin_redirect.php:1365 wplogin_redirect.php:1376
+#: wplogin_redirect.php:1388
+msgid "No"
+msgstr "Ne"
+
+#: wplogin_redirect.php:1371
 msgid ""
 "Allow a POST or GET &#34;redirect_to&#34; logout variable to take redirect "
 "precedence"
 msgstr ""
+"Povolit POST nebo GET &#34;redirect_to&#34; ohlašovací promněnou pro "
+"přednostní přesměrování"
 
-#: wplogin_redirect.php:1382
+#: wplogin_redirect.php:1383
 #, php-format
 msgid ""
 "Use external redirect file. Set this to &#34;Yes&#34; if you are using a "
 "plugin such as Gigya that bypasses the regular WordPress redirect process "
 "(and allows only one fixed redirect URL). Then, set the redirect URL to %s"
 msgstr ""
+"Použít externí přesměrovací soubor. Nastevto na &#34;Ano&#34; pokud "
+"používáte pluginy jako Gigya, který přepisuje běžný přesměrovací proce "
+"WordPressu (a umožňuje pouze jednu fixní přesměrovací URL). Poté nastavetu "
+"toto URL na %s"
 
-#: wplogin_redirect.php:1393
+#: wplogin_redirect.php:1394
 msgid "Permission level required to edit redirect URLs"
-msgstr ""
+msgstr "Úroveň oprávnění potřebná pro úpravu přesměrovacích URL."
