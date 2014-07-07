@@ -194,6 +194,9 @@ http://www.screenr.com/Gqi8
 
 == Changelog ==
 
+= 2.8.0 =
+* 2014-07-06: Improved management interface to add specific Edit and Delete buttons per rule, and removed limit around number of rules.
+
 = 2.7.2 =
 * 2013-10-07: Support PHP 5 static function calls, bumping WordPress requirement to 3.2+.
 
