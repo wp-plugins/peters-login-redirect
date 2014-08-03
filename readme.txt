@@ -3,7 +3,7 @@ Contributors: pkthree
 Donate link: http://www.theblog.ca
 Tags: login, logout, redirect, admin, administration, dashboard, users, authentication
 Requires at least: 3.2
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: trunk
 
 Redirect users to different locations after logging in and logging out.
@@ -193,6 +193,9 @@ For a deeper dive into this feature, please see this video:
 http://www.screenr.com/Gqi8
 
 == Changelog ==
+
+= 2.8.1 =
+* 2014-08-03: Support the deletion of rules referencing deleted user, roles, or levels.
 
 = 2.8.0 =
 * 2014-07-06: Improved management interface to add specific Edit and Delete buttons per rule, and removed limit around number of rules.
