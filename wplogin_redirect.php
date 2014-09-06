@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter Keung
-Version: 2.8.1
+Version: 2.8.2
 Change Log:
+2014-09-06  2.8.2: Translation string fix.
 2014-08-03  2.8.1: Support the deletion of rules referencing deleted user, roles, or levels.
 2014-07-06  2.8.0: Improved management interface to add specific Edit and Delete buttons per rule, and removed limit around number of rules.
 2013-10-07  2.7.2: Support PHP 5 static function calls, bumping WordPress requirement to 3.2+.
@@ -57,7 +58,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.8.1';
+$rul_version = '2.8.2';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -1402,7 +1403,7 @@ if( is_admin() )
         
         <tr>
             <td>
-                <p><strong><?php sprintf( _e( 'Use external redirect file. Set this to &#34;Yes&#34; if you are using a plugin such as Gigya that bypasses the regular WordPress redirect process (and allows only one fixed redirect URL). Then, set the redirect URL to %s', 'peterloginrd' ), '<br />http://www.yoursite.com/wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php' ); ?></strong></p>
+                <p><strong><?php print sprintf( __( 'Use external redirect file. Set this to &#34;Yes&#34; if you are using a plugin such as Gigya that bypasses the regular WordPress redirect process (and allows only one fixed redirect URL). Then, set the redirect URL in the other plugin to %s', 'peterloginrd' ), '<br />http://www.yoursite.com/wp-content/plugins/peters-login-redirect/wplogin_redirect_control.php' ); ?></strong></p>
             </td>
             <td>
                 <select name="rul_use_redirect_controller">
