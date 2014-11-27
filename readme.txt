@@ -34,6 +34,7 @@ This plugin also includes a function `rul_register` that acts the same as the `w
 * uk translation by Yura
 * sr\_RS translation by Borisa Djuraskovic of http://www.webhostinghub.com/
 * fr\_FR translation by DomBonj
+* pt\_BR translation by Graal4
 
 == Installation ==
 
