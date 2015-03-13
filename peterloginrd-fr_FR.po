@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Peter's Login Redirect v2.7.2\n"
+"Project-Id-Version: Peter's Login Redirect v2.8.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-06 12:42-0800\n"
+"POT-Creation-Date: 2015-03-13 11:57-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: DomBonj <dombonj@gmail.com>\n"
 "Language-Team: DomBonj <http://www.addfi.fr>\n"
@@ -39,50 +39,49 @@ msgid "ERROR: Non-existent level submitted "
 msgstr "ERREUR : permission inexistante"
 
 #: wplogin_redirect.php:734
-#, fuzzy, php-format
+#, php-format
 msgid "ERROR: Empty %s submitted "
-msgstr "ERREUR : rôle inexistant"
+msgstr "ERREUR : %s vide fourni(e)"
 
 #: wplogin_redirect.php:763 wplogin_redirect.php:825
-#, fuzzy, php-format
+#, php-format
 msgid "ERROR: Non-local or invalid URL submitted for %s %s"
-msgstr "ERREUR : URL non locale ou invalide fournie pour cet utilisateur"
+msgstr "ERREUR : URL non locale ou invalide fournie pour %s %s"
 
 #: wplogin_redirect.php:789
-#, fuzzy, php-format
+#, php-format
 msgid "ERROR: Unknown error adding %s-specific redirect for %s %s"
 msgstr ""
-"ERREUR : erreur inconnue en tentant de mettre à jour l'URL spécifiée pour "
-"cet utilisateur"
+"ERREUR : erreur inconnue en ajoutant une redirection spécifique à %s pour %s "
+"%s"
 
 #: wplogin_redirect.php:796
-#, fuzzy, php-format
+#, php-format
 msgid "Successfully added %s-specific redirect rule for %s"
-msgstr "Les URL spécifiées pour cet utilisateur ont été mise à jour"
+msgstr "La règle de redirection spécifique à %s pour %s a été ajoutée"
 
 #: wplogin_redirect.php:854
-#, fuzzy, php-format
+#, php-format
 msgid "ERROR: Unknown error editing %s-specific redirect for %s %s"
 msgstr ""
-"ERREUR : erreur inconnue en tentant de mettre à jour l'URL spécifiée pour "
-"cet utilisateur"
+"ERREUR : erreur inconnue en éditant la redirection spécifique à %s pour %s %s"
 
 #: wplogin_redirect.php:861
-#, fuzzy, php-format
+#, php-format
 msgid "Successfully edited %s-specific redirect rule for %s"
-msgstr "Les URL spécifiées pour cet utilisateur ont été mise à jour"
+msgstr "La règle de redirection spécifique à %s pour %s a été éditée"
 
 #: wplogin_redirect.php:889
-#, fuzzy, php-format
+#, php-format
 msgid "ERROR: Unknown error deleting %s-specific redirect for %s %s"
 msgstr ""
-"ERREUR : erreur inconnue en tentant de mettre à jour l'URL spécifiée pour "
-"cet utilisateur"
+"ERREUR : erreur inconnue en tentant de supprimer la redirection spécifique à "
+"%s pour %s %s"
 
 #: wplogin_redirect.php:895
-#, fuzzy, php-format
+#, php-format
 msgid "Successfully deleted %s-specific redirect rule for %s"
-msgstr "Les URL spécifiées pour cet utilisateur ont été mise à jour"
+msgstr "La règle de redirection spécifique à %s pour %s a été supprimée"
 
 #: wplogin_redirect.php:930
 msgid ""
@@ -138,9 +137,8 @@ msgstr "Les réglages de l'extension ont été mis à jour"
 
 #: wplogin_redirect.php:1206 wplogin_redirect.php:1224
 #: wplogin_redirect.php:1241
-#, fuzzy
 msgid "Login URL"
-msgstr "URL à la déconnexion"
+msgstr "URL de connexion"
 
 #: wplogin_redirect.php:1207 wplogin_redirect.php:1225
 #: wplogin_redirect.php:1242
@@ -150,7 +148,7 @@ msgstr "URL à la déconnexion"
 #: wplogin_redirect.php:1209 wplogin_redirect.php:1227
 #: wplogin_redirect.php:1245
 msgid "Edit"
-msgstr ""
+msgstr "Editer"
 
 #: wplogin_redirect.php:1209 wplogin_redirect.php:1227
 #: wplogin_redirect.php:1245 wplogin_redirect.php:1353
@@ -216,7 +214,7 @@ msgstr "URL à la déconnexion :"
 
 #: wplogin_redirect.php:1293
 msgid "Add username rule"
-msgstr ""
+msgstr "Ajouter une règle sur utilisateur"
 
 #: wplogin_redirect.php:1296
 msgid "Specific roles"
@@ -228,7 +226,7 @@ msgstr "choisissez un rôle"
 
 #: wplogin_redirect.php:1315
 msgid "Add role rule"
-msgstr ""
+msgstr "Ajouter une règle sur rôle"
 
 #: wplogin_redirect.php:1318
 msgid "Specific levels"
@@ -248,7 +246,7 @@ msgstr "Ordre :"
 
 #: wplogin_redirect.php:1346
 msgid "Add level rule"
-msgstr ""
+msgstr "Ajouter une règle sur permission"
 
 #: wplogin_redirect.php:1349
 msgid "All other users"
@@ -310,7 +308,7 @@ msgstr ""
 "ou le GET &#34;redirect_to&#34; d'imposer la redirection"
 
 #: wplogin_redirect.php:1406
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Use external redirect file. Set this to &#34;Yes&#34; if you are using a "
 "plugin such as Gigya that bypasses the regular WordPress redirect process "
@@ -320,7 +318,8 @@ msgstr ""
 "Utiliser un fichier de redirection externe. Choisissez &#34;Oui&#34; si vous "
 "utilisez une extension comme Gigya qui court-circuite la procédure de "
 "redirection standard de WordPress (et ne permet qu'une seule URL de "
-"redirection). Ensuite, saisissez %s comme URL de redirection"
+"redirection). Ensuite, saisissez %s comme URL de redirection dans l'autre "
+"extension."
 
 #: wplogin_redirect.php:1417
 msgid "Permission level required to edit redirect URLs"
