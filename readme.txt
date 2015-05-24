@@ -26,7 +26,7 @@ This plugin also includes a function `rul_register` that acts the same as the `w
 * sk\_SK translation by Michal Miksik of http://moonpixel.com/michal-miksik/
 * ro\_RO translation by Anunturi Jibo of http://www.jibo.ro
 * cs\_CZ translation by Petr Mašek and Michal Kuk
-* de\_DE translation by Lara of http://www.u-center.nl
+* de\_DE translation by Lara of http://www.u-center.nl and Mario
 * es\_ES translation by Closemarketing of http://www.closemarketing.es
 * lt\_LT translation by Vincent G of http://www.host1free.com
 * da\_DK translation by Tom of http://artikelforlaget.dk
