@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Peters'login redirect\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-10 20:35-0800\n"
+"POT-Creation-Date: 2015-08-03 17:59-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Peter <peter@keung.biz>\n"
 "Language-Team: \n"
@@ -19,141 +19,141 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wplogin_redirect.php:570
+#: wplogin_redirect.php:576
 msgid "Register"
 msgstr "Регистрация"
 
-#: wplogin_redirect.php:574
+#: wplogin_redirect.php:580
 msgid "Site Admin"
 msgstr "Администратор"
 
-#: wplogin_redirect.php:696
+#: wplogin_redirect.php:702
 msgid "ERROR: Non-existent username submitted "
 msgstr "ОШИБКА: Имя пользователя не существует"
 
-#: wplogin_redirect.php:706
+#: wplogin_redirect.php:712
 msgid "ERROR: Non-existent role submitted "
 msgstr "ОШИБКА: Роль не существует"
 
-#: wplogin_redirect.php:717
+#: wplogin_redirect.php:723
 msgid "ERROR: Non-existent level submitted "
 msgstr "ОШИБКА: Уровень не существует"
 
-#: wplogin_redirect.php:734
+#: wplogin_redirect.php:740
 #, php-format
 msgid "ERROR: Empty %s submitted "
 msgstr "ОШИБКА: Пустое поле %s"
 
-#: wplogin_redirect.php:763 wplogin_redirect.php:825
+#: wplogin_redirect.php:769 wplogin_redirect.php:831
 #, php-format
 msgid "ERROR: Non-local or invalid URL submitted for %s %s"
 msgstr "ОШИБКА: Не внутренняя или не верная ссылка для %s %s"
 
-#: wplogin_redirect.php:789
+#: wplogin_redirect.php:795
 #, php-format
 msgid "ERROR: Unknown error adding %s-specific redirect for %s %s"
 msgstr "ОШИБКА: Редирект %s не был добавлен для %s %s"
 
-#: wplogin_redirect.php:796
+#: wplogin_redirect.php:802
 #, php-format
 msgid "Successfully added %s-specific redirect rule for %s"
 msgstr "Добавлен редирект %s для правила %s"
 
-#: wplogin_redirect.php:854
+#: wplogin_redirect.php:860
 #, php-format
 msgid "ERROR: Unknown error editing %s-specific redirect for %s %s"
 msgstr "ОШИБКА: Редирект %s не был изменён для %s %s"
 
-#: wplogin_redirect.php:861
+#: wplogin_redirect.php:867
 #, php-format
 msgid "Successfully edited %s-specific redirect rule for %s"
 msgstr "Изменён редирект %s для правила %s"
 
-#: wplogin_redirect.php:889
+#: wplogin_redirect.php:895
 #, php-format
 msgid "ERROR: Unknown error deleting %s-specific redirect for %s %s"
 msgstr "ОШИБКА: Редирект %s не был удалён для %s %s"
 
-#: wplogin_redirect.php:895
+#: wplogin_redirect.php:901
 #, php-format
 msgid "Successfully deleted %s-specific redirect rule for %s"
 msgstr "Удалён редирект %s для правила %s"
 
-#: wplogin_redirect.php:930
+#: wplogin_redirect.php:936
 msgid ""
 "ERROR: Unknown database problem removing URL for &#34;all other users&#34; "
 msgstr ""
 "ОШИБКА: Проблема при удалении ссылки для &#34;всех остальных "
 "пользователей&#34;"
 
-#: wplogin_redirect.php:934
+#: wplogin_redirect.php:940
 msgid "Successfully removed URL for &#34;all other users&#34; "
 msgstr "Удалены ссылки &#34;для всех остальных пользователей&#34; "
 
-#: wplogin_redirect.php:945 wplogin_redirect.php:1014
+#: wplogin_redirect.php:951 wplogin_redirect.php:1020
 msgid "ERROR: Non-local or invalid URL submitted "
 msgstr "ОШИБКА: Не внутренняя или не верная ссылка"
 
-#: wplogin_redirect.php:958
+#: wplogin_redirect.php:964
 msgid ""
 "ERROR: Unknown database problem updating URL for &#34;all other users&#34; "
 msgstr ""
 "ОШИБКА: Проблема обновления ссылки для &#34;всех остальных пользователей&#34;"
 
-#: wplogin_redirect.php:962
+#: wplogin_redirect.php:968
 msgid "Successfully updated URL for &#34;all other users&#34;"
 msgstr "Обновлены ссылки &#34;для всех остальных пользователей&#34; "
 
-#: wplogin_redirect.php:1001
+#: wplogin_redirect.php:1007
 msgid ""
 "ERROR: Unknown database problem removing URL for &#34;post-registration&#34; "
 msgstr ""
 "ОШИБКА: Проблема при удалении ссылки для &#34;входа после регистрации&#34;"
 
-#: wplogin_redirect.php:1004
+#: wplogin_redirect.php:1010
 msgid "Successfully removed URL for &#34;post-registration&#34; "
 msgstr "Удалены ссылки &#34;для входа после регистрации&#34; "
 
-#: wplogin_redirect.php:1027
+#: wplogin_redirect.php:1033
 msgid ""
 "ERROR: Unknown database problem updating URL for &#34;post-registration&#34; "
 msgstr ""
 "ОШИБКА: Проблема обновления ссылки для &#34;входа после регистрации&#34;"
 
-#: wplogin_redirect.php:1031
+#: wplogin_redirect.php:1037
 msgid "Successfully updated URL for &#34;post-registration&#34;"
 msgstr "Обновлены ссылки &#34;для входа после регистрации&#34; "
 
-#: wplogin_redirect.php:1057
+#: wplogin_redirect.php:1063
 msgid "Successfully updated plugin settings"
 msgstr "Настройки сохранены"
 
-#: wplogin_redirect.php:1206 wplogin_redirect.php:1224
-#: wplogin_redirect.php:1241
+#: wplogin_redirect.php:1212 wplogin_redirect.php:1230
+#: wplogin_redirect.php:1247
 msgid "Login URL"
 msgstr "Ссылка входа"
 
-#: wplogin_redirect.php:1207 wplogin_redirect.php:1225
-#: wplogin_redirect.php:1242
+#: wplogin_redirect.php:1213 wplogin_redirect.php:1231
+#: wplogin_redirect.php:1248
 msgid "Logout URL"
 msgstr "Ссылка выхода"
 
-#: wplogin_redirect.php:1209 wplogin_redirect.php:1227
-#: wplogin_redirect.php:1245
+#: wplogin_redirect.php:1215 wplogin_redirect.php:1233
+#: wplogin_redirect.php:1251
 msgid "Edit"
 msgstr "Редактировать"
 
-#: wplogin_redirect.php:1209 wplogin_redirect.php:1227
-#: wplogin_redirect.php:1245 wplogin_redirect.php:1353
-#: wplogin_redirect.php:1361
+#: wplogin_redirect.php:1215 wplogin_redirect.php:1233
+#: wplogin_redirect.php:1251 wplogin_redirect.php:1359
+#: wplogin_redirect.php:1367
 msgid "Delete"
 msgstr "Удалить"
 
-#: wplogin_redirect.php:1268
+#: wplogin_redirect.php:1274
 msgid "Manage redirect rules"
 msgstr "Управление входом/выходом"
 
-#: wplogin_redirect.php:1270
+#: wplogin_redirect.php:1276
 msgid ""
 "Define custom URLs to which different users, users with specific roles, "
 "users with specific levels, and all other users will be redirected upon "
@@ -162,13 +162,13 @@ msgstr ""
 "Установите ссылки по которым пользователи в соответствии с установленными "
 "правилами будут перенаправляться при входе в Панель управления."
 
-#: wplogin_redirect.php:1271
+#: wplogin_redirect.php:1277
 msgid "Define a custom URL to which all users will be redirected upon logout"
 msgstr ""
 "Установите ссылку, по которой все пользователи будут перенаправляться при "
 "выходе из системы"
 
-#: wplogin_redirect.php:1272
+#: wplogin_redirect.php:1278
 msgid ""
 "Note that you can use the syntax <strong>[variable]username[/variable]</"
 "strong> in your URLs so that the system will build a dynamic URL upon each "
@@ -178,100 +178,100 @@ msgstr ""
 "</strong>, таким образом система будет создавать динамическую ссылку после "
 "каждого входа, заменяя текст с именем пользователя."
 
-#: wplogin_redirect.php:1274
+#: wplogin_redirect.php:1280
 msgid "Specific users"
 msgstr "Пользователи"
 
-#: wplogin_redirect.php:1285 wplogin_redirect.php:1307
-#: wplogin_redirect.php:1337
+#: wplogin_redirect.php:1291 wplogin_redirect.php:1313
+#: wplogin_redirect.php:1343
 msgid "Add:"
 msgstr "Добавить:"
 
-#: wplogin_redirect.php:1287
+#: wplogin_redirect.php:1293
 msgid "Select a username"
 msgstr "Выберите пользователя"
 
-#: wplogin_redirect.php:1290 wplogin_redirect.php:1312
-#: wplogin_redirect.php:1343 wplogin_redirect.php:1351
-#: wplogin_redirect.php:1360
+#: wplogin_redirect.php:1296 wplogin_redirect.php:1318
+#: wplogin_redirect.php:1349 wplogin_redirect.php:1357
+#: wplogin_redirect.php:1366
 msgid "URL:"
 msgstr "Ссылка входа:"
 
-#: wplogin_redirect.php:1291 wplogin_redirect.php:1313
-#: wplogin_redirect.php:1344 wplogin_redirect.php:1352
+#: wplogin_redirect.php:1297 wplogin_redirect.php:1319
+#: wplogin_redirect.php:1350 wplogin_redirect.php:1358
 msgid "Logout URL:"
 msgstr "Ссылка выхода:"
 
-#: wplogin_redirect.php:1293
+#: wplogin_redirect.php:1299
 msgid "Add username rule"
 msgstr "Добавить правило имени пользователя"
 
-#: wplogin_redirect.php:1296
+#: wplogin_redirect.php:1302
 msgid "Specific roles"
 msgstr "Роли"
 
-#: wplogin_redirect.php:1309
+#: wplogin_redirect.php:1315
 msgid "Select a role"
 msgstr "Выберите роль"
 
-#: wplogin_redirect.php:1315
+#: wplogin_redirect.php:1321
 msgid "Add role rule"
 msgstr "Добавить правило роли"
 
-#: wplogin_redirect.php:1318
+#: wplogin_redirect.php:1324
 msgid "Specific levels"
 msgstr "Уровни"
 
-#: wplogin_redirect.php:1327
+#: wplogin_redirect.php:1333
 msgid "Order"
 msgstr "Порядок"
 
-#: wplogin_redirect.php:1339
+#: wplogin_redirect.php:1345
 msgid "Select a level"
 msgstr "Выберите уровень"
 
-#: wplogin_redirect.php:1342
+#: wplogin_redirect.php:1348
 msgid "Order:"
 msgstr "Порядок:"
 
-#: wplogin_redirect.php:1346
+#: wplogin_redirect.php:1352
 msgid "Add level rule"
 msgstr "Добавить правило уровня"
 
-#: wplogin_redirect.php:1349
+#: wplogin_redirect.php:1355
 msgid "All other users"
 msgstr "Все остальные пользователи"
 
-#: wplogin_redirect.php:1353 wplogin_redirect.php:1361
-#: wplogin_redirect.php:1438
+#: wplogin_redirect.php:1359 wplogin_redirect.php:1367
+#: wplogin_redirect.php:1444
 msgid "Update"
 msgstr "Обновить"
 
-#: wplogin_redirect.php:1358
+#: wplogin_redirect.php:1364
 msgid "Post-registration"
 msgstr "После регистрации"
 
-#: wplogin_redirect.php:1366
+#: wplogin_redirect.php:1372
 msgid "Customize plugin settings"
 msgstr "Дополнительные настройки"
 
-#: wplogin_redirect.php:1371
+#: wplogin_redirect.php:1377
 msgid "Redirect restrictions"
 msgstr "Ограничения перенаправления"
 
-#: wplogin_redirect.php:1375
+#: wplogin_redirect.php:1381
 msgid "Any http or https URL"
 msgstr "Любая ссылка http или https"
 
-#: wplogin_redirect.php:1376
+#: wplogin_redirect.php:1382
 msgid "Any URL"
 msgstr "Любая ссылка"
 
-#: wplogin_redirect.php:1377
+#: wplogin_redirect.php:1383
 msgid "Any URL on the same domain"
 msgstr "Любая ссылка с того же домена"
 
-#: wplogin_redirect.php:1383
+#: wplogin_redirect.php:1389
 msgid ""
 "Allow a POST or GET &#34;redirect_to&#34; variable to take redirect "
 "precedence"
@@ -279,17 +279,17 @@ msgstr ""
 "Запросы POST или GET в переменной &#34;redirect_to&#34; для задания "
 "приоритета входа"
 
-#: wplogin_redirect.php:1387 wplogin_redirect.php:1398
-#: wplogin_redirect.php:1410
+#: wplogin_redirect.php:1393 wplogin_redirect.php:1404
+#: wplogin_redirect.php:1416
 msgid "Yes"
 msgstr "Да"
 
-#: wplogin_redirect.php:1388 wplogin_redirect.php:1399
-#: wplogin_redirect.php:1411
+#: wplogin_redirect.php:1394 wplogin_redirect.php:1405
+#: wplogin_redirect.php:1417
 msgid "No"
 msgstr "Нет"
 
-#: wplogin_redirect.php:1394
+#: wplogin_redirect.php:1400
 msgid ""
 "Allow a POST or GET &#34;redirect_to&#34; logout variable to take redirect "
 "precedence"
@@ -297,7 +297,7 @@ msgstr ""
 "Запросы POST или GET в переменной &#34;redirect_to&#34; для задания "
 "приоритета выхода"
 
-#: wplogin_redirect.php:1406
+#: wplogin_redirect.php:1412
 #, php-format
 msgid ""
 "Use external redirect file. Set this to &#34;Yes&#34; if you are using a "
@@ -310,7 +310,7 @@ msgstr ""
 "системы, например плагин Gigya. Допустима только одна ссылка "
 "перенаправления. В плагине установите следующую ссылку перенаправления: %s"
 
-#: wplogin_redirect.php:1417
+#: wplogin_redirect.php:1423
 msgid "Permission level required to edit redirect URLs"
 msgstr "Право доступа, при котором разрешёно редактирование ссылок"
 

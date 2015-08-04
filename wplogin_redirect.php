@@ -4,8 +4,9 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter Keung
-Version: 2.8.2
+Version: 2.8.3
 Change Log:
+2015-08-03  2.8.3: Add new URL variable "userslug" to match author URLs
 2014-09-06  2.8.2: Translation string fix.
 2014-08-03  2.8.1: Support the deletion of rules referencing deleted user, roles, or levels.
 2014-07-06  2.8.0: Improved management interface to add specific Edit and Delete buttons per rule, and removed limit around number of rules.
@@ -58,7 +59,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version = '2.8.2';
+$rul_version = '2.8.3';
 
 // A global variable that we will add to on the fly when $rul_local_only is set to equal 1
 $rul_allowed_hosts = array();
@@ -183,6 +184,11 @@ class rulRedirectFunctionCollection
                     // Returns the current user's username (only use this if you know they're logged in)
                     case 'username':
                         $variable_value = rawurlencode( $user->user_login );
+                        break;
+                    // Returns the current user's author slug aka nickname as used in URLs
+                    // sanitize_title should not be required here since it was already done on insert
+                    case 'userslug':
+                        $variable_value = $user->user_nicename;
                         break;
                     // Returns the URL of the WordPress files; see http://codex.wordpress.org/Function_Reference/network_site_url
                     case 'siteurl':
